@@ -1,11 +1,17 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "catwalk",
+  "version": "0.0.1",
+  "description": "A tweet curating tools for humanities",
   "main": "main.js",
   "scripts": {
-    "start": "electron main.js"
+    "start": "electron main.js",
+    "release": "node_modules/.bin/build --mac"
   },
+  "build": {
+    "appId": "catwalk",
+    "app-category-type": "your.app.category.type"
+  },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/atom/electron-quick-start.git"
@@ -24,5 +30,9 @@
   "homepage": "https://github.com/atom/electron-quick-start#readme",
   "devDependencies": {
     "electron-prebuilt": "^0.36.0"
+  },
+  "dependencies": {
+    "glob": "^7.0.3",
+    "lodash": "^4.6.1"
   }
 }

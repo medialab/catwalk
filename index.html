@@ -2,12 +2,51 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
   </head>
+  <script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+
+
+</script>
   <body>
-    <h1>Hello World!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+
+
+    <div id="waitingList">
+        <ul>
+          <li v-for="tweet in state.tweets">
+            <tweet twid="{{tweet.id}}">{{ tweet.id }}</tweet>
+          </li>
+        </ul>
+    </div>
+
+    <div id="in" class="curated" ></div>
+    <div id="out" class="curated" ></div>
+
+    <div id="filepicker" >
+      <input type="file" @change="onFileChange">
+    </div>
+
+    <script type="x-template" id="tweet">
+      <div id="tw{{twid}}"></div>
+    </script>
+
+    <script type="text/javascript" src="./assets/js/catwalk.js"></script>
+
   </body>
 </html>
