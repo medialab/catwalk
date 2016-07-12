@@ -111,17 +111,21 @@ body, html {
   transition-timing-function:ease-out, ease-out;
   max-width: 500px;
 }
+
 .out {
   border-top: tomato 2vw solid;
   margin-left: 25vw;
 }
+
 .in  {
   border-top: springgreen 2vw solid;
   margin-left: 45vw;
 }
+
 .controls {
   margin:24px;
 }
+
 button {
     background-color: white; /* Green */
     font-family: 'Playfair Display', serif;
@@ -138,6 +142,7 @@ hr {
   width: 50%;
   margin-top:24px;
 }
+
 #filepicker {
   text-align: center;
   margin-top: 20vh;
