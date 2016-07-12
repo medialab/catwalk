@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+  </head>
+
+  <body>
+
+
+    <div id="waitingList">
+        <ul>
+          <li v-for="tweet in state.tweets">
+            <tweet twid="{{tweet.id}}">{{ tweet.id }}</tweet>
+          </li>
+        </ul>
+    </div>
+
+    <div id="in" class="curated" ></div>
+    <div id="out" class="curated" ></div>
+
+    <div id="filepicker" >
+      <input type="file" @change="onFileChange">
+    </div>
+
+    <script type="x-template" id="tweet">
+      <div id="tw{{twid}}"></div>
+    </script>
+
+    <script type="text/javascript" src="./assets/js/catwalk.js"></script>
+
+  </body>
+</html>
