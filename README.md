@@ -5,11 +5,11 @@
 
 ## Shortcuts
 
-`TOP arrow` for the **previous** tweet
-`BOTTOM arrow` for the previous **next** tweet
-`LEFT arrow` to consider tweet as **OUT**
-`RIGHT arrow` to consider tweet as **IN**
-`S` is for **DOWNLOAD** data in CSV 
+- `TOP arrow` for the **previous** tweet
+- `BOTTOM arrow` for the previous **next** tweet
+- `LEFT arrow` to consider tweet as **OUT**
+- `RIGHT arrow` to consider tweet as **IN**
+- `S` is for **DOWNLOAD** data in CSV 
 
 
 ## Build Setup
@@ -33,5 +33,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
