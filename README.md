@@ -1,6 +1,6 @@
-# cat
+# catwalk
 
-> A Vue.js project
+> A tweet curation tools for humanities 
 
 ## Build Setup
 
