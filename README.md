@@ -3,6 +3,13 @@
 > A tweet curation tools for humanities 
 
 
+## Shortcuts
+
+`TOP arrow` for the **previous** tweet
+`BOTTOM arrow` for the previous **next** tweet
+`LEFT arrow` to consider tweet as **OUT**
+`RIGHT arrow` to consider tweet as **IN**
+`S` is for **DOWNLOAD** data in CSV 
 
 
 ## Build Setup
