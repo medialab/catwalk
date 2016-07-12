@@ -16,7 +16,12 @@
       </div>
     </div>
 
-    <Twlist :tweets="tweets" :start="start" :end="end" ></Twlist>
+    <Twlist
+      :tweets="tweets"
+      :start="start"
+      :showout="showout"
+      :showin="showin"
+    ></Twlist>
     <!-- <Hints  v-if="tweets.length < 1" :tweets="tweets"></Hints> -->
   </div>
 </template>
@@ -35,18 +40,19 @@ export default {
       tweets:[],
       dataSetName:'none',
       start:0,
-      end:1,
+      showout:true,
+      showin:true,
     }
   },
   created: function () {
     window.addEventListener('keyup', this.keyHandler);
-    // window.addEventListener("beforeunload", function (e) {
-    //     var confirmationMessage = 'It looks like you have been editing something. '
-    //                             + 'If you leave before saving, your changes will be lost.';
+    window.addEventListener("beforeunload", function (e) {
+        var confirmationMessage = 'It looks like you have been editing something. '
+                                + 'If you leave before saving, your changes will be lost.';
 
-    //     (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-    //     return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-    // });
+        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+    });
   },
   components: { Hello,Loader,Twlist,Hints },
   methods: {
@@ -60,11 +66,9 @@ export default {
     },
     prev: function (){
       this.start = Math.abs(this.start-1);
-      this.end   = this.start+1;
     },
     next: function (){
       this.start = (this.start + 1) % this.tweets.length;
-      this.end   = this.start+1;
     },
     save: function(){
       var data = JSON.parse(JSON.stringify(this.$get('tweets')));
