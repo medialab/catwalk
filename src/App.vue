@@ -17,7 +17,7 @@
     </div>
 
     <Twlist :tweets="tweets" :start="start" :end="end" ></Twlist>
-    <Hints  v-if="tweets.length < 1" :tweets="tweets"></Hints>
+    <!-- <Hints  v-if="tweets.length < 1" :tweets="tweets"></Hints> -->
   </div>
 </template>
 
