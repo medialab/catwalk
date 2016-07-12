@@ -9,8 +9,8 @@
       {{tweet.id}} from <img src={{tweet.from_user_profile_image_url}}> @{{tweet.from_user_name}}
     </p>
 
-    <input v-model="tweet.in" type="checkbox">
-    <h3>{{inout}}</h3>
+    <!-- <input v-model="tweet.in" type="checkbox"> -->
+    <!-- <h3>{{inout}}</h3> -->
   </div>
 </template>
 

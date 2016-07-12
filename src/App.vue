@@ -8,15 +8,16 @@
         <button v-on:click="prev">prev</button>
         {{start}}/{{tweets.length}}
         <button v-on:click="next">next</button>
-        <button v-on:click="save">download data !</button>
-
+        —
         display in <input type="checkbox">
         out <input type="checkbox">
-
+        —
+        <button v-on:click="save">get my data back !</button>
       </div>
     </div>
 
     <Twlist :tweets="tweets" :start="start" :end="end" ></Twlist>
+    <Hints  v-if="tweets.length < 1" :tweets="tweets"></Hints>
   </div>
 </template>
 
@@ -24,6 +25,7 @@
 import Hello from './components/Hello'
 import Loader from './components/Loader'
 import Twlist from './components/Twlist'
+import Hints from './components/Hints'
 import _ from 'lodash'
 const Papa = require('papaparse');
 
@@ -46,7 +48,7 @@ export default {
     //     return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
     // });
   },
-  components: { Hello,Loader,Twlist },
+  components: { Hello,Loader,Twlist,Hints },
   methods: {
     keyHandler: function (e) {
       var key = e.which || e.keyCode;
@@ -134,6 +136,7 @@ hr {
   border: none;
   background-color: black;
   width: 50%;
+  margin-top:24px;
 }
 #filepicker {
   text-align: center;
