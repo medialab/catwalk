@@ -12,8 +12,7 @@ import state from './../state.js'
 export default {
   data: function(){ return {state} },
   ready: function(){
-    console.log(this.state.tweet)
-    // twttr.widgets.createTweet(this.tweet.id, document.getElementById('tw'+this.tweet.id));
+    twttr.widgets.createTweet(this.tweet.id, document.getElementById('tw'+this.tweet.id));
   },
   watch: {
     'tweet.id': function(){

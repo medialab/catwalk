@@ -36,7 +36,7 @@ export default {
       return this.state.tweets.length > 1
     },
     tweet: function(){
-      return Object.assign({},this.state.tweets[this.state.start]);
+      return this.state.tweets[this.state.start];
     },
   }
 }
