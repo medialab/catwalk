@@ -25,9 +25,9 @@
 
         <button class="btn btn-default" @click="save">
         Download
-        <span class="badge twin">{{twin.length}}</span>
-        <span class="badge twundecided">{{twundecided.length}}</span>
-        <span class="badge twout">{{twout.length}}</span></button>
+        <span class="badge in">{{twin.length}}</span>
+        <span class="badge undecided">{{twundecided.length}}</span>
+        <span class="badge out">{{twout.length}}</span></button>
       </div>
       </div>
     </div>
@@ -101,18 +101,6 @@ export default {
   }
   .start {
     text-align: center;
-  }
-  .badge {
-
-  }
-  .twin {
-    background-color: #4CD563;
-  }
-  .twout {
-    background-color: tomato;
-  }
-  .twundecided {
-    background-color: grey;
   }
 
   .logo {

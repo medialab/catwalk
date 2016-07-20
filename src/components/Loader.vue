@@ -1,8 +1,11 @@
 <template>
     <div id="filepicker" class="col-sm-6 col-sm-offset-2">
       <h1>CATWALK</h1>
-      <p>Add a CSV with tweets "id" in the "id" column.
-      <input type="file" @change="onFileChange"></p>
+      <div class="form-group">
+        <label for="exampleInputFile">Add a CSV …</label>
+        <input type="file" @change="onFileChange">
+        <p class="help-block">tweets should have "id" in the "id" column.</p>
+      </div>
     </div>
 </template>
 

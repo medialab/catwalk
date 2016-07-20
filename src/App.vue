@@ -44,25 +44,44 @@ export default {
 </script>
 
 <style>
-@import 'https://fonts.googleapis.com/css?family=Playfair+Display';
+  @import 'https://fonts.googleapis.com/css?family=Playfair+Display';
 
-body, html {
+  body, html {
 
   padding-bottom: 15vh;
-}
-h1 {
-  font-family: 'Playfair Display', serif;
-  color: black;
-}
-#app {
-  margin-top: 80px;
-}
-hr {
-  height: 1px;
-  border: none;
-  background-color: black;
-  width: 50%;
-  margin-top:24px;
-}
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    color: black;
+  }
+  #app {
+    margin-top: 80px;
+  }
+  hr {
+    height: 1px;
+    border: none;
+    background-color: black;
+    width: 50%;
+    margin-top:24px;
+  }
+
+  .badge {
+    transition-property: background-color;
+    transition-duration: 0.1s;
+    transition-timing-function:ease-out;
+      text-transform: uppercase;
+
+  }
+
+  .badge.in {
+    background-color: #4CD563 !important;
+  }
+  .badge.out {
+    background-color: tomato !important;
+  }
+  .badge.undecided {
+    background-color: grey !important;
+  }
+
 
 </style>

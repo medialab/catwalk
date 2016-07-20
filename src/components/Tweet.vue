@@ -1,9 +1,12 @@
 <template>
   <div class="tweet">
-    <div class="col-sm-4"
-      id={{'tw'+tweet.id}}
-      v-bind:class="['twbox', twstate, twposition]"
-      ></div>
+    <div>
+      <div class="col-sm-4" v-bind:class="['twbox', twstate, twposition]">
+        <span class="badge {{twstate}}">{{twstate}}</span>
+          <div id={{'tw'+tweet.id}}></div>
+        </div>
+    </div>
+
   </div>
 </template>
 
@@ -44,24 +47,13 @@ export default {
 
 .twbox {
   border-radius: 8px;
-  transition-property: margin-left, border-top;
+  transition-property: margin-left, background-color;
   transition-duration: 0.2s, 0.1s;
   transition-timing-function:ease-out, ease-out;
 }
-
-.out {
-  border-top: tomato 2vw solid;
-  /*margin-left: 25vw;*/
-}
-
-.in {
-  border-top: #4CD563 2vw solid;
-  /*margin-left: 45vw;*/
-}
-
-.undecided {
-  border-top: grey 2vw solid;
-  /*margin-left: 32vw;*/
+.badge {
+  width: 100%;
+  font-size: 24px;
 }
 
 </style>

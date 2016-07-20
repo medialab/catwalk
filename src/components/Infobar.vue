@@ -5,7 +5,6 @@
             <strong >@{{tweet.from_user_name}}</strong>
         </p>
         <p class="col-sm-5">{{tweet.text}}</p>
-        <p class="col-sm-1">{{twstate}}</p>
     </p>
     </div>
 </template>
