@@ -6,7 +6,6 @@
     <p><code>left</code> to label  <span class="badge in">in</span></p>
     <p><code>right</code> to label <span class="badge out">out</span></p>
   </div>
-
 </template>
 
 <style scoped>

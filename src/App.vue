@@ -15,7 +15,6 @@ import Controls from './components/Controls'
 import Infobar from './components/Infobar'
 import Hints from './components/Hints'
 import state from './state.js'
-
 import _ from 'lodash'
 const Papa = require('papaparse')
 
@@ -47,8 +46,7 @@ export default {
   @import 'https://fonts.googleapis.com/css?family=Playfair+Display';
 
   body, html {
-
-  padding-bottom: 15vh;
+   padding-bottom: 15vh;
   }
   h1 {
     font-family: 'Playfair Display', serif;

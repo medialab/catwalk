@@ -2,7 +2,7 @@
     <div class="navbar navbar-fixed-bottom">
         <p class="col-sm-offset-2 col-sm-2">
           <img v-bind:src="[tweet.from_user_profile_image_url]">
-            <strong >@{{tweet.from_user_name}}</strong>
+          <strong >@{{tweet.from_user_name}}</strong>
         </p>
         <p class="col-sm-5">{{tweet.text}}</p>
     </p>
@@ -25,9 +25,5 @@
   }
 </script>
 <style scoped>
-
-
-  .navbar {
-    min-height: 70px;
-  }
+  .navbar { min-height: 70px; }
 </style>

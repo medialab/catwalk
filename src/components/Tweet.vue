@@ -1,17 +1,12 @@
 <template>
   <div class="tweet">
-    <div>
-      <div class="col-sm-4" v-bind:class="['twbox', twstate, twposition]">
-        <span class="badge {{twstate}}">{{twstate}}</span>
-          <div id={{'tw'+tweet.id}}></div>
-        </div>
+    <div class="col-sm-4" v-bind:class="['twbox', twstate, twposition]">
+      <span class="badge {{twstate}}">{{twstate}}</span>
+      <div id={{'tw'+tweet.id}}></div>
     </div>
-
   </div>
 </template>
-
 <script>
-
 import state from './../state.js'
 
 export default {

@@ -12,7 +12,6 @@
             v-model="state.start"
             max="{{state.tweets.length}}"
             debounce="500">
-          <!-- <span class="input-group-addon" id="basic-addon2">on {{state.tweets.length}}</span> -->
           <div class="input-group-btn">
             <button class="btn btn-default" @click="next">next</button>
           </div>

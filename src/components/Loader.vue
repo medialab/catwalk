@@ -39,7 +39,7 @@ export default {
 }
 </script>
 <style scoped>
-#filepicker {
-  font-family: 'Playfair Display', serif;
-}
+  #filepicker {
+    font-family: 'Playfair Display', serif;
+  }
 </style>
