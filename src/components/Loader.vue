@@ -1,19 +1,21 @@
 <template>
-  <div>
-    <div id="filepicker">
-      <h2>First, a CSV …</h2>
-      <p>We will look for tweets "id" in the "id" column.</p>
-      <input type="file" @change="onFileChange">
+    <div id="filepicker" class="col-sm-6 col-sm-offset-2">
+      <h1>CATWALK</h1>
+      <p>Add a CSV with tweets "id" in the "id" column.
+      <input type="file" @change="onFileChange"></p>
     </div>
-  </div>
 </template>
 
 <script>
 const Papa = require('papaparse');
+import state from './../state.js'
 
 export default {
+  data: function(){ return {state} },
+  ready (){
+    console.log("state", this.state);
+  },
   methods:{
-
     onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
@@ -23,10 +25,10 @@ export default {
       reader.onload = () => {
         var results = Papa.parse(reader.result, {header: true})
         _.forEach(results.data, (t) => {
-            if(_.isUndefined(t.in)) t.in = false;
+          if(_.isUndefined(t.in)) t.in = undefined;
         })
-        this.$parent.tweets = results.data;
-        this.$parent.dataSetName = file.name;
+        this.state.tweets = results.data;
+        this.state.dataSetName = file.name;
       }
       reader.readAsBinaryString(file);
     }
@@ -34,5 +36,7 @@ export default {
 }
 </script>
 <style scoped>
-
+#filepicker {
+  font-family: 'Playfair Display', serif;
+}
 </style>

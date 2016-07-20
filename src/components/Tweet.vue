@@ -1,45 +1,67 @@
 <template>
   <div class="tweet">
-    <div
+    <div class="col-sm-4"
       id={{'tw'+tweet.id}}
-      v-bind:class="['twbox',tweet.in ? 'in' : 'out']"
+      v-bind:class="['twbox', twstate, twposition]"
       ></div>
-
-    <p>
-      {{tweet.id}} from <img v-bind:src="[tweet.from_user_profile_image_url]"> @{{tweet.from_user_name}}
-    </p>
-
-    <!-- <input v-model="tweet.in" type="checkbox"> -->
-    <!-- <h3>{{inout}}</h3> -->
   </div>
 </template>
 
 <script>
-export default {
-  props: ['tweet'],
-  created: function () {
-    window.addEventListener('keyup', this.keyHandler)
-  },
-  ready: function(){
-    twttr.widgets.createTweet(this.tweet.id, document.getElementById('tw'+this.tweet.id));
-  },
 
-  methods: {
-    keyHandler: function (e) {
-      var key = e.which || e.keyCode;
-      if(key === 39) this.tweet.in = true;
-      if(key === 37) this.tweet.in = false;
+import state from './../state.js'
+
+export default {
+  data: function(){ return {state} },
+  ready: function(){
+    console.log(this.state.tweet)
+    // twttr.widgets.createTweet(this.tweet.id, document.getElementById('tw'+this.tweet.id));
+  },
+  watch: {
+    'tweet.id': function(){
+      var elmt = document.getElementById('tw'+this.tweet.id);
+      elmt.innerHTML = "";
+      twttr.widgets.createTweet(this.tweet.id, elmt);
     }
   },
   computed:{
-    inout: function(){ return this.tweet.in ? 'in' : 'out' }
+    tweet: function(){
+      return this.state.tweets[this.state.start];
+    },
+    twposition: function(){
+      if(_.isUndefined(this.tweet.in)) return 'col-sm-offset-2'
+      return (this.tweet.in ? 'col-sm-offset-3' : 'col-sm-offset-1')
+    },
+    twstate: function(){
+      if(_.isUndefined(this.tweet.in)) return 'undecided'
+      return (this.tweet.in ? 'in' : 'out')
+    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1 {
-  color: #42b983;
+
+.twbox {
+  border-radius: 8px;
+  transition-property: margin-left, border-top;
+  transition-duration: 0.2s, 0.1s;
+  transition-timing-function:ease-out, ease-out;
 }
+
+.out {
+  border-top: tomato 2vw solid;
+  /*margin-left: 25vw;*/
+}
+
+.in {
+  border-top: #4CD563 2vw solid;
+  /*margin-left: 45vw;*/
+}
+
+.undecided {
+  border-top: grey 2vw solid;
+  /*margin-left: 32vw;*/
+}
+
 </style>

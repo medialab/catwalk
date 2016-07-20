@@ -1,17 +1,18 @@
 <template>
-  <hr>
-  <div class="hints">
-    <h2>Shortcuts</h2>
-    <p>TOP is for PREVIOUS & BOTTOM is for NEXT</p>
-    <p>LEFT is for OUT & RIGH is for IN</p>
-    <p>S is for SAVING</p>
-
+  <div class="hints col-sm-2 ">
+    <p><strong>press …</strong></p>
+    <p><code>bottom</code> for <strong>next</strong> tweet
+    <p><code>top</code> for <strong>previous</strong> tweet
+    <p><code>left</code> to label <strong>in</strong></p>
+    <p><code>right</code> to label <strong>out</strong></p>
   </div>
 
 </template>
 
 <style scoped>
   .hints {
-    margin-bottom: 48px;
+    margin-top: 25vh;
+
   }
+
 </style>

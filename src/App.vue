@@ -1,93 +1,44 @@
 <template>
-  <div id="app" >
-        <h1 class="logo">CATWALK</h1>
-
-    <Loader v-if="tweets.length < 1" :tweets="tweets"></Loader>
-    <div class="controls" v-if="tweets.length > 0" >
-      <div>
-        <button v-on:click="prev">prev</button>
-        {{start}}/{{tweets.length}}
-        <button v-on:click="next">next</button>
-        —
-        display in <input type="checkbox">
-        out <input type="checkbox">
-        —
-        <button v-on:click="save">get my data back !</button>
-      </div>
-    </div>
-
-    <Twlist
-      :tweets="tweets"
-      :start="start"
-      :showout="showout"
-      :showin="showin"
-    ></Twlist>
-    <!-- <Hints  v-if="tweets.length < 1" :tweets="tweets"></Hints> -->
+  <div id="app" class="container" >
+    <Loader v-if="!hasData"></Loader>
+    <Controls v-if="hasData"></Controls>
+    <Hints></Hints>
+    <Tweet v-if="hasData"></Tweet>
+    <Infobar v-if="hasData"></Infobar>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
 import Loader from './components/Loader'
-import Twlist from './components/Twlist'
+import Tweet from './components/Tweet'
+import Controls from './components/Controls'
+import Infobar from './components/Infobar'
 import Hints from './components/Hints'
+import state from './state.js'
+
 import _ from 'lodash'
-const Papa = require('papaparse');
+const Papa = require('papaparse')
 
 export default {
-  data () {
-    return {
-      tweets:[],
-      dataSetName:'none',
-      start:0,
-      showout:true,
-      showin:true,
-    }
-  },
+  data: function(){ return {state} },
   created: function () {
-    window.addEventListener('keyup', this.keyHandler);
-    window.addEventListener("beforeunload", function (e) {
-        var confirmationMessage = 'It looks like you have been editing something. '
-                                + 'If you leave before saving, your changes will be lost.';
+    // window.addEventListener('keyup', this.keyHandler);
+    // window.addEventListener("beforeunload", function (e) {
+    //     var confirmationMessage = 'It looks like you have been editing something. '
+    //                             + 'If you leave before saving, your changes will be lost.';
 
-        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-    });
+    //     (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+    //     return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+    // });
   },
-  components: { Hello,Loader,Twlist,Hints },
-  methods: {
-    keyHandler: function (e) {
-      var key = e.which || e.keyCode;
-      console.log(key);
-
-      if(key === 40) this.next();
-      if(key === 38) this.prev();
-      if(key === 83) this.save();
+  components: {Loader, Tweet, Controls, Infobar, Hints },
+  computed:{
+    hasData: function(){
+      return this.state.tweets.length > 1
     },
-    prev: function (){
-      this.start = Math.abs(this.start-1);
+    tweet: function(){
+      return Object.assign({},this.state.tweets[this.state.start]);
     },
-    next: function (){
-      this.start = (this.start + 1) % this.tweets.length;
-    },
-    save: function(){
-      var data = JSON.parse(JSON.stringify(this.$get('tweets')));
-      var csv = Papa.unparse(data);
-      var blob = new Blob([csv], {type: "octet/stream"});
-
-      var d = new Date();
-      var fileName = this.$get('dataSetName')+'_'+d.toString()+'.csv'
-
-      var a = document.createElement("a");
-      document.body.appendChild(a);
-      a.style = "display: none";
-
-      var url = window.URL.createObjectURL(blob);
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
-    }
   }
 }
 </script>
@@ -96,60 +47,22 @@ export default {
 @import 'https://fonts.googleapis.com/css?family=Playfair+Display';
 
 body, html {
-  padding: 0;
-  margin: 0;
+
+  padding-bottom: 15vh;
+}
+h1 {
   font-family: 'Playfair Display', serif;
-  text-align: center;
   color: black;
 }
-.logo {
-  text-align: center;
+#app {
+  margin-top: 80px;
 }
-
-.twbox {
-  width: 40vw;
-
-  border-radius: 8px;
-  transition-property: margin-left, border-left;
-  transition-duration: 0.2s, 0.1s;
-  transition-timing-function:ease-out, ease-out;
-  max-width: 500px;
-}
-
-.out {
-  border-top: tomato 2vw solid;
-  margin-left: 25vw;
-}
-
-.in  {
-  border-top: springgreen 2vw solid;
-  margin-left: 45vw;
-}
-
-.controls {
-  margin:24px;
-}
-
-button {
-    background-color: white; /* Green */
-    font-family: 'Playfair Display', serif;
-    color: black;
-    text-align: center;
-    display: inline-block;
-    font-size: 14px;
-}
-
 hr {
   height: 1px;
   border: none;
   background-color: black;
   width: 50%;
   margin-top:24px;
-}
-
-#filepicker {
-  text-align: center;
-  margin-top: 20vh;
 }
 
 </style>
