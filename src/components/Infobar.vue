@@ -1,10 +1,10 @@
 <template>
-    <div class="navbar navbar-fixed-bottom">
-        <p class="col-sm-offset-2 col-sm-2">
+    <div class="navbar navbar-fixed-bottom container">
+        <p class="col-sm-3">
           <img v-bind:src="[tweet.from_user_profile_image_url]">
           <strong >@{{tweet.from_user_name}}</strong>
         </p>
-        <p class="col-sm-5">{{tweet.text}}</p>
+        <p class="col-sm-7">{{tweet.text}}</p>
     </p>
     </div>
 </template>

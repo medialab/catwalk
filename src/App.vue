@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container" >
+  <div id="app" class="container">
     <Loader v-if="!hasData"></Loader>
     <Controls v-if="hasData"></Controls>
     <Hints></Hints>
@@ -51,9 +51,10 @@ export default {
   h1 {
     font-family: 'Playfair Display', serif;
     color: black;
+    font-size: 30px;
   }
   #app {
-    margin-top: 80px;
+    margin-top: 55px;
   }
   hr {
     height: 1px;

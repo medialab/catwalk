@@ -1,17 +1,17 @@
 <template>
-    <div class="controls navbar navbar-fixed-top" >
-      <h1 class="logo col-sm-5">CATWALK</h1>
-      <div class="col-sm-2">
+    <div class="controls navbar navbar-fixed-top container" >
+      <h1 class="logo col-sm-4">CATWALK</h1>
+      <div class="col-sm-4">
         <div class="input-group">
           <div class="input-group-btn">
             <button class="btn btn-default" @click="prev">prev</button>
           </div>
           <input
-            type="text"
+            type="number"
             class="start form-control"
             v-model="state.start"
             max="{{state.tweets.length}}"
-            debounce="500">
+            debounce="500" number>
           <div class="input-group-btn">
             <button class="btn btn-default" @click="next">next</button>
           </div>
@@ -45,15 +45,14 @@ export default {
     keyHandler: function (e){
       var key = e.which || e.keyCode;
 
-      console.log(key);
+      if(key === 85) this.tweetIsIn(undefined);   // u
+      if(key === 73) this.tweetIsIn(true);        // i
+      if(key === 79) this.tweetIsIn(false);       // o
 
-      if(key === 39) this.tweetIsIn(true);
-      if(key === 37) this.tweetIsIn(false);
-      if(key === 85) this.tweetIsIn(undefined);
+      if(key === 70) this.next();                 // right
+      if(key === 68) this.prev();                 // left
+      if(key === 83) this.save();                 // s
 
-      if(key === 39) this.next(); // right
-      if(key === 37) this.prev(); // left
-      if(key === 83) this.save(); // s
     },
     tweetIsIn: function (s){
       this.state.tweets[this.state.start].in = s;
@@ -98,15 +97,14 @@ export default {
 <style scoped>
 
   .controls {
-    padding-top:24px;
-    height: 80px;
+    padding-top:12px;
+    height: 60px;
   }
   .start {
     text-align: center;
   }
 
   .logo {
-    text-align: center;
     margin:0;
   }
 </style>
