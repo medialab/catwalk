@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import state from './../state.js'
+import state from './../state.js';
 const Papa = require('papaparse');
 
 export default {
@@ -64,13 +64,12 @@ export default {
       _(this.state.tweets)
         .filter({'retweeted_id':this.tweet.id})
         .forEach(function(tweet){ tweet.in = s })
-        .value();
 
       // tweets who is retweeted
       _(this.state.tweets)
         .filter({'id':this.tweet.retweeted_id})
         .forEach(function(tweet){ tweet.in = s })
-        .value();
+
     },
     prev: function (){
       this.state.start = Math.abs(this.state.start-1);
