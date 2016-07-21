@@ -42,6 +42,7 @@ export default {
       return (this.tweet.in ? 'in' : 'out')
     },
     twlinks: function(){
+      if(_.isUndefined(this.tweet.links)) return []; // exit if field doesn't exists
       var links = this.tweet.links.split("|");
       return _(links).map(function(link){
           var re1='.*?'; // Non-greedy match on filler
