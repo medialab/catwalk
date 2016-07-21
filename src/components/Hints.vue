@@ -1,6 +1,5 @@
 <template>
   <div class="hints col-sm-offset-10 col-sm-2 ">
-    <p><strong>shortcuts</strong></p>
     <p><code>↑</code> — <strong>previous</strong>
     <p><code>↓</code> — <strong>next</strong>
     <p><code>→</code> —  <span class="badge in">IN</span></p>
@@ -18,5 +17,6 @@
   code {
     color: black;
     background: #eee;
+    font-size: 1.1em;
   }
 </style>
