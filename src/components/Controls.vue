@@ -1,5 +1,5 @@
 <template>
-    <div class="controls navbar navbar-fixed-top container" >
+    <div class="controls navbar navbar-fixed-top container-fluid" >
       <h1 class="logo col-sm-4">CATWALK</h1>
       <div class="col-sm-4">
         <div class="input-group">
@@ -20,10 +20,11 @@
       <div class="col-sm-2"></div>
       <div class="col-sm-2">
         <button class="btn btn-default" @click="save">
-        Download —
-        <span class="badge in">{{twin.length}}</span>
-        <span class="badge undecided">{{twundecided.length}}</span>
-        <span class="badge out">{{twout.length}}</span></button>
+          Download —
+          <span class="badge out">{{twout.length}}</span>
+          <span class="badge undecided">{{twundecided.length}}</span>
+          <span class="badge in">{{twin.length}}</span>
+        </button>
       </div>
       </div>
     </div>
@@ -42,13 +43,16 @@ export default {
     keyHandler: function (e){
       var key = e.which || e.keyCode;
 
-      if(key === 85) this.setTwState(undefined);   // u
-      if(key === 73) this.setTwState(true);        // i
-      if(key === 79) this.setTwState(false);       // o
+      if([32, 37, 38, 39, 40].indexOf(key) > -1) e.preventDefault();
 
-      if(key === 70) this.next();                 // right
-      if(key === 68) this.prev();                 // left
+      if(key === 85) this.setTwState(undefined);   // u
       if(key === 83) _.debounce(this.save(), 1000) // s
+
+      if(key === 39) this.setTwState(true);        // right
+      if(key === 37) this.setTwState(false);       // left
+
+      if(key === 40) this.next();                 // bottom
+      if(key === 38) this.prev();                 // top
 
     },
     setTwState: function (s){

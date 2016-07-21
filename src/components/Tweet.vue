@@ -34,8 +34,8 @@ export default {
       return this.state.tweets[this.state.start];
     },
     twposition: function(){
-      if(_.isUndefined(this.tweet.in)) return 'col-sm-offset-2'
-      return (this.tweet.in ? 'col-sm-offset-1' : 'col-sm-offset-3')
+      if(_.isUndefined(this.tweet.in)) return 'col-sm-offset-4'
+      return (this.tweet.in ? 'col-sm-offset-5' : 'col-sm-offset-3')
     },
     twstate: function(){
       if(_.isUndefined(this.tweet.in)) return 'undecided'

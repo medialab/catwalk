@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar navbar-fixed-bottom container">
+    <div class="navbar navbar-fixed-bottom container-fluid">
         <p class="col-sm-3">
           <img v-bind:src="[tweet.from_user_profile_image_url]">
           <strong >@{{tweet.from_user_name}}</strong>

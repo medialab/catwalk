@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container">
+  <div id="app" class="container-fluid">
     <Loader v-if="!hasData"></Loader>
     <Controls v-if="hasData"></Controls>
     <Hints></Hints>
