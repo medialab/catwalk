@@ -1,5 +1,5 @@
 <template>
-    <div id="filepicker" class="col-sm-6 col-sm-offset-2">
+    <div id="filepicker" class="col-sm-4 col-sm-offset-1">
       <h1>CATWALK</h1>
       <div class="form-group">
         <label for="exampleInputFile">Add a CSV with at least a column with tweets id </label>

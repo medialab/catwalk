@@ -1,5 +1,5 @@
 <template>
-  <div class="hints col-sm-2 ">
+  <div class="hints col-sm-offset-10 col-sm-2 ">
     <p><strong>shortcuts</strong></p>
     <p><code>↑</code> — <strong>previous</strong>
     <p><code>↓</code> — <strong>next</strong>
