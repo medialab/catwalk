@@ -1,10 +1,11 @@
 <template>
   <div class="hints col-sm-2 ">
     <p><strong>press …</strong></p>
-    <p><code>bottom</code> for <strong>next</strong> tweet
-    <p><code>top</code> for <strong>previous</strong> tweet
-    <p><code>left</code> to label  <span class="badge in">in</span></p>
-    <p><code>right</code> to label <span class="badge out">out</span></p>
+    <p><code>right</code> for <strong>next</strong>
+    <p><code>left</code> for <strong>previous</strong>
+    <p><code>u</code> for <span class="badge undecided">UNDECIDED</span></p>
+    <p><code>i</code> for  <span class="badge in">IN</span></p>
+    <p><code>o</code> for <span class="badge out">OUT</span></p>
   </div>
 </template>
 

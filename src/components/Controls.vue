@@ -45,11 +45,14 @@ export default {
     keyHandler: function (e){
       var key = e.which || e.keyCode;
 
+      console.log(key);
+
       if(key === 39) this.tweetIsIn(true);
       if(key === 37) this.tweetIsIn(false);
+      if(key === 85) this.tweetIsIn(undefined);
 
-      if(key === 40) this.next(); // right
-      if(key === 38) this.prev(); // left
+      if(key === 39) this.next(); // right
+      if(key === 37) this.prev(); // left
       if(key === 83) this.save(); // s
     },
     tweetIsIn: function (s){

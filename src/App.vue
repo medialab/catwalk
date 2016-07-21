@@ -21,14 +21,14 @@ const Papa = require('papaparse')
 export default {
   data: function(){ return {state} },
   created: function () {
-    window.addEventListener('keyup', this.keyHandler);
-    window.addEventListener("beforeunload", function (e) {
-        var confirmationMessage = 'It looks like you have been editing something. '
-                                + 'If you leave before saving, your changes will be lost.';
+    // window.addEventListener('keyup', this.keyHandler);
+    // window.addEventListener("beforeunload", function (e) {
+    //     var confirmationMessage = 'It looks like you have been editing something. '
+    //                             + 'If you leave before saving, your changes will be lost.';
 
-        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-    });
+    //     (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+    //     return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+    // });
   },
   components: {Loader, Tweet, Controls, Infobar, Hints },
   computed:{
@@ -71,15 +71,8 @@ export default {
 
   }
 
-  .badge.in {
-    background-color: #4CD563 !important;
-  }
-  .badge.out {
-    background-color: tomato !important;
-  }
-  .badge.undecided {
-    background-color: grey !important;
-  }
-
+  .badge.in { background-color: #4CD563 !important }
+  .badge.out { background-color: tomato !important }
+  .badge.undecided { background-color: grey !important }
 
 </style>

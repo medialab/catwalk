@@ -25,6 +25,7 @@ export default {
 
       var file = files[0];
       var reader = new FileReader();
+
       reader.onload = () => {
         var results = Papa.parse(reader.result, {header: true})
         _.forEach(results.data, (t) => {
@@ -33,7 +34,7 @@ export default {
         this.state.tweets = results.data;
         this.state.dataSetName = file.name;
       }
-      reader.readAsBinaryString(file);
+      reader.readAsText(file, 'UTF-8');
     }
   }
 }

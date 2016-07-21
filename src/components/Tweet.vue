@@ -27,7 +27,7 @@ export default {
     },
     twposition: function(){
       if(_.isUndefined(this.tweet.in)) return 'col-sm-offset-2'
-      return (this.tweet.in ? 'col-sm-offset-3' : 'col-sm-offset-1')
+      return (this.tweet.in ? 'col-sm-offset-1' : 'col-sm-offset-3')
     },
     twstate: function(){
       if(_.isUndefined(this.tweet.in)) return 'undecided'
