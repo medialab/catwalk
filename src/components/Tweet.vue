@@ -18,6 +18,7 @@ export default {
   },
   watch: {
     'tweet.id': function(){
+
       var twBox = document.getElementById('twBox');
       twBox.innerHTML = "";
       twttr.widgets.createTweet(this.tweet.id, twBox);

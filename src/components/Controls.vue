@@ -17,13 +17,10 @@
           </div>
         </div>
       </div>
+      <div class="col-sm-2"></div>
       <div class="col-sm-2">
-
-      </div>
-      <div class="col-sm-2">
-
         <button class="btn btn-default" @click="save">
-        Download
+        Download —
         <span class="badge in">{{twin.length}}</span>
         <span class="badge undecided">{{twundecided.length}}</span>
         <span class="badge out">{{twout.length}}</span></button>
@@ -45,17 +42,31 @@ export default {
     keyHandler: function (e){
       var key = e.which || e.keyCode;
 
-      if(key === 85) this.tweetIsIn(undefined);   // u
-      if(key === 73) this.tweetIsIn(true);        // i
-      if(key === 79) this.tweetIsIn(false);       // o
+      if(key === 85) this.setTwState(undefined);   // u
+      if(key === 73) this.setTwState(true);        // i
+      if(key === 79) this.setTwState(false);       // o
 
       if(key === 70) this.next();                 // right
       if(key === 68) this.prev();                 // left
-      if(key === 83) this.save();                 // s
+      if(key === 83) _.debounce(this.save(), 1000) // s
 
     },
-    tweetIsIn: function (s){
+    setTwState: function (s){
+
+      // the actual tweet
       this.state.tweets[this.state.start].in = s;
+
+      // tweets who retweets this
+      _(this.state.tweets)
+        .filter({'retweeted_id':this.tweet.id})
+        .forEach(function(tweet){ tweet.in = s })
+        .value();
+
+      // tweets who is retweeted
+      _(this.state.tweets)
+        .filter({'id':this.tweet.retweeted_id})
+        .forEach(function(tweet){ tweet.in = s })
+        .value();
     },
     prev: function (){
       this.state.start = Math.abs(this.state.start-1);
