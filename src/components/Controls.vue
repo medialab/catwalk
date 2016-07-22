@@ -82,7 +82,7 @@ export default {
       var csv = Papa.unparse(data);
       var blob = new Blob([csv], {type: "octet/stream"});
       var d = new Date();
-      var fileName = this.state.dataSetName+'_'+d.toString()+'.csv'
+      var fileName = this.state.dataSetName+'_'+d.toISOString()+'.csv'
 
       var a = document.createElement("a");
       document.body.appendChild(a);
