@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export LC_CTYPE=C
+export LANG=C
 
 TWEETSFILE=$1
 if [ -z "$TWEETSFILE" ]; then
@@ -15,7 +17,7 @@ if [ -z "$ROOT_MEDIA_URL" ]; then
   echo "ERROR: plase first setup ROOT_MEDIA_URL in config.sh"
 fi
 
-DIRNAME=output/$(echo "$TWEETSFILE" | sed 's|^.*/\([^/]\+\)$|\1|' | sed 's/.csv//g')
+DIRNAME=output/$(basename "$TWEETSFILE" | tail -n 1 | sed 's/.\csv//')
 
 mkdir -p "$DIRNAME/media"
 
@@ -28,14 +30,14 @@ grep ",true$" "$DIRNAME/filtered_tweets.csv" |
   grep .                                     |
   tr '|' '\n'                                |
   sort | uniq -c | sort -rn                  |
-  sed 's/^ *\([0-9]\+\) \+\(.*\)$/\2,\1/' >> "$DIRNAME/media_count.csv"
+  awk -F " " '{ print $2","$1 }' >> "$DIRNAME/media_count.csv"
 
 cat "$DIRNAME/media_count.csv"  |
   grep -v '^filename'           |
   sed 's/,.*$//'                |
   while read IMGFILE; do
     IMGDIR=$(echo "$IMGFILE" | sed 's/_.*$//' | sed 's/.\{15\}$//')
-    wget -q "$ROOT_MEDIA_URL/$IMGDIR/$IMGFILE" -O "$DIRNAME/media/$IMGFILE"
+    curl -sL "$ROOT_MEDIA_URL/$IMGDIR/$IMGFILE" > "$DIRNAME/media/$IMGFILE"
   done
 
 TOTALIMGS=$(ls "$DIRNAME"/media/ | wc -l)
