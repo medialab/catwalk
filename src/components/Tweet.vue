@@ -45,20 +45,8 @@ export default {
       if(_.isUndefined(this.tweet.links)) return []; // exit if field doesn't exists
       var links = this.tweet.links.split("|");
       return _(links).map(function(link){
-
-          var re1='.*?';  // Non-greedy match on filler
-          var re2='(twitter\\.com)';  // Fully Qualified Domain Name 1
-          var re3='(\\/)';  // Any Single Character 1
-          var re4='((?:[a-z][a-z0-9_]*))';  // Variable Name 1
-          var re5='(\\/)';  // Any Single Character 2
-          var re6='(status)'; // Word 1
-          var re7='(\\/)';  // Any Single Character 3
-          var re8='(\\d+)'; // Integer Number 1
-
-          var p = new RegExp(re1+re2+re3+re4+re5+re6+re7+re8,["i"]);
-          var m = p.exec(link);
-
-          if (m != null) return m[7];
+          var match = link.match(/twitter.com\/[^/]+\/statuse?s?\/(\d+)/i);
+          if (match != null) return match[1];
         })
         .toArray()
         .value()
