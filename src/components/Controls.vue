@@ -20,7 +20,7 @@
       <div class="col-sm-2"></div>
       <div class="col-sm-2">
         <button class="btn btn-default" @click="save">
-          Download —
+          Download |
           <span class="badge out">{{twout.length}}</span>
           <span class="badge undecided">{{twundecided.length}}</span>
           <span class="badge in">{{twin.length}}</span>
@@ -33,6 +33,7 @@
 <script>
 import state from './../state.js';
 const Papa = require('papaparse');
+const filesaver = require('file-saver');
 
 export default {
   data: function(){ return {state:state} },
@@ -80,19 +81,12 @@ export default {
     save: function(){
       var data = JSON.parse(JSON.stringify(this.state.tweets));
       var csv = Papa.unparse(data);
-      var blob = new Blob([csv], {type: "octet/stream"});
+
       var d = new Date();
       var fileName = this.state.dataSetName+'_'+d.toISOString()+'.csv'
 
-      var a = document.createElement("a");
-      document.body.appendChild(a);
-      a.style = "display: none";
-
-      var url = window.URL.createObjectURL(blob);
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
+      var blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
+      filesaver.saveAs(blob, fileName, true);
     }
   },
   computed:{
