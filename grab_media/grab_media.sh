@@ -17,7 +17,7 @@ if [ -z "$ROOT_MEDIA_URL" ]; then
   echo "ERROR: plase first setup ROOT_MEDIA_URL in config.sh"
 fi
 
-DIRNAME=output/$(basename "$TWEETSFILE" | tail -n 1 | sed 's/.\csv//')
+DIRNAME=output/$(basename "$TWEETSFILE" | tail -n 1 | sed 's/\.csv//g')
 
 mkdir -p "$DIRNAME/media"
 
