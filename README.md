@@ -4,12 +4,12 @@
 
 ## Shortcuts
 
-`↑` — previous
-`↓` — next
-`→` — IN
-`←` — OUT
-`u` — UNDECIDED
-`s` — save
+- `↑` — previous
+- `↓` — next
+- `→` — IN
+- `←` — OUT
+- `u` — UNDECIDED
+- `s` — save
 
 ## Build Setup
 
