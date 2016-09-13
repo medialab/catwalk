@@ -60,7 +60,6 @@ export default {
     height: 1px;
     border: none;
     background-color: black;
-    width: 50%;
     margin-top:24px;
   }
 

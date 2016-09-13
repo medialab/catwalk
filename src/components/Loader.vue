@@ -1,10 +1,20 @@
 <template>
-    <div id="filepicker" class="col-sm-4 col-sm-offset-1">
+    <div id="filepicker" class="col-sm-8 col-sm-offset-1">
       <h1>CATWALK</h1>
       <div class="form-group">
-        <label for="exampleInputFile">Add a CSV with at least a column with tweets id </label>
+        <label for="exampleInputFile">Add a CSV with at least a column with tweets id (<a target="_blank" href="https://raw.githubusercontent.com/medialab/catwalk/master/sample.csv">CSV sample</a>)</label>
         <input type="file" @change="onFileChange">
       </div>
+
+      <p class="col-xs-2 logo"><a href="http://www.medialab.sciences-po.fr/fr/" target="_blank" ><img class="img-responsive" src="/static/images/logo.png"></a></p>
+      <p class="col-xs-9 comment">
+        Discover other médialab's tools on: <a  target="_blank" href="http://tools.medialab.sciences-po.fr">tools.medialab.sciences-po.fr</a>
+        <br>CATWALK is a free software under LGPL V3 licence. Source code and documentation available on <a  target="_blank" href="https://github.com/medialab/catwalk">GitHub</a>.
+
+      </p>
+
+
+
     </div>
 </template>
 
@@ -42,7 +52,18 @@ export default {
 }
 </script>
 <style scoped>
+  .logo {
+    padding-left: 0;
+    margin-top: 4px;
+  }
+  .comment {
+    color: grey;
+  }
   #filepicker {
     font-family: 'Playfair Display', serif;
+  }
+  input {
+    margin-top: 20px;
+    height: 30vh;
   }
 </style>
