@@ -2,6 +2,8 @@
 
 > A tweet curation tools for humanities 
 
+🌀[live demo](https://medialab.github.io/catwalk)
+
 ## Shortcuts
 
 - `↑` — previous
