@@ -6,11 +6,11 @@
         <input type="file" @change="onFileChange">
       </div>
 
-      <p class="col-xs-2 logo"><a href="http://www.medialab.sciences-po.fr/fr/" target="_blank" ><img class="img-responsive" src="http://www.medialab.sciences-po.fr/wp-content/uploads/2016/04/logo.png"></a></p>
+      <p class="col-xs-2 logo"><a href="https://medialab.sciencespo.fr/" target="_blank" ><img class="img-responsive" src="../../static/medialab.png"></a></p>
       <p class="col-xs-9 comment">
-        Discover other médialab's tools on: <a  target="_blank" href="http://tools.medialab.sciences-po.fr">tools.medialab.sciences-po.fr</a>
-        <br>CATWALK is a free software under LGPL V3 licence. Source code and documentation available on <a  target="_blank" href="https://github.com/medialab/catwalk">GitHub</a>.
-
+        Discover more médialab tools: <a target="_blank" href="https://medialab.sciencespo.fr/tools/">medialab.sciencespo.fr/tools</a>
+        <br/>CATWALK is a free software under GPL V3 licence.
+        <br/>Source code and documentation available on <a  target="_blank" href="https://github.com/medialab/catwalk">GitHub</a>.
       </p>
 
 
