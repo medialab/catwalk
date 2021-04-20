@@ -33,7 +33,7 @@ export default {
       var reader = new FileReader();
 
       reader.onload = () => {
-        var results = Papa.parse(reader.result, {header: true})
+        var results = Papa.parse(reader.result, {header: true, error: function(err, file, inputElem, reason) {console.log(err)}})
         _.forEach(results.data, (t) => {
           if(t.in === "true") t.in = true;
           else if(t.in === "false") t.in = false;
