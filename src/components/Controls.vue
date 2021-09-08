@@ -80,7 +80,7 @@ export default {
     },
     save: function(){
       var data = JSON.parse(JSON.stringify(this.state.tweets));
-      var csv = Papa.unparse(data);
+      var csv = Papa.unparse(data, {columns: Object.keys(this.state.tweets[0])});
 
       var d = new Date();
       var fileName = this.state.dataSetName+'_'+d.toISOString()+'.csv'
