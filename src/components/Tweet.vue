@@ -14,6 +14,12 @@ import state from './../state.js'
 export default {
   data: function(){ return {state} },
   ready: function(){
+    try {
+      twttr;
+    } catch(e) {
+      if (e == "ReferenceError: twttr is not defined")
+        return window.alert('WARNING: it seems like your browser uses "Strict protection" which is incompatible with displaying embedded tweets by Catwalk. Please disable it or add an exception first, then reload the page.');
+    }
     twttr.widgets.createTweet(this.tweet.id, document.getElementById('twBox'));
   },
   watch: {
