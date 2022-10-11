@@ -1,0 +1,51 @@
+{
+  "name": "catwalk",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Nano curation tools for the humanities.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "kotatsu serve ./src/main.tsx --open",
+    "prettier": "prettier src --write"
+  },
+  "kotatsu": {
+    "config": "./webpack.config.js",
+    "progress": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/medialab/catwalk.git"
+  },
+  "contributors": [
+    {
+      "name": "Robin de Mourat",
+      "url": "http://github.com/robindemourat"
+    },
+    {
+      "name": "Guillaume Plique",
+      "url": "http://github.com/Yomguithereal"
+    },
+    {
+      "name": "Béatrice Mazoyer",
+      "url": "http://github.com/bmaz"
+    }
+  ],
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/medialab/catwalk/issues"
+  },
+  "homepage": "https://github.com/medialab/catwalk#readme",
+  "devDependencies": {
+    "@types/webpack-env": "^1.18.0",
+    "@yomguithereal/prettier-config": "^1.2.0",
+    "gh-pages": "^4.0.0",
+    "kotatsu": "^0.23.1",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "prettier": "@yomguithereal/prettier-config"
+}
