@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "kotatsu serve ./src/main.tsx --open",
-    "prettier": "prettier src --write"
+    "prettier": "prettier src --write",
+    "storybook": "start-storybook -p 6006"
   },
   "kotatsu": {
     "config": "./webpack.config.js",
@@ -36,8 +37,18 @@
   },
   "homepage": "https://github.com/medialab/catwalk#readme",
   "devDependencies": {
+    "@babel/core": "^7.19.3",
+    "@storybook/addon-actions": "^6.5.12",
+    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-interactions": "^6.5.12",
+    "@storybook/addon-links": "^6.5.12",
+    "@storybook/builder-webpack5": "^6.5.12",
+    "@storybook/manager-webpack5": "^6.5.12",
+    "@storybook/react": "^6.5.12",
+    "@storybook/testing-library": "^0.0.13",
     "@types/webpack-env": "^1.18.0",
     "@yomguithereal/prettier-config": "^1.2.0",
+    "babel-loader": "^8.2.5",
     "gh-pages": "^4.0.0",
     "kotatsu": "^0.23.1",
     "prettier": "^2.7.1",
