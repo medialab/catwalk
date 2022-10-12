@@ -8,10 +8,12 @@
     "node": ">=16"
   },
   "pre-commit": [
-    "lint"
+    "lint",
+    "prettier"
   ],
   "scripts": {
     "dev": "kotatsu serve ./src/main.tsx --open",
+    "dts-gen": "node ./scripts/yaml-dts.js > ./i18n/types.d.ts && prettier i18n/*.d.ts --write",
     "lint": "eslint './src/**/*{.ts,.tsx,.js,.jsx}'",
     "prettier": "prettier src --write",
     "storybook": "start-storybook -p 6006"
