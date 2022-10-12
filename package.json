@@ -4,6 +4,9 @@
   "private": true,
   "description": "Nano curation tools for the humanities.",
   "main": "index.js",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "dev": "kotatsu serve ./src/main.tsx --open",
     "lint": "eslint './src/**/*{.ts,.tsx,.js,.jsx}'",
