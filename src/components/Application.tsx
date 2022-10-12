@@ -1,4 +1,5 @@
 import en from '../../i18n/en.yml';
+import './Application.scss';
 
 console.log(en.tagline);
 

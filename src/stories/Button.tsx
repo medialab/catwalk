@@ -1,4 +1,4 @@
-import './button.css';
+import './button.scss';
 
 interface ButtonProps {
   /**
