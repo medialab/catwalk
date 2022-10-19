@@ -86,7 +86,8 @@
       "node": true
     },
     "globals": {
-      "React": true
+      "React": true,
+      "JSX": true
     },
     "extends": [
       "eslint:recommended",
