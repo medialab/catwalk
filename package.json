@@ -15,7 +15,7 @@
     "dev": "kotatsu serve ./src/main.tsx --open",
     "dts-gen": "node ./scripts/yaml-dts.js > ./i18n/types.d.ts && prettier i18n/*.d.ts --write",
     "lint": "eslint './src/**/*{.ts,.tsx,.js,.jsx}' './.storybook/*.js'",
-    "prettier": "prettier src .storybook --write",
+    "prettier": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --write",
     "storybook": "start-storybook -p 6006"
   },
   "kotatsu": {

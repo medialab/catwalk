@@ -16,7 +16,6 @@
 .TagsColumn {
 }
 
-
 .Dropzone {
   border: 1px dashed black;
   padding: $margin_medium;
@@ -28,7 +27,7 @@
   flex-flow: row nowrap;
   align-items: center;
   margin: $margin_medium 0;
-  > div:first-of-type{
+  > div:first-of-type {
     padding-right: $margin_small;
   }
   > div:last-of-type {

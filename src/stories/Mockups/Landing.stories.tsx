@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import {ComponentStory, ComponentMeta} from '@storybook/react';
 
 import Dropzone from '../../components/Dropzone';
 import Footer from '../../components/Footer';
@@ -9,9 +9,9 @@ import Notification from '../../components/Notification';
 import SamplePicker from '../../components/SamplePicker/SamplePicker';
 
 const mockSamplesOptions = [
-  { value: 'tweets', label: 'tweets' },
-  { value: 'youtubeVideos', label: 'youtube videos' },
-  { value: 'websites', label: 'websites' },
+  {value: 'tweets', label: 'tweets'},
+  {value: 'youtubeVideos', label: 'youtube videos'},
+  {value: 'websites', label: 'websites'}
 ];
 
 const mockIntroText = `
@@ -24,14 +24,12 @@ export default {
   component: Layout,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    backgroundColor: { control: 'color' }
+    backgroundColor: {control: 'color'}
   }
 } as ComponentMeta<typeof Layout>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Layout> = args => (
-  <Layout {...args} />
-);
+const Template: ComponentStory<typeof Layout> = args => <Layout {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -39,9 +37,7 @@ Default.args = {
   children: (
     <MainColumn>
       <Header />
-      <p>
-        {mockIntroText}
-      </p>
+      <p>{mockIntroText}</p>
       <Dropzone onFilesDrop={console.log} />
       <SamplePicker onChange={console.log} options={mockSamplesOptions} />
       <Footer />
@@ -55,13 +51,9 @@ InvalidFile.args = {
   children: (
     <MainColumn>
       <Header />
-      <p>
-        {mockIntroText}
-      </p>
+      <p>{mockIntroText}</p>
       <Dropzone onFilesDrop={console.log} />
-      <Notification>
-        Invalid file ! try again !
-      </Notification>
+      <Notification>Invalid file ! try again !</Notification>
       <SamplePicker onChange={console.log} options={mockSamplesOptions} />
       <Footer />
     </MainColumn>
@@ -74,9 +66,7 @@ LoadingFile.args = {
   children: (
     <MainColumn>
       <Header />
-      <p>
-        {mockIntroText}
-      </p>
+      <p>{mockIntroText}</p>
       <Dropzone onFilesDrop={console.log} />
       <SamplePicker onChange={console.log} options={mockSamplesOptions} />
       <Footer />
