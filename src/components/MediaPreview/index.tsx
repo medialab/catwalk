@@ -1,3 +1,3 @@
-import MediaPreview from "./MediaPreview";
+import MediaPreview from './MediaPreview';
 
 export default MediaPreview;

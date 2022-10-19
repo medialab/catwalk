@@ -1,5 +1,3 @@
-
-
 .Railway {
 }
 
@@ -16,4 +14,31 @@
 }
 
 .TagsColumn {
+}
+
+
+.Dropzone {
+  border: 1px dashed black;
+  padding: $margin_medium;
+  margin: $margin_medium 0;
+}
+
+.SamplePicker {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin: $margin_medium 0;
+  > div:first-of-type{
+    padding-right: $margin_small;
+  }
+  > div:last-of-type {
+    flex: 1;
+  }
+}
+
+.Notification {
+  padding: $margin_medium;
+  &.is-type-error {
+    background: red;
+  }
 }

@@ -1,6 +1,4 @@
-
-
-type LayoutModes = 'landing'|'annotation';
+type LayoutModes = 'landing' | 'annotation';
 
 interface ContainerProps {
   children: JSX.Element[] | JSX.Element;

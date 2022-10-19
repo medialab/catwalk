@@ -1,3 +1,3 @@
-import DownloadFooter from "./DownloadFooter";
+import DownloadFooter from './DownloadFooter';
 
 export default DownloadFooter;

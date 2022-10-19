@@ -3,11 +3,11 @@
  *
  */
 
- #root {
+#root {
   position: fixed;
   left: 0;
   top: 0;
- }
+}
 .Container {
   position: fixed;
   top: 0;
@@ -30,6 +30,15 @@
       width: $layout_one_column_width;
       max-width: calc(100vw - $margin_medium * 2);
     }
+
+    .Footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: $margin_medium calc((100vw - $layout_one_column_width) / 2);
+      box-sizing: border-box;
+    }
   }
 
   &.is-mode-annotation {
@@ -41,7 +50,7 @@
       top: $margin_medium;
       box-sizing: border-box;
     }
-    .Railway{
+    .Railway {
       left: $margin_medium;
     }
     .TagsColumn {
