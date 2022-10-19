@@ -1,0 +1,13 @@
+/**
+ * Layouts
+ *
+ */
+ .LayoutOneColumnContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  .LayoutOneColumnElement {
+    width: $layout_one_column_width;
+    max-width: calc(100vw - $margin_medium * 2);
+  }
+}

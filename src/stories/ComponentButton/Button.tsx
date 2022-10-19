@@ -1,5 +1,5 @@
 import './button.scss';
-import {useI18nMessages} from '../hooks';
+import {useI18nMessages} from '../../hooks';
 
 interface ButtonProps {
   /**
@@ -34,7 +34,6 @@ export const Button = ({
   // label,
   ...props
 }: ButtonProps) => {
-
   const {test} = useI18nMessages();
   const mode = primary
     ? 'storybook-button--primary'

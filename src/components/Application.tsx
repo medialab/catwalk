@@ -1,7 +1,7 @@
 import {LangContext} from '../contexts';
 import {useI18nMessages} from '../hooks';
 
-import './Application.scss';
+import '../styles/entrypoint.scss';
 
 function TagLine() {
   const messages = useI18nMessages();
