@@ -8,7 +8,11 @@ const englishMessages = YAML.parse(
 );
 
 function templateTypescriptDeclaration(messages) {
-  const declaration = ['interface InternationalizedStrings {'];
+  const declaration = [
+    '// !!! DO NOT EDIT: This file has been automatically generated',
+    '// !!! To update it, use `npm run dts-gen`',
+    'interface InternationalizedStrings {'
+  ];
 
   for (const name in messages) {
     declaration.push(`  ${name}: string`);
