@@ -1,8 +1,19 @@
-import en from '../../i18n/en.yml';
+import {LangContext} from '../contexts';
+import {useI18nMessages} from '../hooks';
+
 import './Application.scss';
 
-console.log(en.tagline);
+function TagLine() {
+  const messages = useI18nMessages();
+
+  return <div>{messages.tagline}</div>;
+}
 
 export default function Application() {
-  return <div>Catwalk version 2</div>;
+  return (
+    <LangContext.Provider value="en">
+      <div>Catwalk version 2</div>
+      <TagLine />
+    </LangContext.Provider>
+  );
 }

@@ -1,5 +1,6 @@
 interface InternationalizedStrings {
   tagline: string;
+  [name: string]: string;
 }
 
 declare module '*.yml' {
