@@ -15,6 +15,10 @@ module.exports = {
       test: /\.scss$/,
       use: ['style-loader', 'css-loader', 'sass-loader']
     });
+    config.module.rules.push({
+      test: /\.ya?ml$/,
+      use: 'yaml-loader'
+    });
 
     return config;
   }
