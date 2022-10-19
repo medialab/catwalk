@@ -1,10 +1,12 @@
-type LayoutModes = 'landing' | 'annotation';
+import classNames from 'classnames';
+
+type LayoutMode = 'landing' | 'annotation';
 
 interface ContainerProps {
-  children: JSX.Element[] | JSX.Element;
-  style: object;
+  children: React.ReactNode;
+  style: React.CSSProperties;
   className: string;
-  mode: LayoutModes;
+  mode: LayoutMode;
 }
 
 export default function Container({
@@ -14,7 +16,9 @@ export default function Container({
   mode = 'landing'
 }: ContainerProps) {
   return (
-    <div className={`Container is-mode-${mode} ${className}`} style={style}>
+    <div
+      className={classNames('Container', `is-mode-${mode}`, className)}
+      style={style}>
       {children}
     </div>
   );
