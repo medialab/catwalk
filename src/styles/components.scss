@@ -20,6 +20,11 @@
   border: 1px dashed black;
   padding: $margin_medium;
   margin: $margin_medium 0;
+
+  &.is-drag-active {
+    // @todo refine color
+    background: green;
+  }
 }
 
 .SamplePicker {
@@ -38,6 +43,46 @@
 .Notification {
   padding: $margin_medium;
   &.is-type-error {
+    // @todo refine color
     background: red;
+  }
+}
+
+.LoadingCartel {
+  border: 1px solid black;
+  padding: $margin_medium;
+  text-align: center;
+  .animation-container {
+    font-size: 2rem;
+    animation: rotation 2s infinite linear;
+    display: flex;
+    flex-flow: column nowrap;
+    > span {
+      position: relative;
+    }
+    > span:first-of-type {
+      top: .5em;
+      left: .1em;
+    }
+    > span:last-of-type {
+      top: -.5em;
+      transform: rotate(180deg);
+    }
+  }
+  .bar-container {
+    height: 1rem;
+    border: 1px solid black;
+    position: relative;
+    .bar-bar {
+      background: black;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition : .2s ease width;
+    }
+  }
+  .loading-message {
+    
   }
 }

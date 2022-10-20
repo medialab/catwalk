@@ -1,3 +1,11 @@
 ---
-tagline: Nano curation tools for the humanities.
 test: Coucou michel
+tagline: Nano curation tools for the humanities.
+notif_invalid_file: Invalid file ! try again !
+introduction_text: Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam amet voluptatem eius dolorum reprehenderit earum. Quis, dolorum cum in vel laudantium adipisci, beatae accusamus voluptatibus quos tenetur explicabo expedita.
+loading_message: loading
+choose_a_data_sample: Choose a data sample
+choose_a_data_sample_placeholder: Select an example dataset
+dnd_prompt_inactive: Drag and drop some files here, or click to select files
+dnd_prompt_active: Drop the files here !
+footer_html: Catwalk was created and is maintained by the <a href="https://medialab.sciencespo.fr/" target="blank" rel="noopener">médialab of Sciences Po</a>. Its code is <a href="https://github.com/medialab/catwalk/" target="blank" rel="noopener"> free and open source</a>.

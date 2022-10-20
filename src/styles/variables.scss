@@ -3,3 +3,12 @@ $margin_medium: 1rem;
 
 $layout_one_column_width: 500px;
 $layout_annotation_width: 600px;
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
