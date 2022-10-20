@@ -1,13 +1,252 @@
 .Button {
   cursor: pointer;
   padding: $margin_small;
+
+  border: none;
+  background: lightgrey;
+  box-shadow: none;
+  box-sizing: border-box;
+  border: 1px solid white;
   &.is-full-width {
     width: 100%;
+  }
+  &.is-active {
+    background: black;
+    color: white;
   }
 }
 
 .Railway {
+  .main-column {
+    height: 100%;
+    width: $railway_width;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: stretch;
+    box-sizing: border-box;
+    .items-container {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: stretch;
+      box-sizing: border-box;
+      .RailwayItem {
+        flex: 1;
+        position: relative;
+        transition: 0.5s ease all;
+        .main-item-content {
+          border: 1px solid white;
+          background: lightgrey;
+          width: 100%;
+          box-sizing: border-box;
+          position: relative;
+          height: 100%;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: stretch;
+          cursor: pointer;
+          .category-object {
+            flex: 1;
+          }
+        }
+        .preview-content-container {
+          position: absolute;
+          left: calc(100% + $margin_small);
+          top: 0;
+          width: 100vw;
+          transition: 0.5s ease all;
+          pointer-events: none;
+          z-index: 1000;
+          opacity: 0;
+
+          .preview-content {
+            color: white;
+            background: black;
+            display: inline-block;
+            padding: $margin_small;
+
+            .tags-summary {
+              padding: 0;
+              .tag-summary-item {
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: center;
+                margin-bottom: $margin_small / 2;
+                .color-marker {
+                  min-width: 1em;
+                  max-width: 1em;
+                  min-height: 1em;
+                  max-height: 1em;
+                  margin-right: $margin_small;
+                }
+                .datum-value-for-category {
+                  margin-left: $margin_small;
+                  flex: 1;
+                }
+              }
+            }
+          }
+        }
+      }
+      // when items container is hover ...
+      &:hover {
+        // lighten all items ...
+        .RailwayItem {
+          opacity: 0.5;
+          .preview-content-container {
+            opacity: 0;
+          }
+          // ... except the one which is hovered
+          &:hover {
+            opacity: 1;
+            .preview-content-container {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+    .edit-toggle-container {
+      padding-top: $margin_medium;
+      .Button {
+        height: $railway_width;
+      }
+    }
+    .refresh-container {
+      max-height: 0;
+      transition: 0.5s ease all;
+      overflow: hidden;
+      .Button {
+        height: $railway_width;
+
+        span {
+          position: relative;
+          top: -0.2em;
+        }
+      }
+    }
+  }
+
+  .secondary-column {
+    position: absolute;
+    bottom: 0;
+    left: $railway_width + $margin_small;
+    width: 10vw;
+    max-width: 20rem;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: stretch;
+  }
+
+  .sort-options-container {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: 0.5s ease all;
+
+    .sort-options-title {
+      color: white;
+      margin-bottom: $margin_small;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      position: relative;
+    }
+  }
+
+  .arrows-wrapper {
+    flex: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    width: 100vw;
+    pointer-events: none;
+    .arrow-item-container {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      pointer-events: all;
+      .key-binding-info {
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.5s ease all;
+        padding-left: $margin_small;
+        min-width: 12rem;
+      }
+
+      &:hover {
+        .key-binding-info {
+          opacity: 1;
+          z-index: 5;
+        }
+      }
+
+      .edit-key-assign-btn {
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.5s ease all;
+      }
+    }
+  }
+
+  .railway-background {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s ease all;
+  }
+
+  // when .Railway is refreshable
+  &.is-refreshable {
+    .refresh-container {
+      max-height: 100vh;
+    }
+  }
+
+  // when .Railway is edited
+  &.is-edited {
+    z-index: 5;
+    .railway-background {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .arrows-wrapper {
+      .arrow-item-container {
+        .key-binding-info {
+          opacity: 1;
+          color: white;
+        }
+        .edit-key-assign-btn {
+          opacity: 1;
+          pointer-events: all;
+        }
+      }
+    }
+    .sort-options-container {
+      opacity: 1;
+      max-height: 100%;
+      pointer-events: all;
+    }
+  }
 }
+// End of Railway component styling
 
 .Header {
   h1 {
@@ -41,8 +280,19 @@
 
 .DownloadFooter {
 }
+.DownloadFooterModalContent {
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}
 
 .TagsColumn {
+  width: calc(50vw - $layout_annotation_width / 2 - $margin_medium * 2);
+  background: lightblue;
+  overflow: hidden;
 }
 
 .Dropzone {
@@ -169,6 +419,7 @@
     text-transform: none;
     transition: all 0.5s ease;
     width: 160px;
+    z-index: 1000;
   }
 
   //Tooltip arrow
@@ -184,6 +435,7 @@
     line-height: 0;
     margin-left: -5px;
     width: 0;
+    z-index: 1000;
   }
 
   //Setting up the transition
@@ -202,5 +454,44 @@
   &:hover::after {
     opacity: 1;
     transition: all 0.75s ease;
+  }
+}
+
+.Modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: 0.5s ease all;
+  background: rgba(0, 0, 0, 0);
+  opacity: 0;
+
+  pointer-events: none;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+
+  .modal-bg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    cursor: pointer;
+  }
+
+  .modal-content {
+    background: white;
+    padding: $margin_medium;
+  }
+
+  &.is-open {
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: all;
+    opacity: 1;
   }
 }

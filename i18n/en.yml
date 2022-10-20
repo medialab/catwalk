@@ -1,7 +1,7 @@
 ---
 test: Coucou michel
 
-tagline: Nano curation tools for the humanities.
+tagline: a multi-dimensional categorization tool for web & media data
 header_backlink: Go back to file upload
 
 notif_invalid_file: Invalid file ! try again !
@@ -26,3 +26,31 @@ mediatype_label_youtube_video: youtube video
 mediatype_label_website_iframe: website iframe
 
 footer_html: Catwalk was created and is maintained by the <a href="https://medialab.sciencespo.fr/" target="blank" rel="noopener">médialab of Sciences Po</a>. Its code is <a href="https://github.com/medialab/catwalk/" target="blank" rel="noopener"> free and open source</a>.
+
+
+download_footer_download: download
+download_footer_modal_title: Download your work
+download_footer_modal_dl_data: Download your annotated data
+download_footer_modal_dl_data_help: Help Download your annotated data
+download_footer_modal_dl_model: Download your annotation model only
+download_footer_modal_dl_model_help: Help Download your annotation model only
+download_footer_modal_dl_everything: Download your data and annotation model
+download_footer_modal_dl_everything_help: Help Download your data and annotation model
+
+modal_cancel: cancel
+
+modal_key_assign_message: Please type on your keyboard the new key to assign
+
+railway_sort_mode_title: "sort items by: "
+railway_sort_mode_table: order of the table
+railway_sort_mode_non_annotated: non-annotated items first
+railway_sort_mode_incomplete: incompletely annotated items first
+
+railway_item_tooltip_no_tagging: No tagging yet
+
+railway_keyassign_modal_title: "Key binding for the navigation command "
+railway_keyassign_modal_next: next object
+railway_keyassign_modal_prev: previous object
+
+railway_arrows_key_binding: "Key binding: "
+railway_arrows_edit_key: Edit key

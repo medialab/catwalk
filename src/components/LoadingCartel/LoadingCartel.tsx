@@ -16,7 +16,7 @@ function LoadingCartel({loadingPct}) {
           }}
         />
       </div>
-      <h5 className="loading_message">{loading_message}</h5>
+      <h5 className="loading-message">{loading_message}</h5>
     </div>
   );
 }
