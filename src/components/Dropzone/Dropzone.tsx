@@ -1,29 +1,21 @@
 import classNames from 'classnames';
 import React, {useCallback} from 'react';
 import {useDropzone} from 'react-dropzone';
-import { useI18nMessages } from '../../hooks';
+import {useI18nMessages} from '../../hooks';
 
 function Dropzone({onFilesDrop}) {
   const onDrop = useCallback(onFilesDrop, []);
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
-  const {
-    dnd_prompt_active,
-    dnd_prompt_inactive
-  } = useI18nMessages();
+  const {dnd_prompt_active, dnd_prompt_inactive} = useI18nMessages();
 
   return (
-    <div 
-      className={classNames("Dropzone", {
-        "is-drag-active": isDragActive
+    <div
+      className={classNames('Dropzone', {
+        'is-drag-active': isDragActive
       })}
-     {...getRootProps()}
-    >
+      {...getRootProps()}>
       <input {...getInputProps()} />
-      {isDragActive ? (
-        <p>{dnd_prompt_active}</p>
-      ) : (
-        <p>{dnd_prompt_inactive}</p>
-      )}
+      {isDragActive ? <p>{dnd_prompt_active}</p> : <p>{dnd_prompt_inactive}</p>}
     </div>
   );
 }

@@ -1,3 +1,11 @@
+.Button {
+  cursor: pointer;
+  padding: $margin_small;
+  &.is-full-width {
+    width: 100%;
+  }
+}
+
 .Railway {
 }
 
@@ -5,9 +13,30 @@
   h1 {
     margin: 0;
   }
+
+  .backlink_btn {
+    text-decoration: underline;
+    cursor: pointer;
+    &:before {
+      content: '←';
+    }
+  }
 }
 
 .MediaPreview {
+  .type-choice-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-bottom: $margin_medium;
+    > div {
+      flex: 1;
+    }
+    > div:first-of-type {
+      text-align: right;
+      padding-right: $margin_small;
+    }
+  }
 }
 
 .DownloadFooter {
@@ -61,11 +90,11 @@
       position: relative;
     }
     > span:first-of-type {
-      top: .5em;
-      left: .1em;
+      top: 0.5em;
+      left: 0.1em;
     }
     > span:last-of-type {
-      top: -.5em;
+      top: -0.5em;
       transform: rotate(180deg);
     }
   }
@@ -79,10 +108,99 @@
       position: absolute;
       left: 0;
       top: 0;
-      transition : .2s ease width;
+      transition: 0.2s ease width;
     }
   }
-  .loading-message {
-    
+  // .loading-message {
+  // }
+}
+
+.TablePreview {
+  min-width: 100%;
+  max-width: 100%;
+  overflow: auto;
+  th,
+  td {
+    min-width: 5rem;
+    text-align: left;
+    padding: $margin_small;
+    cursor: pointer;
+    transition: 0.5s ease background;
+    background: rgba(0, 0, 0, 0);
+    &.is-active {
+      // @todo refine color
+      background: lightgreen;
+      cursor: default;
+    }
+    &.is-hovered:not(.is-active) {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+.InfoPin {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  padding: 0 $margin_small/2;
+  font-size: 1em;
+  > span {
+    width: 1em;
+    height: 1em;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  //Tooltip text container
+  &::before {
+    position: absolute;
+    bottom: 30px;
+    left: -80px;
+    // @todo change colors;
+    background-color: black;
+    color: #fff;
+    content: attr(
+      aria-label
+    ); //This pulls in the text from the element with the tooltip
+    padding: $margin_small;
+    text-transform: none;
+    transition: all 0.5s ease;
+    width: 160px;
+  }
+
+  //Tooltip arrow
+  &::after {
+    position: absolute;
+    top: -12px;
+    left: 9px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #2b222a;
+    content: ' ';
+    font-size: 0;
+    line-height: 0;
+    margin-left: -5px;
+    width: 0;
+  }
+
+  //Setting up the transition
+  &::before,
+  &::after {
+    color: white;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+  }
+
+  //Triggering the transition
+  &:focus::before,
+  &:focus::after,
+  &:hover::before,
+  &:hover::after {
+    opacity: 1;
+    transition: all 0.75s ease;
   }
 }

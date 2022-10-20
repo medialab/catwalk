@@ -29,15 +29,16 @@
     .MainColumn {
       width: $layout_one_column_width;
       max-width: calc(100vw - $margin_medium * 2);
+      min-height: 100vh;
+      display: flex;
+      flex-flow: column nowrap;
+      .MainRow {
+        flex: 1;
+      }
     }
 
     .Footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding: $margin_medium calc((100vw - $layout_one_column_width) / 2);
-      box-sizing: border-box;
+      padding: $margin_medium 0 $margin_medium * 2 0;
     }
   }
 

@@ -1,11 +1,22 @@
-import { useI18nMessages } from "../../hooks";
+import {useI18nMessages} from '../../hooks';
 
-function Header() {
-  const {tagline} = useI18nMessages();
+interface HeaderProps {
+  allowBackLink?: boolean;
+  onBackLinkClick?: () => any;
+}
+
+function Header({allowBackLink, onBackLinkClick}: HeaderProps) {
+  const {tagline, header_backlink} = useI18nMessages();
   return (
     <header className="Header">
       <h1>Catwalk</h1>
+
       <h2>{tagline}</h2>
+      {allowBackLink ? (
+        <div className="backlink_btn" onClick={onBackLinkClick}>
+          {header_backlink}
+        </div>
+      ) : null}
     </header>
   );
 }

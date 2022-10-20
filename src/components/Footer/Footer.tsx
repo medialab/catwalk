@@ -1,10 +1,7 @@
-import { useI18nMessages } from "../../hooks";
+import {useI18nMessages} from '../../hooks';
 
 function Footer() {
-
-  const {
-    footer_html
-  } = useI18nMessages();
+  const {footer_html} = useI18nMessages();
   return (
     <footer className="Footer">
       <p
