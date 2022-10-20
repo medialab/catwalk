@@ -90,14 +90,23 @@ const MockRailway = ({
 
 interface MockTagsColumnProps {
   isEdited?: boolean;
+  uploadedModelStatus?: 'error' | 'pending' | 'processing';
 }
 
-const MockTagsColumn = ({isEdited}: MockTagsColumnProps) => {
+const MockTagsColumn = ({
+  isEdited,
+  uploadedModelStatus
+}: MockTagsColumnProps) => {
   return (
     <TagsColumn
       model={mockAnnotationModel}
       isEdited={isEdited}
+      uploadedModelStatus={uploadedModelStatus}
       stats={mockAnnotationStats}
+      onModelFilesDrop={console.log}
+      onEditTogglePrompt={console.log}
+      onNewCategorizationPrompt={console.log}
+      onDeleteCategoryRequest={console.log}
     />
   );
 };
@@ -126,6 +135,34 @@ Default.args = {
         <MockDownloadFooter />
       </MainColumn>
       <MockTagsColumn />
+    </>
+  )
+};
+
+export const ModelIsEdited = Template.bind({});
+ModelIsEdited.args = {
+  children: (
+    <>
+      <MockRailway />
+      <MainColumn>
+        <MockMainRow />
+        <MockDownloadFooter />
+      </MainColumn>
+      <MockTagsColumn isEdited />
+    </>
+  )
+};
+
+export const ModelHasBeenUploadedButIsInvalid = Template.bind({});
+ModelHasBeenUploadedButIsInvalid.args = {
+  children: (
+    <>
+      <MockRailway />
+      <MainColumn>
+        <MockMainRow />
+        <MockDownloadFooter />
+      </MainColumn>
+      <MockTagsColumn isEdited uploadedModelStatus="error" />
     </>
   )
 };

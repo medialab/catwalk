@@ -46,32 +46,39 @@ export const mockAnnotationStats = [
   {
     name: 'Status',
     completedPortion: 0.6,
+    color: 'red',
     modalities: [
       {
         name: 'In',
-        count: 3
+        count: 3,
+        key: 'A'
       },
       {
         name: 'Out',
-        count: 56
+        count: 56,
+        key: 'Z'
       },
       {
         name: 'Undecided',
-        count: 55
+        count: 55,
+        key: 'E'
       }
     ]
   },
   {
     name: 'Language',
     completedPortion: 0.34,
+    color: 'blue',
     modalities: [
       {
         name: 'français',
-        count: 53
+        count: 53,
+        key: 'Q'
       },
       {
         name: 'anglais',
-        count: 12
+        count: 12,
+        key: 'S'
       }
     ]
   }

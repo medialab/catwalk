@@ -54,3 +54,10 @@ railway_keyassign_modal_prev: previous object
 
 railway_arrows_key_binding: "Key binding: "
 railway_arrows_edit_key: Edit key
+
+tags_edition_edit: Edit
+tags_edition_done: Done
+tags_edition_invalid_model_file: Invalid model file !
+tags_edition_processing_model_file: Processing file
+tags_edition_drop_model_file_prompt: Drop an existing model file here !
+tags_edition_new_categorization: Add categorization

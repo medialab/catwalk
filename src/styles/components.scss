@@ -291,8 +291,209 @@
 
 .TagsColumn {
   width: calc(50vw - $layout_annotation_width / 2 - $margin_medium * 2);
-  background: lightblue;
+  border: 1px solid black;
   overflow: hidden;
+  box-sizing: border-box;
+  padding: $margin_medium;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: stretch;
+
+  .main-row {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .upload-status-container {
+    transition: 0.5s ease all;
+    overflow: hidden;
+    max-height: 100vh;
+    &.is-hidden {
+      max-height: 0;
+    }
+  }
+
+  .model-drop-container {
+    transition: 0.5s ease all;
+    overflow: hidden;
+    max-height: 0;
+  }
+
+  .CategorizationGroup {
+    &:not(:last-of-type) {
+      margin-bottom: $margin_medium;
+    }
+    .CategorizationHeader {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: stretch;
+
+      .categorization-title-container {
+        flex: 1;
+        margin: 0;
+        padding-right: $margin_small;
+        position: relative;
+        height: 2.2em;
+        box-sizing: border-box;
+
+        .completed-portion-container,
+        .title-container {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          box-sizing: border-box;
+        }
+        .completed-portion-container {
+          opacity: 1;
+          transition: 0.5s ease all;
+          .completed-portion-background {
+            filter: saturate(20%) brightness(300%) opacity(0.5);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+          }
+          .completed-portion-bar {
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            filter: saturate(100%);
+            border: 1px solid white;
+            box-sizing: border-box;
+          }
+        }
+
+        .title-container {
+          .title-readmode,
+          .title-writemode {
+            padding: $margin_small;
+            box-sizing: border-box;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+          }
+
+          .title-writemode {
+            height: 2rem;
+          }
+        }
+      }
+
+      .delete-btn-container {
+        transition: 0.5s ease all;
+        overflow: hidden;
+        max-width: 0;
+        padding-left: 0;
+      }
+    }
+
+    .modalities-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    &.is-edited {
+      .CategorizationHeader {
+        .completed-portion-container {
+          opacity: 0;
+          pointer-events: none;
+        }
+        .delete-btn-container {
+          max-width: 100%;
+          padding-left: $margin_small;
+        }
+      }
+    }
+  }
+
+  .ModalityGroup {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: stretch;
+    align-items: center;
+
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+
+    .key-btn-container {
+      padding-right: $margin_small;
+    }
+
+    .title-container {
+      flex: 1;
+      height: 2rem;
+      box-sizing: border-box;
+
+      position: relative;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+
+      .share-bar,
+      .share-bar-background {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.05);
+        z-index: -1;
+      }
+
+      .share-bar-background {
+        background: rgba(0, 0, 0, 0.01);
+        width: 100%;
+      }
+
+      .title-readmode,
+      .title-writemode {
+        padding: $margin_small;
+        box-sizing: border-box;
+      }
+
+      .title-writemode {
+        width: 100%;
+        height: 2rem;
+      }
+    }
+    .delete-btn-container {
+      transition: 0.5s ease all;
+      overflow: hidden;
+      max-width: 0;
+      padding-left: 0;
+    }
+    &.is-edited {
+      .delete-btn-container {
+        max-width: 100vw;
+        padding-left: $margin_small;
+      }
+    }
+  }
+
+  .cta-container {
+    margin-top: $margin_small;
+  }
+
+  // tagscolumn is edited
+  &.is-edited {
+    .model-drop-container {
+      max-height: 100vh;
+    }
+  }
 }
 
 .Dropzone {
