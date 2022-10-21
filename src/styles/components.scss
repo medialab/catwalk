@@ -77,7 +77,7 @@
                 display: flex;
                 flex-flow: row nowrap;
                 align-items: center;
-                margin-bottom: $margin_small / 2;
+                margin-bottom: calc($margin_small / 2);
                 .color-marker {
                   min-width: 1em;
                   max-width: 1em;
@@ -593,7 +593,7 @@
   cursor: pointer;
   position: relative;
   display: inline-block;
-  padding: 0 $margin_small/2;
+  padding: 0 calc($margin_small / 2);
   font-size: 1em;
   > span {
     width: 1em;
