@@ -16,6 +16,7 @@
     "dts-gen": "node ./scripts/yaml-dts.js > ./i18n/types.d.ts && prettier i18n/*.d.ts --write",
     "lint": "eslint './src/**/*{.ts,.tsx,.js,.jsx}' './.storybook/*.js'",
     "prettier": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --write",
+    "reinstall": "rimraf ./node_modules && npm i",
     "storybook": "start-storybook -p 6006"
   },
   "kotatsu": {
@@ -69,6 +70,7 @@
     "kotatsu": "^0.23.1",
     "pre-commit": "^1.2.2",
     "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
     "sass": "^1.55.0",
     "storybook-react-context": "^0.6.0",
     "typescript": "^4.8.4"
