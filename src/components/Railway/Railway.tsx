@@ -58,33 +58,33 @@ function Railway({
   onSortOrderChange
 }: RailwayProps) {
   const {
-    railway_sort_mode_title,
-    railway_sort_mode_table,
-    railway_sort_mode_non_annotated,
-    railway_sort_mode_incomplete,
+    railwaySortModeTitle,
+    railwaySortModeTable,
+    railwaySortModeNonAnnotated,
+    railwaySortModeIncomplete,
 
-    railway_arrows_key_binding,
-    railway_arrows_edit_key,
+    railwayArrowsKeyBinding,
+    railwayArrowsEditKey,
 
-    modal_cancel,
-    railway_keyassign_modal_prev,
-    railway_keyassign_modal_next,
-    railway_keyassign_modal_title,
-    modal_key_assign_message
+    modalCancel,
+    railwayKeyassignModalPrev,
+    railwayKeyassignModalNext,
+    railwayKeyassignModalTitle,
+    modalKeyAssignMessage
   } = useI18nMessages();
 
   const sortOrderOptions = [
     {
       value: 'table',
-      label: railway_sort_mode_table
+      label: railwaySortModeTable
     },
     {
       value: 'non_annotated',
-      label: railway_sort_mode_non_annotated
+      label: railwaySortModeNonAnnotated
     },
     {
       value: 'incomplete',
-      label: railway_sort_mode_incomplete
+      label: railwaySortModeIncomplete
     }
   ];
 
@@ -142,18 +142,18 @@ function Railway({
                 <Button onClick={() => onNavToSibling(id)}>{icon}</Button>
               </div>
               <span className="key-binding-info">
-                {railway_arrows_key_binding} <code>{binding}</code>
+                {railwayArrowsKeyBinding} <code>{binding}</code>
               </span>
               <Button
                 onClick={() => onNavKeyAssignOpenPrompt(id)}
                 className="edit-key-assign-btn">
-                {railway_arrows_edit_key}
+                {railwayArrowsEditKey}
               </Button>
             </div>
           ))}
         </div>
         <div className="sort-options-container">
-          <div className="sort-options-title">{railway_sort_mode_title}</div>
+          <div className="sort-options-title">{railwaySortModeTitle}</div>
           <ul>
             {sortOrderOptions.map(({value, label}) => {
               const handleClick = () => {
@@ -175,15 +175,15 @@ function Railway({
       </div>
       <Modal isOpen={keyAssignIsEdited} onClose={onNavKeyAssignClosePrompt}>
         <h3>
-          {railway_keyassign_modal_title}
+          {railwayKeyassignModalTitle}
           <code>
             {editedKeyAssignCommand === 'next'
-              ? railway_keyassign_modal_next
-              : railway_keyassign_modal_prev}
+              ? railwayKeyassignModalNext
+              : railwayKeyassignModalPrev}
           </code>
         </h3>
-        <p>{modal_key_assign_message}</p>
-        <Button onClick={onNavKeyAssignClosePrompt}>{modal_cancel}</Button>
+        <p>{modalKeyAssignMessage}</p>
+        <Button onClick={onNavKeyAssignClosePrompt}>{modalCancel}</Button>
       </Modal>
     </div>
   );

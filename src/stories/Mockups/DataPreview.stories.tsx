@@ -13,23 +13,21 @@ import Button from '../../components/Button';
 import MainRow from '../../components/Layout/MainRow';
 
 function ColumnSelectionPrompt() {
-  const {
-    preview_select_column_prompt,
-    preview_select_column_prompt_explanation
-  } = useI18nMessages();
+  const {previewSelectColumnPrompt, previewSelectColumnPromptExplanation} =
+    useI18nMessages();
 
   return (
     <p>
-      <span>{preview_select_column_prompt}</span>
-      <InfoPin message={preview_select_column_prompt_explanation} />
+      <span>{previewSelectColumnPrompt}</span>
+      <InfoPin message={previewSelectColumnPromptExplanation} />
     </p>
   );
 }
 
 function ValidationButton() {
-  const {preview_validation} = useI18nMessages();
+  const {previewValidation} = useI18nMessages();
 
-  return <Button isFullWidth>{preview_validation}</Button>;
+  return <Button isFullWidth>{previewValidation}</Button>;
 }
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

@@ -1,7 +1,7 @@
 import {useI18nMessages} from '../../hooks';
 
 function LoadingCartel({loadingPct}) {
-  const {loading_message} = useI18nMessages();
+  const {loadingMessage} = useI18nMessages();
   return (
     <div className="LoadingCartel">
       <div className="animation-container">
@@ -16,7 +16,7 @@ function LoadingCartel({loadingPct}) {
           }}
         />
       </div>
-      <h5 className="loading-message">{loading_message}</h5>
+      <h5 className="loading-message">{loadingMessage}</h5>
     </div>
   );
 }

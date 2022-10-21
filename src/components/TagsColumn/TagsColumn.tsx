@@ -31,12 +31,12 @@ function TagsColumn({
   onDeleteCategoryRequest
 }: TagsColumnProps) {
   const {
-    tags_edition_edit,
-    tags_edition_done,
-    tags_edition_invalid_model_file,
-    tags_edition_processing_model_file,
-    tags_edition_drop_model_file_prompt,
-    tags_edition_new_categorization
+    tagsEditionEdit,
+    tagsEditionDone,
+    tagsEditionInvalidModelFile,
+    tagsEditionProcessingModelFile,
+    tagsEditionDropModelFilePrompt,
+    tagsEditionNewCategorization
   } = useI18nMessages();
   return (
     <aside
@@ -59,14 +59,14 @@ function TagsColumn({
         })}
         <li>
           <Button onClick={onNewCategorizationPrompt} isFullWidth>
-            {tags_edition_new_categorization}
+            {tagsEditionNewCategorization}
           </Button>
         </li>
       </ul>
       <div className="secondary-row">
         <div className="model-drop-container">
           <Dropzone
-            dndPromptMessage={tags_edition_drop_model_file_prompt}
+            dndPromptMessage={tagsEditionDropModelFilePrompt}
             onFilesDrop={onModelFilesDrop}
           />
           <div
@@ -75,14 +75,14 @@ function TagsColumn({
             })}>
             <Notification isType={uploadedModelStatus}>
               {uploadedModelStatus === 'error'
-                ? tags_edition_invalid_model_file
-                : tags_edition_processing_model_file}
+                ? tagsEditionInvalidModelFile
+                : tagsEditionProcessingModelFile}
             </Notification>
           </div>
         </div>
         <div className="cta-container">
           <Button isFullWidth onClick={onEditTogglePrompt}>
-            {isEdited ? tags_edition_done : tags_edition_edit}
+            {isEdited ? tagsEditionDone : tagsEditionEdit}
           </Button>
         </div>
       </div>

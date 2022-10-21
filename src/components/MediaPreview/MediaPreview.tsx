@@ -34,12 +34,12 @@ function ObjectPreview({type, data}) {
  */
 function MediaPreview({type, data, onPreviewTypeChange}) {
   const {
-    mediapreview_cant_preview,
-    mediapreview_choose_a_type,
-    mediapreview_choose_a_type_placeholder,
-    mediatype_label_twitter_tweet,
-    mediatype_label_youtube_video,
-    mediatype_label_website_iframe
+    mediapreviewCantPreview,
+    mediapreviewChooseAType,
+    mediapreviewChooseATypePlaceholder,
+    mediatypeLabelTwitterTweet,
+    mediatypeLabelYoutubeVideo,
+    mediatypeLabelWebsiteIframe
   } = useI18nMessages();
 
   /**
@@ -47,23 +47,23 @@ function MediaPreview({type, data, onPreviewTypeChange}) {
    * so they are put in the component function body
    */
   const PREVIEW_OPTIONS = [
-    {value: 'twitter_tweet', label: mediatype_label_twitter_tweet},
-    {value: 'youtube_video', label: mediatype_label_youtube_video},
-    {value: 'website_iframe', label: mediatype_label_website_iframe}
+    {value: 'twitter_tweet', label: mediatypeLabelTwitterTweet},
+    {value: 'youtube_video', label: mediatypeLabelYoutubeVideo},
+    {value: 'website_iframe', label: mediatypeLabelWebsiteIframe}
   ];
   const selectedOption =
     type !== undefined && PREVIEW_OPTIONS.find(({value}) => value === type);
   return (
     <main className="MediaPreview">
       <div className="type-choice-container">
-        <div>{mediapreview_choose_a_type}</div>
+        <div>{mediapreviewChooseAType}</div>
         <div>
           <Select
             onChange={onPreviewTypeChange}
             options={PREVIEW_OPTIONS}
             isSearchable={false}
             value={selectedOption}
-            placeholder={mediapreview_choose_a_type_placeholder}
+            placeholder={mediapreviewChooseATypePlaceholder}
           />
         </div>
       </div>
@@ -71,9 +71,7 @@ function MediaPreview({type, data, onPreviewTypeChange}) {
         {canPreview({type, data}) ? (
           <ObjectPreview type={type} data={data} />
         ) : (
-          <Notification isType="error">
-            {mediapreview_cant_preview}
-          </Notification>
+          <Notification isType="error">{mediapreviewCantPreview}</Notification>
         )}
       </div>
     </main>

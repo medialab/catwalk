@@ -18,7 +18,7 @@ function templateTypescriptDeclaration(messages) {
     declaration.push(`  ${name}: string`);
   }
 
-  declaration.push('[name: string]: string;');
+  // declaration.push('[name: string]: string;');
   declaration.push('}');
   declaration.push('');
   declaration.push("declare module '*.yml' {");

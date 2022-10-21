@@ -22,13 +22,13 @@ const mockIntroText = `
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam amet voluptatem eius dolorum reprehenderit earum. Quis, dolorum cum in vel laudantium adipisci, beatae accusamus voluptatibus quos tenetur explicabo expedita.
 `;
 function ParagraphIntroduction() {
-  const {introduction_text} = useI18nMessages();
-  return <p>{introduction_text}</p>;
+  const {introductionText} = useI18nMessages();
+  return <p>{introductionText}</p>;
 }
 
 function NotificationInvalidFile() {
-  const {notif_invalid_file} = useI18nMessages();
-  return <Notification>{notif_invalid_file}</Notification>;
+  const {notifInvalidFile} = useI18nMessages();
+  return <Notification>{notifInvalidFile}</Notification>;
 }
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

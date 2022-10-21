@@ -5,7 +5,7 @@ interface ButtonProps {
   className?: string;
   isFullWidth?: boolean;
   isActive?: boolean;
-  onClick: () => any;
+  onClick?: () => any;
 }
 
 function Button({

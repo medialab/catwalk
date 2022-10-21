@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import {useI18nMessages} from '../../hooks';
 
 function RailwayItem({datum, schema, onClick}) {
-  const {railway_item_tooltip_no_tagging} = useI18nMessages();
+  const {railwayItemTooltipNoTagging} = useI18nMessages();
   // process data for mini viz
   const vizData = useMemo(() => {
     return schema.reduce((items, {name, color, modalities}) => {
@@ -47,7 +47,7 @@ function RailwayItem({datum, schema, onClick}) {
                   <strong className="category-name">{name}</strong>
                   <span>{': '}</span>
                   <span className="datum-value-for-category">
-                    {isActive ? value : railway_item_tooltip_no_tagging}
+                    {isActive ? value : railwayItemTooltipNoTagging}
                   </span>
                 </li>
               );

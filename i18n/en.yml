@@ -2,62 +2,61 @@
 test: Coucou michel
 
 tagline: a multi-dimensional categorization tool for web & media data
-header_backlink: Go back to file upload
+headerBacklink: Go back to file upload
 
-notif_invalid_file: Invalid file ! try again !
-introduction_text: Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam amet voluptatem eius dolorum reprehenderit earum. Quis, dolorum cum in vel laudantium adipisci, beatae accusamus voluptatibus quos tenetur explicabo expedita.
-loading_message: loading
-choose_a_data_sample: Choose a data sample
-choose_a_data_sample_placeholder: Select an example dataset
-dnd_prompt_inactive: Drag and drop some files here, or click to select files
-dnd_prompt_active: Drop the files here !
+notifInvalidFile: Invalid file ! try again !
+introductionText: Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam amet voluptatem eius dolorum reprehenderit earum. Quis, dolorum cum in vel laudantium adipisci, beatae accusamus voluptatibus quos tenetur explicabo expedita.
+loadingMessage: loading
+chooseADataSample: Choose a data sample
+chooseADataSamplePlaceholder: Select an example dataset
+dndPromptInactive: Drag and drop some files here, or click to select files
+dndPromptActive: Drop the files here !
 
-preview_select_column_prompt: Select a column to be used to preview media objects
-preview_select_column_prompt_explanation: It can be the column where are your urls, ids, etc.
+previewSelectColumnPrompt: Select a column to be used to preview media objects
+previewSelectColumnPromptExplanation: It can be the column where are your urls, ids, etc.
 
-preview_validation: Validate and start annotating
+previewValidation: Validate and start annotating
 
-mediapreview_cant_preview: Can't preview data with this media type.
-mediapreview_choose_a_type: Preview data as
-mediapreview_choose_a_type_placeholder: Choose a preview format
+mediapreviewCantPreview: Can't preview data with this media type.
+mediapreviewChooseAType: Preview data as
+mediapreviewChooseATypePlaceholder: Choose a preview format
 
-mediatype_label_twitter_tweet: tweet
-mediatype_label_youtube_video: youtube video
-mediatype_label_website_iframe: website iframe
+mediatypeLabelTwitterTweet: tweet
+mediatypeLabelYoutubeVideo: youtube video
+mediatypeLabelWebsiteIframe: website iframe
 
-footer_html: Catwalk was created and is maintained by the <a href="https://medialab.sciencespo.fr/" target="blank" rel="noopener">médialab of Sciences Po</a>. Its code is <a href="https://github.com/medialab/catwalk/" target="blank" rel="noopener"> free and open source</a>.
+footerHtml: Catwalk was created and is maintained by the <a href="https://medialab.sciencespo.fr/" target="blank" rel="noopener">médialab of Sciences Po</a>. Its code is <a href="https://github.com/medialab/catwalk/" target="blank" rel="noopener"> free and open source</a>.
 
+downloadFooterDownload: download
+downloadFooterModalTitle: Download your work
+downloadFooterModalDlData: Download your annotated data
+downloadFooterModalDlDataHelp: Help Download your annotated data
+downloadFooterModalDlModel: Download your annotation model only
+downloadFooterModalDlModelHelp: Help Download your annotation model only
+downloadFooterModalDlEverything: Download your data and annotation model
+downloadFooterModalDlEverythingHelp: Help Download your data and annotation model
 
-download_footer_download: download
-download_footer_modal_title: Download your work
-download_footer_modal_dl_data: Download your annotated data
-download_footer_modal_dl_data_help: Help Download your annotated data
-download_footer_modal_dl_model: Download your annotation model only
-download_footer_modal_dl_model_help: Help Download your annotation model only
-download_footer_modal_dl_everything: Download your data and annotation model
-download_footer_modal_dl_everything_help: Help Download your data and annotation model
+modalCancel: cancel
 
-modal_cancel: cancel
+modalKeyAssignMessage: Please type on your keyboard the new key to assign
 
-modal_key_assign_message: Please type on your keyboard the new key to assign
+railwaySortModeTitle: 'sort items by: '
+railwaySortModeTable: order of the table
+railwaySortModeNonAnnotated: non-annotated items first
+railwaySortModeIncomplete: incompletely annotated items first
 
-railway_sort_mode_title: "sort items by: "
-railway_sort_mode_table: order of the table
-railway_sort_mode_non_annotated: non-annotated items first
-railway_sort_mode_incomplete: incompletely annotated items first
+railwayItemTooltipNoTagging: No tagging yet
 
-railway_item_tooltip_no_tagging: No tagging yet
+railwayKeyassignModalTitle: 'Key binding for the navigation command '
+railwayKeyassignModalNext: next object
+railwayKeyassignModalPrev: previous object
 
-railway_keyassign_modal_title: "Key binding for the navigation command "
-railway_keyassign_modal_next: next object
-railway_keyassign_modal_prev: previous object
+railwayArrowsKeyBinding: 'Key binding: '
+railwayArrowsEditKey: Edit key
 
-railway_arrows_key_binding: "Key binding: "
-railway_arrows_edit_key: Edit key
-
-tags_edition_edit: Edit
-tags_edition_done: Done
-tags_edition_invalid_model_file: Invalid model file !
-tags_edition_processing_model_file: Processing file
-tags_edition_drop_model_file_prompt: Drop an existing model file here !
-tags_edition_new_categorization: Add categorization
+tagsEditionEdit: Edit
+tagsEditionDone: Done
+tagsEditionInvalidModelFile: Invalid model file !
+tagsEditionProcessingModelFile: Processing file
+tagsEditionDropModelFilePrompt: Drop an existing model file here !
+tagsEditionNewCategorization: Add categorization

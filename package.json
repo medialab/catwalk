@@ -2,7 +2,7 @@
   "name": "catwalk",
   "version": "2.0.0",
   "private": true,
-  "description": "Nano curation tools for the humanities.",
+  "description": "A multi-dimensional categorization tool for web & media data.",
   "main": "index.js",
   "engines": {
     "node": ">=16"
