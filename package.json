@@ -8,10 +8,10 @@
     "node": ">=16"
   },
   "pre-commit": [
-    "lint",
-    "prettier:check"
+    "check"
   ],
   "scripts": {
+    "check": "npm run lint && npm run prettier:check",
     "dev": "kotatsu serve ./src/main.tsx --open",
     "dts-gen": "node ./scripts/yaml-dts.js > ./i18n/types.d.ts && prettier i18n/*.d.ts --write",
     "lint": "eslint './src/**/*{.ts,.tsx,.js,.jsx}' './.storybook/*.js'",
@@ -62,6 +62,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/webpack-env": "^1.18.0",
+    "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.0",
     "@yomguithereal/prettier-config": "^1.2.0",
     "babel-loader": "^8.2.5",
@@ -96,8 +97,12 @@
       "React": true,
       "JSX": true
     },
+    "plugins": [
+      "@typescript-eslint"
+    ],
     "extends": [
       "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
       "eslint-config-prettier"
     ]
   }

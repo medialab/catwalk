@@ -84,7 +84,7 @@ LoadingFile.args = {
       <MainRow>
         <Header />
         <ParagraphIntroduction />
-        <LoadingCartel loadingPct={50} />
+        <LoadingCartel loadingPercentage={50} />
       </MainRow>
       <Footer />
     </MainColumn>

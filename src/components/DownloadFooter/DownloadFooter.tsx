@@ -3,15 +3,17 @@ import Button from '../Button';
 import InfoPin from '../InfoPin';
 import Modal from '../Modal';
 
+type DowloadType = 'everything' | 'data' | 'model';
+
 type DownloadFooterProps = {
   hasModalOpen?: boolean;
   onModalOpen: () => void;
   onModalClose: () => void;
-  onDownloadChoice: (type: string) => void /* eslint no-unused-vars: 0 */;
+  onDownloadChoice: (type: DowloadType) => void;
 };
 
 function DownloadFooter({
-  hasModalOpen,
+  hasModalOpen = false,
   onModalOpen,
   onModalClose,
   onDownloadChoice

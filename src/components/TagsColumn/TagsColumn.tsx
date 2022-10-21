@@ -11,9 +11,7 @@ type TagsColumnProps = {
   stats: Array<any>;
   uploadedModelStatus?: 'error' | 'pending' | 'processing';
   onNewCategorizationPrompt: () => void;
-  onModelFilesDrop: (
-    files: Array<object>
-  ) => void /* eslint no-unused-vars : 0 */;
+  onModelFilesDrop: (files: Array<object>) => void;
   onEditTogglePrompt: () => void;
 
   onDeleteCategoryRequest: (category: object) => void;
@@ -73,7 +71,8 @@ function TagsColumn({
             className={classNames('upload-status-container', {
               'is-hidden': uploadedModelStatus === undefined
             })}>
-            <Notification isType={uploadedModelStatus}>
+            <Notification
+              isType={uploadedModelStatus === 'error' ? 'error' : 'info'}>
               {uploadedModelStatus === 'error'
                 ? tagsEditionInvalidModelFile
                 : tagsEditionProcessingModelFile}

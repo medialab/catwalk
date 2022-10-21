@@ -1,6 +1,10 @@
 import {useI18nMessages} from '../../hooks';
 
-function LoadingCartel({loadingPct}) {
+interface LoadingCartel {
+  loadingPercentage: number;
+}
+
+function LoadingCartel({loadingPercentage}: LoadingCartel) {
   const {loadingMessage} = useI18nMessages();
   return (
     <div className="LoadingCartel">
@@ -12,7 +16,7 @@ function LoadingCartel({loadingPct}) {
         <div
           className="bar-bar"
           style={{
-            width: `${loadingPct}%`
+            width: `${loadingPercentage}%`
           }}
         />
       </div>

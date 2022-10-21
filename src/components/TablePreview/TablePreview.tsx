@@ -5,7 +5,7 @@ interface TablePreviewProps {
   columns: Array<string>;
   data: Array<object>;
   selectedColumnId?: string;
-  onClickOnColumn?: (column: string) => void /* eslint no-unused-vars: 0 */;
+  onClickOnColumn?: (column: string) => void;
 }
 
 function TablePreview({

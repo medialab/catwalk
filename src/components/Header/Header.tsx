@@ -2,10 +2,10 @@ import {useI18nMessages} from '../../hooks';
 
 interface HeaderProps {
   allowBackLink?: boolean;
-  onBackLinkClick?: () => any;
+  onBackLinkClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-function Header({allowBackLink, onBackLinkClick}: HeaderProps) {
+function Header({allowBackLink = false, onBackLinkClick}: HeaderProps) {
   const {tagline, headerBacklink} = useI18nMessages();
   return (
     <header className="Header">

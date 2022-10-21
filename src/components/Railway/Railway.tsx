@@ -26,11 +26,8 @@ type RailwayProps = {
   onRefreshSort: () => void;
   onNavToSibling: (direction: string) => void;
   onNavToIndex: (index: number) => void;
-  onNavKeyAssignChoice: (
-    command: string,
-    key: string
-  ) => void /* eslint no-unused-vars: 0 */;
-  onSortOrderChange: (sortOrder: string) => void /* eslint no-unused-vars: 0 */;
+  onNavKeyAssignChoice: (command: string, key: string) => void;
+  onSortOrderChange: (sortOrder: string) => void;
 };
 
 function Railway({

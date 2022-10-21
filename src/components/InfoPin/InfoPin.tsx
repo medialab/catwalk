@@ -1,4 +1,8 @@
-function InfoPin({message}) {
+interface InfoPinProps {
+  message: string;
+}
+
+function InfoPin({message}: InfoPinProps) {
   return (
     <span className="InfoPin" aria-label={message}>
       <span>

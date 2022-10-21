@@ -1,13 +1,14 @@
 import classNames from 'classnames';
 
-type ModalProps = {
+interface ModalProps {
   children: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
   isOpen: boolean;
   onClose: () => void;
-};
-function Modal({children, className = '', style, isOpen, onClose}: ModalProps) {
+}
+
+function Modal({children, className, style, isOpen, onClose}: ModalProps) {
   return (
     <div
       className={classNames('Modal', className, {

@@ -1,18 +1,15 @@
 import classNames from 'classnames';
 
-interface ButtonProps {
-  children: React.ReactNode;
-  className?: string;
+interface ButtonProps extends React.ComponentProps<'button'> {
   isFullWidth?: boolean;
   isActive?: boolean;
-  onClick?: () => any;
 }
 
 function Button({
   children,
   className,
-  isFullWidth,
-  isActive,
+  isFullWidth = false,
+  isActive = false,
   onClick,
   ...props
 }: ButtonProps) {

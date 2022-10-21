@@ -12,7 +12,7 @@ interface ContainerProps {
 export default function Container({
   children,
   style = {},
-  className = '',
+  className,
   mode = 'landing'
 }: ContainerProps) {
   return (
