@@ -1,20 +1,22 @@
 import classNames from 'classnames';
+
+import type {CSVData, AnnotationSortOrder, AnnotationSchema} from '../../types';
 import {useI18nMessages} from '../../hooks';
 import Button from '../Button';
 import Modal from '../Modal';
 import RailwayItem from './RailwayItem';
 
 type RailwayProps = {
-  data: Array<object>;
+  data: CSVData;
   navKeyBindings: {
-    prev: 'string';
-    next: 'string';
+    prev: string;
+    next: string;
   };
-  schema: object;
-  sortOrder: string;
+  schema: AnnotationSchema;
+  sortOrder: AnnotationSortOrder;
   activeObjectIndex: number;
 
-  isEdited: boolean;
+  isEdited?: boolean;
   isRefreshable?: boolean;
   keyAssignIsEdited?: boolean;
   editedKeyAssignCommand?: string; // @todo next or prev
@@ -28,7 +30,7 @@ type RailwayProps = {
   onNavToSibling: (direction: string) => void;
   onNavToIndex: (index: number) => void;
   onNavKeyAssignChoice: (command: string, key: string) => void;
-  onSortOrderChange: (sortOrder: string) => void;
+  onSortOrderChange: (sortOrder: AnnotationSortOrder) => void;
 };
 
 function Railway({
@@ -38,8 +40,8 @@ function Railway({
   navKeyBindings,
   activeObjectIndex = 0,
 
-  isEdited,
-  isRefreshable,
+  isEdited = false,
+  isRefreshable = false,
   keyAssignIsEdited,
   editedKeyAssignCommand,
 
@@ -72,13 +74,13 @@ function Railway({
     modalKeyAssignMessage
   } = useI18nMessages();
 
-  const sortOrderOptions = [
+  const sortOrderOptions: Array<{value: AnnotationSortOrder; label: string}> = [
     {
       value: 'table',
       label: railwaySortModeTable
     },
     {
-      value: 'non_annotated',
+      value: 'non-annotated',
       label: railwaySortModeNonAnnotated
     },
     {

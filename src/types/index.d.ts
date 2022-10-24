@@ -1,4 +1,10 @@
 /**
+ * CSV data types.
+ */
+export type CSVRow = {[column: string]: string};
+export type CSVData = Array<CSVRow>;
+
+/**
  * Types related to the annotation schema.
  */
 export type Modality = {
@@ -14,10 +20,12 @@ export type Categorization = {
   modalities: Array<Modality>;
 };
 
-export type SortOrder = 'table-order';
+export type AnnotationSchema = Array<Categorization>;
+
+export type AnnotationSortOrder = 'table' | 'non-annotated' | 'incomplete';
 
 export type AnnotationOptions = {
-  sortOrder: SortOrder;
+  sortOrder: AnnotationSortOrder;
   navKeyBindings: {
     prev: string;
     next: string;
@@ -26,5 +34,5 @@ export type AnnotationOptions = {
 
 export type AnnotationConfig = {
   options: AnnotationOptions;
-  schema: Array<Categorization>;
+  schema: AnnotationSchema;
 };

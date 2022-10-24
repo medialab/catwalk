@@ -1,8 +1,22 @@
 import classNames from 'classnames';
 import {useMemo} from 'react';
+
+import type {CSVRow, AnnotationSchema} from '../../types';
 import {useI18nMessages} from '../../hooks';
 
-function RailwayItem({datum, schema, isActive, onClick}) {
+interface RailwayItemProps {
+  datum: CSVRow;
+  schema: AnnotationSchema;
+  isActive?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLLIElement>) => void;
+}
+
+function RailwayItem({
+  datum,
+  schema,
+  isActive = false,
+  onClick
+}: RailwayItemProps) {
   const {railwayItemTooltipNoTagging} = useI18nMessages();
   // process data for mini viz
   const vizData = useMemo(() => {
@@ -15,7 +29,7 @@ function RailwayItem({datum, schema, isActive, onClick}) {
         {
           name: name,
           color: color,
-          isActive: value && value !== '',
+          isActive: !!value,
           value: value ? value.name : undefined
         }
       ];
