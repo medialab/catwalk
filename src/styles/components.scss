@@ -329,6 +329,13 @@
     max-height: 0;
   }
 
+  .add-new-categorization-container,
+  .add-new-modality-container {
+    overflow: hidden;
+    transition: 0.5s ease all;
+    max-height: 0;
+  }
+
   .CategorizationGroup {
     &:not(:last-of-type) {
       margin-bottom: $margin_medium;
@@ -413,6 +420,10 @@
     }
 
     &.is-edited {
+      .add-new-categorization-container,
+      .add-new-modality-container {
+        max-height: 10rem;
+      }
       .CategorizationHeader {
         .completed-portion-container {
           opacity: 0;
