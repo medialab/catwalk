@@ -6,6 +6,13 @@ $railway_width: $margin_medium * 2;
 $layout_one_column_width: 500px;
 $layout_annotation_width: 600px;
 
+$color_dark: black;
+$color_object: lightgrey;
+$color_bg: white;
+
+$color_translucid_dark: rgba(0, 0, 0, 0.5);
+$color_translucid_light: rgba(0, 0, 0, 0.05);
+
 @keyframes rotation {
   from {
     transform: rotate(0deg);

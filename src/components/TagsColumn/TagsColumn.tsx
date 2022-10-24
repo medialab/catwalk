@@ -55,7 +55,7 @@ function TagsColumn({
             />
           );
         })}
-        <li>
+        <li className="add-new-categorization-container">
           <Button onClick={onNewCategorizationPrompt} isFullWidth>
             {tagsEditionNewCategorization}
           </Button>

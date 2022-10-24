@@ -151,7 +151,7 @@ export default function CategorizationGroup({
             />
           );
         })}
-        <li>
+        <li className="add-new-modality-container">
           <Button isFullWidth onClick={console.log}>
             Add modality
           </Button>
