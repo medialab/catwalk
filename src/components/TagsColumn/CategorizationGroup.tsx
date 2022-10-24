@@ -35,6 +35,7 @@ function CategorizationHeader({
               className="title-writemode"
               value={name}
               placeholder="Type name"
+              onChange={console.log}
             />
           ) : (
             <span className="title-readmode">
@@ -89,6 +90,7 @@ function ModalityGroup({
             className="title-writemode"
             value={name}
             placeholder="Type modality name"
+            onChange={console.log}
           />
         ) : (
           // <span className="title-readmode">{name} ({count})</span>
