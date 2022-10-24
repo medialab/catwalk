@@ -93,6 +93,12 @@
             }
           }
         }
+
+        &.is-active {
+          .main-item-content {
+            border: 1px solid black;
+          }
+        }
       }
       // when items container is hover ...
       &:hover {

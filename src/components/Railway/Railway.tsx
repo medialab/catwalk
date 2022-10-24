@@ -12,6 +12,7 @@ type RailwayProps = {
   };
   schema: object;
   sortOrder: string;
+  activeObjectIndex: number;
 
   isEdited: boolean;
   isRefreshable?: boolean;
@@ -35,6 +36,7 @@ function Railway({
   schema,
   sortOrder = 'table',
   navKeyBindings,
+  activeObjectIndex = 0,
 
   isEdited,
   isRefreshable,
@@ -100,6 +102,7 @@ function Railway({
                 datum={datum}
                 schema={schema}
                 key={datumIndex}
+                isActive={datumIndex === activeObjectIndex}
                 onClick={() => onNavToIndex(datumIndex)}
               />
             );

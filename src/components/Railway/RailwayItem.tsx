@@ -1,7 +1,8 @@
+import classNames from 'classnames';
 import {useMemo} from 'react';
 import {useI18nMessages} from '../../hooks';
 
-function RailwayItem({datum, schema, onClick}) {
+function RailwayItem({datum, schema, isActive, onClick}) {
   const {railwayItemTooltipNoTagging} = useI18nMessages();
   // process data for mini viz
   const vizData = useMemo(() => {
@@ -21,7 +22,9 @@ function RailwayItem({datum, schema, onClick}) {
     }, []);
   }, [datum, schema]);
   return (
-    <li className="RailwayItem" onClick={onClick}>
+    <li
+      className={classNames('RailwayItem', {'is-active': isActive})}
+      onClick={onClick}>
       <ul className="main-item-content">
         {vizData.map(category => (
           <div

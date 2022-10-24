@@ -30,7 +30,7 @@ const Template: ComponentStory<typeof Layout> = args => {
   return <Layout mode="annotation" {...args} />;
 };
 
-const annotatedTweets20 = generateMockAnnotatedTweets(20);
+const annotatedTweets20 = generateMockAnnotatedTweets(100);
 
 /**
  * Wrapping main row code as it does not change between stories
@@ -74,6 +74,7 @@ const MockRailway = ({
       isRefreshable={isRefreshable}
       keyAssignIsEdited={editedKeyAssignCommand !== undefined}
       editedKeyAssignCommand={editedKeyAssignCommand}
+      activeObjectIndex={0}
       // callbacks
       onEditOpenPrompt={console.log}
       onEditClosePrompt={console.log}
