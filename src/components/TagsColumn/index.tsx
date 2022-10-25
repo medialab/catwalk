@@ -1,3 +1,1 @@
-import TagsColumn from './TagsColumn';
-
-export default TagsColumn;
+export {default} from './TagsColumn';

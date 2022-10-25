@@ -1,3 +1,1 @@
-import SamplePicker from './SamplePicker';
-
-export default SamplePicker;
+export {default} from './SamplePicker';

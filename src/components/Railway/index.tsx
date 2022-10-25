@@ -1,2 +1,1 @@
-import Railway from './Railway';
-export default Railway;
+export {default} from './Railway';

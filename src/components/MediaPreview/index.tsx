@@ -1,3 +1,1 @@
-import MediaPreview from './MediaPreview';
-
-export default MediaPreview;
+export {default} from './MediaPreview';
