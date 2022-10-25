@@ -22,6 +22,10 @@
   },
   "kotatsu": {
     "config": "./webpack.config.js",
+    "public": [
+      "/public",
+      "./public"
+    ],
     "progress": true,
     "sass": true
   },
