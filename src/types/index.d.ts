@@ -44,3 +44,8 @@ export type AnnotationConfig = {
   options: AnnotationOptions;
   schema: AnnotationSchema;
 };
+
+/**
+ * Media preview types.
+ */
+export type MediaPreviewType = 'twitter-tweet';
