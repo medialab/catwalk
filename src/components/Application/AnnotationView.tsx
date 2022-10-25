@@ -2,9 +2,9 @@ import type {ViewProps} from './types';
 
 export default function AnnotationView({setView}: ViewProps) {
   return (
-    <div>
-      Annotation view
+    <>
+      <span>Annotation view</span>
       <button onClick={() => setView('landing')}>go to landing</button>
-    </div>
+    </>
   );
 }

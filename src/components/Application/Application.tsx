@@ -29,7 +29,13 @@ export default function Application() {
       <Layout mode={view === 'annotation' ? 'annotation' : 'landing'}>
         <MainColumn>
           <MainRow>
-            <Header />
+            <Header
+              allowBackLink={view !== 'landing'}
+              onBackLinkClick={() => {
+                // TODO: decide whether to wipe global state here or not wrt csv data
+                setView('landing');
+              }}
+            />
             {viewChild}
           </MainRow>
           <Footer />

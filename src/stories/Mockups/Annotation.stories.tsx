@@ -65,7 +65,7 @@ const MockRailway = ({
   return (
     <Railway
       // data & model
-      data={annotatedTweets20}
+      rows={annotatedTweets20}
       navKeyBindings={mockAnnotationModel.options.navKeyBindings}
       sortOrder={mockAnnotationModel.options.sortOrder}
       schema={mockAnnotationModel.schema}

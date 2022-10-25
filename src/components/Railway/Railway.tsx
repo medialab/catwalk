@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 
-import type {CSVData, AnnotationSortOrder, AnnotationSchema} from '../../types';
+import type {CSVRows, AnnotationSortOrder, AnnotationSchema} from '../../types';
 import {useI18nMessages} from '../../hooks';
 import Button from '../Button';
 import Modal from '../Modal';
 import RailwayItem from './RailwayItem';
 
 type RailwayProps = {
-  data: CSVData;
+  rows: CSVRows;
   navKeyBindings: {
     prev: string;
     next: string;
@@ -34,7 +34,7 @@ type RailwayProps = {
 };
 
 function Railway({
-  data,
+  rows,
   schema,
   sortOrder = 'table',
   navKeyBindings,
@@ -98,14 +98,14 @@ function Railway({
       <div className="railway-background" onClick={onEditClosePrompt} />
       <div className="main-column">
         <ul className="items-container">
-          {data.map((datum, datumIndex) => {
+          {rows.map((row, rowIndex) => {
             return (
               <RailwayItem
-                datum={datum}
+                row={row}
                 schema={schema}
-                key={datumIndex}
-                isActive={datumIndex === activeObjectIndex}
-                onClick={() => onNavToIndex(datumIndex)}
+                key={rowIndex}
+                isActive={rowIndex === activeObjectIndex}
+                onClick={() => onNavToIndex(rowIndex)}
               />
             );
           })}

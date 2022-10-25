@@ -9,7 +9,7 @@ export type LayoutMode = 'landing' | 'annotation';
  */
 export type CSVRow = {[column: string]: string};
 export type CSVColumns = Array<string>;
-export type CSVData = Array<CSVRow>;
+export type CSVRows = Array<CSVRow>;
 
 /**
  * Types related to the annotation schema.

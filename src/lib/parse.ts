@@ -1,11 +1,11 @@
 import Papa from 'papaparse';
 import extend from '@yomguithereal/helpers/extend';
 
-import type {CSVData, CSVRow, CSVColumns} from '../types';
+import type {CSVRows, CSVRow, CSVColumns} from '../types';
 
 export type ParseCSVResult = {
   columns: CSVColumns;
-  data: CSVData;
+  rows: CSVRows;
 };
 
 export type ParseCSVProgress = {
@@ -18,7 +18,7 @@ export function parseCsvFile(
   progressCallback?: (progress: ParseCSVProgress) => void
 ): Promise<ParseCSVResult> {
   const totalFileSize = file.size;
-  const data: CSVData = [];
+  const rows: CSVRows = [];
   let columns: CSVColumns | null = null;
   let parsedLines = 0;
 
@@ -26,8 +26,9 @@ export function parseCsvFile(
     Papa.parse<CSVRow>(file, {
       worker: true,
       header: true,
+      skipEmptyLines: true,
       chunk(result) {
-        extend(data, result.data);
+        extend(rows, result.data);
         parsedLines += result.data.length;
 
         columns = result.meta.fields;
@@ -44,8 +45,8 @@ export function parseCsvFile(
         reject(err);
       },
       complete() {
-        progressCallback({percent: 1, lines: data.length});
-        resolve({data, columns});
+        progressCallback({percent: 1, lines: rows.length});
+        resolve({rows, columns});
       }
     });
   });

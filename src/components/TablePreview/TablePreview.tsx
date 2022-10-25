@@ -1,18 +1,20 @@
 import classNames from 'classnames';
 import {useState} from 'react';
 
-import type {CSVColumns, CSVData} from '../../types';
+import type {CSVColumns, CSVRows} from '../../types';
+
+const MAX_PREVIEW_ROWS = 10;
 
 interface TablePreviewProps {
   columns: CSVColumns;
-  data: CSVData;
+  rows: CSVRows;
   selectedColumnId?: string;
   onClickOnColumn?: (column: string) => void;
 }
 
 function TablePreview({
   columns = [],
-  data = [],
+  rows = [],
   selectedColumnId,
   onClickOnColumn
 }: TablePreviewProps) {
@@ -41,11 +43,11 @@ function TablePreview({
           </tr>
         </thead>
         <tbody>
-          {data.map((datum, datumIndex) => {
+          {rows.slice(0, MAX_PREVIEW_ROWS).map((row, rowIndex) => {
             return (
-              <tr key={datumIndex}>
+              <tr key={rowIndex}>
                 {columns.map(column => {
-                  const dataPoint = datum[column];
+                  const dataPoint = row[column];
                   return (
                     <td
                       onMouseEnter={() => setHoveredColumn(column)}

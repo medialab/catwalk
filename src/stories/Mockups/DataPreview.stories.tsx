@@ -65,7 +65,7 @@ Default.args = {
     <MainColumn>
       <MainRow>
         <Header allowBackLink onBackLinkClick={console.log} />
-        <TablePreview columns={mockColumns} data={mockData} />
+        <TablePreview columns={mockColumns} rows={mockData} />
         <ColumnSelectionPrompt />
       </MainRow>
       <Footer />
@@ -80,7 +80,7 @@ ColumnSelected.args = {
         <Header allowBackLink onBackLinkClick={console.log} />
         <TablePreview
           columns={mockColumns}
-          data={mockData}
+          rows={mockData}
           selectedColumnId={'titi'}
         />
         <ColumnSelectionPrompt />
@@ -106,7 +106,7 @@ InvalidPreview.args = {
         <Header allowBackLink onBackLinkClick={console.log} />
         <TablePreview
           columns={mockColumns}
-          data={mockData}
+          rows={mockData}
           selectedColumnId={'titi'}
         />
         <ColumnSelectionPrompt />

@@ -6,7 +6,7 @@ import Dropzone from '../Dropzone';
 import LoadingCartel from '../LoadingCartel';
 import SamplePicker from '../SamplePicker';
 import {parseCsvFile} from '../../lib/parse';
-import {useData, useI18nMessages} from '../../hooks';
+import {useCSVData, useI18nMessages} from '../../hooks';
 
 function IntroParagraph() {
   const {introductionText} = useI18nMessages();
@@ -14,7 +14,7 @@ function IntroParagraph() {
 }
 
 export default function LandingView({setView}: ViewProps) {
-  const [_, setData] = useData();
+  const [_, setCSVData] = useCSVData();
   const [isLoading, setIsLoading] = useState(false);
   const [currentProgress, setCurrentProgress] = useState<ParseCSVProgress>({
     lines: 0,
@@ -33,12 +33,13 @@ export default function LandingView({setView}: ViewProps) {
               const data = await parseCsvFile(file, progress => {
                 setCurrentProgress(progress);
               });
-              setData(data);
+              setCSVData(data);
+              setView('data-preview');
             }}
           />
           <SamplePicker
             options={[{value: 'super', label: 'Super fichier'}]}
-            onChange={() => setView('data-preview')}
+            onChange={sampleName => console.log(sampleName, 'was chosen')}
           />
         </>
       )}

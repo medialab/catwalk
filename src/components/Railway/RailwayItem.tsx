@@ -5,14 +5,14 @@ import type {CSVRow, AnnotationSchema} from '../../types';
 import {useI18nMessages} from '../../hooks';
 
 interface RailwayItemProps {
-  datum: CSVRow;
+  row: CSVRow;
   schema: AnnotationSchema;
   isActive?: boolean;
   onClick?: (event: React.MouseEvent<HTMLLIElement>) => void;
 }
 
 function RailwayItem({
-  datum,
+  row,
   schema,
   isActive = false,
   onClick
@@ -22,8 +22,8 @@ function RailwayItem({
   const vizData = useMemo(() => {
     return schema.reduce((items, {name, color, modalities}) => {
       const value =
-        datum[name] &&
-        modalities.find(({name: modalityName}) => modalityName === datum[name]);
+        row[name] &&
+        modalities.find(({name: modalityName}) => modalityName === row[name]);
       return [
         ...items,
         {
@@ -34,7 +34,7 @@ function RailwayItem({
         }
       ];
     }, []);
-  }, [datum, schema]);
+  }, [row, schema]);
   return (
     <li
       className={classNames('RailwayItem', {'is-active': isActive})}
@@ -63,7 +63,7 @@ function RailwayItem({
                   <span className="color-marker" style={{background: color}} />
                   <strong className="category-name">{name}</strong>
                   <span>{': '}</span>
-                  <span className="datum-value-for-category">
+                  <span className="row-value-for-category">
                     {isActive ? value : railwayItemTooltipNoTagging}
                   </span>
                 </li>
