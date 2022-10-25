@@ -1,5 +1,6 @@
 import {useState} from 'react';
 
+import type {ViewProps} from './types';
 import Button from '../Button';
 import TablePreview from '../TablePreview';
 import InfoPin from '../InfoPin';
@@ -18,13 +19,17 @@ function ColumnSelectionPrompt() {
   );
 }
 
-function ValidationButton() {
+function ValidationButton({validate}) {
   const {previewValidation} = useI18nMessages();
 
-  return <Button isFullWidth>{previewValidation}</Button>;
+  return (
+    <Button isFullWidth onClick={validate}>
+      {previewValidation}
+    </Button>
+  );
 }
 
-export default function DataPreviewView() {
+export default function DataPreviewView({setView}: ViewProps) {
   const [csvData] = useCSVData();
   const [selectedColumn, setSelectedColumn] = useState<string | undefined>();
 
@@ -48,7 +53,7 @@ export default function DataPreviewView() {
       {selectedColumn && (
         <>
           <MediaPreview value={rows[0][selectedColumn]} />
-          <ValidationButton />
+          <ValidationButton validate={() => setView('annotation')} />
         </>
       )}
     </>

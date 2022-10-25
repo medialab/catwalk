@@ -19,9 +19,9 @@ export default function Application() {
   let viewChild = <LandingView setView={setView} />;
 
   if (view === 'data-preview') {
-    viewChild = <DataPreviewView />;
+    viewChild = <DataPreviewView setView={setView} />;
   } else if (view === 'annotation') {
-    viewChild = <AnnotationView setView={setView} />;
+    viewChild = <AnnotationView />;
   }
 
   return (
