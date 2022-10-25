@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-type LayoutMode = 'landing' | 'annotation';
+import {LayoutMode} from '../../types';
 
 interface ContainerProps {
   children: React.ReactNode;

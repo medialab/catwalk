@@ -1,7 +1,8 @@
 /**
  * UI state types.
  */
-export type View = 'landing' | 'data-preview';
+export type View = 'landing' | 'data-preview' | 'annotation';
+export type LayoutMode = 'landing' | 'annotation';
 
 /**
  * CSV data types.

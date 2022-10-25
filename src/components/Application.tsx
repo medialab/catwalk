@@ -9,7 +9,6 @@ import Header from './Header';
 import Footer from './Footer';
 import Dropzone from './Dropzone';
 import SamplePicker from './SamplePicker';
-import {useCSVData} from '../hooks';
 
 import '../styles/entrypoint.scss';
 
@@ -17,9 +16,11 @@ const mockIntroText = `
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam amet voluptatem eius dolorum reprehenderit earum. Quis, dolorum cum in vel laudantium adipisci, beatae accusamus voluptatibus quos tenetur explicabo expedita.
 `;
 
-const LandingView = ({setView}) => {
-  const [_, setCSVData] = useCSVData();
+interface ViewProps {
+  setView: (view: View) => void;
+}
 
+const LandingView = ({setView}: ViewProps) => {
   return (
     <>
       <p>{mockIntroText}</p>
@@ -32,10 +33,22 @@ const LandingView = ({setView}) => {
   );
 };
 
-const DataPreviewView = () => {
-  const [csvData] = useCSVData();
+const DataPreviewView = ({setView}: ViewProps) => {
+  return (
+    <div>
+      <p>Coucou data preview.</p>
+      <button onClick={() => setView('annotation')}>go to annotation</button>
+    </div>
+  );
+};
 
-  return <p>Coucou data preview: {Object.keys(csvData[0]).join(', ')}</p>;
+const AnnotationView = ({setView}: ViewProps) => {
+  return (
+    <div>
+      Annotation view
+      <button onClick={() => setView('landing')}>go to landing</button>
+    </div>
+  );
 };
 
 export default function Application() {
@@ -45,11 +58,13 @@ export default function Application() {
 
   if (view === 'data-preview') {
     ViewComponent = DataPreviewView;
+  } else if (view === 'annotation') {
+    ViewComponent = AnnotationView;
   }
 
   return (
     <LangContext.Provider value="en">
-      <Layout mode="landing">
+      <Layout mode={view === 'annotation' ? 'annotation' : 'landing'}>
         <MainColumn>
           <MainRow>
             <Header />
