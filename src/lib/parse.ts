@@ -1,12 +1,7 @@
 import Papa from 'papaparse';
 import extend from '@yomguithereal/helpers/extend';
 
-import type {CSVRows, CSVRow, CSVColumns} from '../types';
-
-export type ParseCSVResult = {
-  columns: CSVColumns;
-  rows: CSVRows;
-};
+import type {CSVRows, CSVRow, CSVColumns, CSVData} from '../types';
 
 export type ParseCSVProgress = {
   percent: number;
@@ -16,7 +11,7 @@ export type ParseCSVProgress = {
 export function parseCsvFile(
   file: File,
   progressCallback?: (progress: ParseCSVProgress) => void
-): Promise<ParseCSVResult> {
+): Promise<CSVData> {
   const totalFileSize = file.size;
   const rows: CSVRows = [];
   let columns: CSVColumns | null = null;

@@ -11,6 +11,7 @@ export type NotificationType = 'error' | 'info';
 export type CSVRow = {[column: string]: string};
 export type CSVColumns = Array<string>;
 export type CSVRows = Array<CSVRow>;
+export type CSVData = {columns: CSVColumns; rows: CSVRows};
 
 /**
  * Types related to the annotation schema.
