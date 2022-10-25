@@ -1,7 +1,9 @@
 import {useState} from 'react';
 
+import Button from '../Button';
 import TablePreview from '../TablePreview';
 import InfoPin from '../InfoPin';
+import MediaPreview from '../MediaPreview';
 import {useCSVData, useI18nMessages} from '../../hooks';
 
 function ColumnSelectionPrompt() {
@@ -14,6 +16,12 @@ function ColumnSelectionPrompt() {
       <InfoPin message={previewSelectColumnPromptExplanation} />
     </p>
   );
+}
+
+function ValidationButton() {
+  const {previewValidation} = useI18nMessages();
+
+  return <Button isFullWidth>{previewValidation}</Button>;
 }
 
 export default function DataPreviewView() {
@@ -37,6 +45,12 @@ export default function DataPreviewView() {
         onClickOnColumn={setSelectedColumn}
       />
       <ColumnSelectionPrompt />
+      {selectedColumn && (
+        <>
+          <MediaPreview value={rows[0][selectedColumn]} />
+          <ValidationButton />
+        </>
+      )}
     </>
   );
 }

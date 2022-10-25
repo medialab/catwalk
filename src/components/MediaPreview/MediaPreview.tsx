@@ -17,9 +17,9 @@ const PREVIEW_MAP: Record<MediaPreviewType, MediaPreviewSpecification> = {
 };
 
 interface MediaPreviewProps {
-  type: MediaPreviewType;
+  type?: MediaPreviewType;
   value: string;
-  onPreviewTypeChange: (type: string) => void;
+  onPreviewTypeChange?: (type: string) => void;
 }
 
 /**
