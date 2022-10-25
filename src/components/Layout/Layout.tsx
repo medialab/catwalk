@@ -4,12 +4,12 @@ type LayoutMode = 'landing' | 'annotation';
 
 interface ContainerProps {
   children: React.ReactNode;
-  style: React.CSSProperties;
-  className: string;
+  style?: React.CSSProperties;
+  className?: string;
   mode: LayoutMode;
 }
 
-export default function Container({
+export default function Layout({
   children,
   style = {},
   className,

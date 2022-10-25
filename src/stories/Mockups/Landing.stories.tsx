@@ -5,7 +5,7 @@ import {useI18nMessages} from '../../hooks';
 import Dropzone from '../../components/Dropzone';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-import Layout from '../../components/Layout/Container';
+import Layout from '../../components/Layout/Layout';
 import MainColumn from '../../components/Layout/MainColumn';
 import Notification from '../../components/Notification';
 import SamplePicker from '../../components/SamplePicker/SamplePicker';

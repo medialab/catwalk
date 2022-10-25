@@ -11,7 +11,7 @@ type TagsColumnProps = {
   stats: Array<any>;
   uploadedModelStatus?: 'error' | 'pending' | 'processing';
   onNewCategorizationPrompt: () => void;
-  onModelFilesDrop: (files: Array<object>) => void;
+  onModelFilesDrop: (file: File) => void;
   onEditTogglePrompt: () => void;
 
   onDeleteCategoryRequest: (category: object) => void;

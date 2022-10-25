@@ -7,7 +7,7 @@ import {
 } from './mockData';
 
 import Header from '../../components/Header';
-import Layout from '../../components/Layout/Container';
+import Layout from '../../components/Layout/Layout';
 import MainColumn from '../../components/Layout/MainColumn';
 import MediaPreview from '../../components/MediaPreview';
 import MainRow from '../../components/Layout/MainRow';

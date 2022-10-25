@@ -1,4 +1,9 @@
 /**
+ * UI state types.
+ */
+export type View = 'landing' | 'data-preview';
+
+/**
  * CSV data types.
  */
 export type CSVRow = {[column: string]: string};
