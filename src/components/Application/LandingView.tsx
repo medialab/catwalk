@@ -1,20 +1,41 @@
+import {useState} from 'react';
+
 import type {ViewProps} from './types';
 import Dropzone from '../Dropzone';
+import LoadingCartel from '../LoadingCartel';
 import SamplePicker from '../SamplePicker';
+import {parseCsvFile} from '../../lib/parse';
+import {useData, useI18nMessages} from '../../hooks';
 
-const mockIntroText = `
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam amet voluptatem eius dolorum reprehenderit earum. Quis, dolorum cum in vel laudantium adipisci, beatae accusamus voluptatibus quos tenetur explicabo expedita.
-`;
+function IntroParagraph() {
+  const {introductionText} = useI18nMessages();
+  return <p>{introductionText}</p>;
+}
 
 export default function LandingView({setView}: ViewProps) {
+  const [_, setData] = useData();
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <>
-      <p>{mockIntroText}</p>
-      <Dropzone />
-      <SamplePicker
-        options={[{value: 'super', label: 'Super fichier'}]}
-        onChange={() => setView('data-preview')}
-      />
+      <IntroParagraph />
+      {!isLoading && (
+        <>
+          <Dropzone
+            accept="csv"
+            onFilesDrop={async file => {
+              setIsLoading(true);
+              const data = await parseCsvFile(file);
+              setData(data);
+            }}
+          />
+          <SamplePicker
+            options={[{value: 'super', label: 'Super fichier'}]}
+            onChange={() => setView('data-preview')}
+          />
+        </>
+      )}
+      {isLoading && <LoadingCartel loadingPercentage={50} />}
     </>
   );
 }

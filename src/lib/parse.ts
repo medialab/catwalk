@@ -1,8 +1,13 @@
 import Papa from 'papaparse';
 
-import type {CSVData, CSVRow} from '../types';
+import type {CSVData, CSVRow, CSVColumns} from '../types';
 
-export function parseCsvFile(file: File): Promise<CSVData> {
+export type ParseCSVResult = {
+  columns: CSVColumns;
+  data: CSVData;
+};
+
+export function parseCsvFile(file: File): Promise<ParseCSVResult> {
   return new Promise((resolve, reject) => {
     Papa.parse<CSVRow>(file, {
       worker: true,
@@ -11,7 +16,7 @@ export function parseCsvFile(file: File): Promise<CSVData> {
         reject(err);
       },
       complete(result) {
-        resolve(result.data);
+        resolve({data: result.data, columns: result.meta.fields});
       }
     });
   });

@@ -18,9 +18,6 @@ const mockSamplesOptions = [
   {value: 'websites', label: 'websites'}
 ];
 
-const mockIntroText = `
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam amet voluptatem eius dolorum reprehenderit earum. Quis, dolorum cum in vel laudantium adipisci, beatae accusamus voluptatibus quos tenetur explicabo expedita.
-`;
 function ParagraphIntroduction() {
   const {introductionText} = useI18nMessages();
   return <p>{introductionText}</p>;
@@ -52,7 +49,7 @@ Default.args = {
     <MainColumn>
       <MainRow>
         <Header />
-        <p>{mockIntroText}</p>
+        <ParagraphIntroduction />
         <Dropzone onFilesDrop={console.log} />
         <SamplePicker onChange={console.log} options={mockSamplesOptions} />
       </MainRow>

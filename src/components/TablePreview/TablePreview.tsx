@@ -1,9 +1,11 @@
 import classNames from 'classnames';
 import {useState} from 'react';
 
+import type {CSVColumns, CSVData} from '../../types';
+
 interface TablePreviewProps {
-  columns: Array<string>;
-  data: Array<object>;
+  columns: CSVColumns;
+  data: CSVData;
   selectedColumnId?: string;
   onClickOnColumn?: (column: string) => void;
 }

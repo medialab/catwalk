@@ -1,8 +1,11 @@
 import {useAtom, SetStateAction} from 'jotai';
 
-import type {CSVData} from '../types';
+import type {ParseCSVResult} from '../lib/parse';
 import {dataAtom} from '../atoms';
 
-export function useCSVData(): [CSVData | null, SetStateAction<CSVData | null>] {
+export function useData(): [
+  ParseCSVResult | null,
+  (action: SetStateAction<ParseCSVResult | null>) => void
+] {
   return useAtom(dataAtom);
 }

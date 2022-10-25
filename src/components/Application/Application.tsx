@@ -16,12 +16,12 @@ import '../../styles/entrypoint.scss';
 export default function Application() {
   const [view, setView] = useState<View>('landing');
 
-  let ViewComponent = LandingView;
+  let viewChild = <LandingView setView={setView} />;
 
   if (view === 'data-preview') {
-    ViewComponent = DataPreviewView;
+    viewChild = <DataPreviewView setView={setView} />;
   } else if (view === 'annotation') {
-    ViewComponent = AnnotationView;
+    viewChild = <AnnotationView setView={setView} />;
   }
 
   return (
@@ -30,7 +30,7 @@ export default function Application() {
         <MainColumn>
           <MainRow>
             <Header />
-            <ViewComponent setView={setView} />
+            {viewChild}
           </MainRow>
           <Footer />
         </MainColumn>
