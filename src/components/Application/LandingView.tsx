@@ -1,5 +1,6 @@
 import {useState} from 'react';
 
+import type {ParseCSVProgress} from '../../lib/parse';
 import type {ViewProps} from './types';
 import Dropzone from '../Dropzone';
 import LoadingCartel from '../LoadingCartel';
@@ -15,6 +16,10 @@ function IntroParagraph() {
 export default function LandingView({setView}: ViewProps) {
   const [_, setData] = useData();
   const [isLoading, setIsLoading] = useState(false);
+  const [currentProgress, setCurrentProgress] = useState<ParseCSVProgress>({
+    lines: 0,
+    percent: 0
+  });
 
   return (
     <>
@@ -25,7 +30,9 @@ export default function LandingView({setView}: ViewProps) {
             accept="csv"
             onFilesDrop={async file => {
               setIsLoading(true);
-              const data = await parseCsvFile(file);
+              const data = await parseCsvFile(file, progress => {
+                setCurrentProgress(progress);
+              });
               setData(data);
             }}
           />
@@ -35,7 +42,12 @@ export default function LandingView({setView}: ViewProps) {
           />
         </>
       )}
-      {isLoading && <LoadingCartel loadingPercentage={50} />}
+      {isLoading && (
+        <LoadingCartel
+          loadingPercentage={currentProgress.percent}
+          lines={currentProgress.lines}
+        />
+      )}
     </>
   );
 }

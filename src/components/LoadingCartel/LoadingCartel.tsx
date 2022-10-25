@@ -1,10 +1,13 @@
+import formatInt from 'comma-number';
+
 import {useI18nMessages} from '../../hooks';
 
 interface LoadingCartel {
   loadingPercentage: number;
+  lines?: number;
 }
 
-function LoadingCartel({loadingPercentage}: LoadingCartel) {
+function LoadingCartel({loadingPercentage, lines}: LoadingCartel) {
   const {loadingMessage} = useI18nMessages();
   return (
     <div className="LoadingCartel">
@@ -16,11 +19,14 @@ function LoadingCartel({loadingPercentage}: LoadingCartel) {
         <div
           className="bar-bar"
           style={{
-            width: `${loadingPercentage}%`
+            width: `${Math.ceil(loadingPercentage * 100)}%`
           }}
         />
       </div>
-      <h5 className="loading-message">{loadingMessage}</h5>
+      <h5 className="loading-message">
+        {loadingMessage}
+        {!!lines && <span> (parsed {formatInt(lines)} lines)</span>}
+      </h5>
     </div>
   );
 }
