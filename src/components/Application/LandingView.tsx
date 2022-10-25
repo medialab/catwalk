@@ -14,7 +14,7 @@ function IntroParagraph() {
 }
 
 export default function LandingView({setView}: ViewProps) {
-  const [_, setCSVData] = useCSVData();
+  const [, setCSVData] = useCSVData();
   const [isLoading, setIsLoading] = useState(false);
   const [currentProgress, setCurrentProgress] = useState<ParseCSVProgress>({
     lines: 0,

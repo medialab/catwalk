@@ -3,19 +3,19 @@ import {useState} from 'react';
 
 import type {CSVColumns, CSVRows} from '../../types';
 
-const MAX_PREVIEW_ROWS = 10;
+const MAX_PREVIEW_ROWS = 5;
 
 interface TablePreviewProps {
   columns: CSVColumns;
   rows: CSVRows;
-  selectedColumnId?: string;
+  selectedColumn?: string;
   onClickOnColumn?: (column: string) => void;
 }
 
 function TablePreview({
   columns = [],
   rows = [],
-  selectedColumnId,
+  selectedColumn,
   onClickOnColumn
 }: TablePreviewProps) {
   const [hoveredColumn, setHoveredColumn] = useState(undefined);
@@ -32,7 +32,7 @@ function TablePreview({
                   onClick={() => onClickOnColumn(column)}
                   onMouseEnter={() => setHoveredColumn(column)}
                   className={classNames({
-                    'is-active': column === selectedColumnId,
+                    'is-active': column === selectedColumn,
                     'is-hovered': column === hoveredColumn
                   })}
                   key={column}>
@@ -52,7 +52,7 @@ function TablePreview({
                     <td
                       onMouseEnter={() => setHoveredColumn(column)}
                       className={classNames({
-                        'is-active': column === selectedColumnId,
+                        'is-active': column === selectedColumn,
                         'is-hovered': column === hoveredColumn
                       })}
                       onClick={() => onClickOnColumn(column)}

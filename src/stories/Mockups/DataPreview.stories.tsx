@@ -81,7 +81,7 @@ ColumnSelected.args = {
         <TablePreview
           columns={mockColumns}
           rows={mockData}
-          selectedColumnId={'titi'}
+          selectedColumn={'titi'}
         />
         <ColumnSelectionPrompt />
 
@@ -107,7 +107,7 @@ InvalidPreview.args = {
         <TablePreview
           columns={mockColumns}
           rows={mockData}
-          selectedColumnId={'titi'}
+          selectedColumn={'titi'}
         />
         <ColumnSelectionPrompt />
 
