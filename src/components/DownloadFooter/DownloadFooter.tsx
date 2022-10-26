@@ -1,15 +1,14 @@
+import type {DownloadType} from '../../types';
 import {useI18nMessages} from '../../hooks';
 import Button from '../Button';
 import InfoPin from '../InfoPin';
 import Modal from '../Modal';
 
-type DowloadType = 'everything' | 'data' | 'model';
-
 type DownloadFooterProps = {
   hasModalOpen?: boolean;
-  onModalOpen: () => void;
-  onModalClose: () => void;
-  onDownloadChoice: (type: DowloadType) => void;
+  onModalOpen?: () => void;
+  onModalClose?: () => void;
+  onDownloadChoice?: (type: DownloadType) => void;
 };
 
 function DownloadFooter({
@@ -42,19 +41,19 @@ function DownloadFooter({
           <h3>{downloadFooterModalTitle}</h3>
           <ul>
             <li>
-              <Button onClick={() => onDownloadChoice('data')}>
+              <Button onClick={() => onDownloadChoice?.('data')}>
                 <span>{downloadFooterModalDlData}</span>
                 <InfoPin message={downloadFooterModalDlDataHelp} />
               </Button>
             </li>
             <li>
-              <Button onClick={() => onDownloadChoice('model')}>
+              <Button onClick={() => onDownloadChoice?.('model')}>
                 <span>{downloadFooterModalDlModel}</span>
                 <InfoPin message={downloadFooterModalDlModelHelp} />
               </Button>
             </li>
             <li>
-              <Button onClick={() => onDownloadChoice('everything')}>
+              <Button onClick={() => onDownloadChoice?.('everything')}>
                 <span>{downloadFooterModalDlEverything}</span>
                 <InfoPin message={downloadFooterModalDlEverythingHelp} />
               </Button>

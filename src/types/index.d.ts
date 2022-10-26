@@ -4,6 +4,7 @@
 export type View = 'landing' | 'data-preview' | 'annotation';
 export type LayoutMode = 'landing' | 'annotation';
 export type NotificationType = 'error' | 'info';
+export type DownloadType = 'everything' | 'data' | 'model';
 
 /**
  * CSV data types.

@@ -5,7 +5,7 @@ interface ModalProps {
   style?: React.CSSProperties;
   className?: string;
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 function Modal({children, className, style, isOpen, onClose}: ModalProps) {

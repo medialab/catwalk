@@ -27,7 +27,7 @@ export function useAnnotationConfig(): [
   const actions: AnnotationConfigActions = {
     createAnnotationConfig(params) {
       const config = createDefaultAnnotationConfig(params);
-      // setAnnotationConfig(config);
+      setAnnotationConfig(config);
     }
   };
 

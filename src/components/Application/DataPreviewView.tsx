@@ -1,11 +1,13 @@
 import {useState} from 'react';
 
+import type {MediaPreviewType} from '../../types';
 import type {ViewProps} from './types';
 import Button from '../Button';
 import TablePreview from '../TablePreview';
 import InfoPin from '../InfoPin';
 import MediaPreview from '../MediaPreview';
-import {useCSVData, useI18nMessages} from '../../hooks';
+import {useCSVData, useAnnotationConfig, useI18nMessages} from '../../hooks';
+import {DEFAULT_MEDIA_PREVIEW_TYPE} from '../../defaults';
 
 function ColumnSelectionPrompt() {
   const {previewSelectColumnPrompt, previewSelectColumnPromptExplanation} =
@@ -31,7 +33,11 @@ function ValidationButton({validate}) {
 
 export default function DataPreviewView({setView}: ViewProps) {
   const [csvData] = useCSVData();
+  const [, {createAnnotationConfig}] = useAnnotationConfig();
   const [selectedColumn, setSelectedColumn] = useState<string | undefined>();
+  const [previewType, setPreviewType] = useState<MediaPreviewType>(
+    DEFAULT_MEDIA_PREVIEW_TYPE
+  );
 
   if (!csvData)
     throw new Error(
@@ -52,8 +58,17 @@ export default function DataPreviewView({setView}: ViewProps) {
       <ColumnSelectionPrompt />
       {selectedColumn && (
         <>
-          <MediaPreview value={rows[0][selectedColumn]} />
-          <ValidationButton validate={() => setView('annotation')} />
+          <MediaPreview
+            value={rows[0][selectedColumn]}
+            type={previewType}
+            onPreviewTypeChange={setPreviewType}
+          />
+          <ValidationButton
+            validate={() => {
+              createAnnotationConfig({columns, selectedColumn, previewType});
+              setView('annotation');
+            }}
+          />
         </>
       )}
     </>
