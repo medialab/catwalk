@@ -41,7 +41,7 @@ export default {
 } as ComponentMeta<typeof Layout>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Layout> = args => {
+const Template: ComponentStory<typeof Layout> = ({mode, ...args}) => {
   return <Layout mode="landing" {...args} />;
 };
 

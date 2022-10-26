@@ -55,7 +55,7 @@ function MediaPreview({
         <div>{mediapreviewChooseAType}</div>
         <div>
           <Select
-            onChange={e => onPreviewTypeChange(e.value)}
+            onChange={e => e && onPreviewTypeChange?.(e.value)}
             options={PREVIEW_OPTIONS}
             isSearchable={false}
             value={selectedOption}

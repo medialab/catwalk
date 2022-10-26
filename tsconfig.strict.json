@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true
-  },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
-}

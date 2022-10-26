@@ -49,7 +49,7 @@ export function useKeypress(key: string, listener: () => void) {
 
   useEffect(() => {
     const windowListener = event => {
-      listenerRef.current(event);
+      listenerRef.current?.(event);
     };
 
     window.addEventListener('keyup', windowListener);

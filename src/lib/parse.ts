@@ -26,22 +26,22 @@ export function parseCsvFile(
         extend(rows, result.data);
         parsedLines += result.data.length;
 
-        columns = result.meta.fields;
+        if (result.meta.fields) columns = result.meta.fields;
 
-        if (progressCallback) {
-          const parsedSize = result.meta.cursor;
-          progressCallback({
-            percent: parsedSize / totalFileSize,
-            lines: parsedLines
-          });
-        }
+        const parsedSize = result.meta.cursor;
+        progressCallback?.({
+          percent: parsedSize / totalFileSize,
+          lines: parsedLines
+        });
       },
       error(err) {
         reject(err);
       },
       complete() {
-        progressCallback({percent: 1, lines: rows.length});
-        resolve({rows, columns});
+        progressCallback?.({percent: 1, lines: rows.length});
+
+        // TODO: what to do when file as no headers
+        resolve({rows, columns: columns as CSVColumns});
       }
     });
   });

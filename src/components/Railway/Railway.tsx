@@ -175,7 +175,7 @@ function Railway({
           </ul>
         </div>
       </div>
-      <Modal isOpen={keyAssignIsEdited} onClose={onNavKeyAssignClosePrompt}>
+      <Modal isOpen={!!keyAssignIsEdited} onClose={onNavKeyAssignClosePrompt}>
         <h3>
           {railwayKeyassignModalTitle}
           <code>

@@ -16,7 +16,7 @@ function SamplePicker({options, onChange}: SamplePickerProps) {
       <div>{chooseADataSample}</div>
       <div>
         <Select
-          onChange={e => onChange(e.value)}
+          onChange={e => e && onChange?.(e.value)}
           options={options}
           isSearchable={false}
           placeholder={chooseADataSamplePlaceholder}

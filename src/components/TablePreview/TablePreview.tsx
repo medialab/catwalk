@@ -18,7 +18,10 @@ function TablePreview({
   selectedColumn,
   onClickOnColumn
 }: TablePreviewProps) {
-  const [hoveredColumn, setHoveredColumn] = useState(undefined);
+  const [hoveredColumn, setHoveredColumn] = useState<string | undefined>(
+    undefined
+  );
+
   return (
     <div
       onMouseLeave={() => setHoveredColumn(undefined)}
@@ -29,7 +32,7 @@ function TablePreview({
             {columns.map(column => {
               return (
                 <th
-                  onClick={() => onClickOnColumn(column)}
+                  onClick={() => onClickOnColumn?.(column)}
                   onMouseEnter={() => setHoveredColumn(column)}
                   className={classNames({
                     'is-active': column === selectedColumn,
@@ -55,7 +58,7 @@ function TablePreview({
                         'is-active': column === selectedColumn,
                         'is-hovered': column === hoveredColumn
                       })}
-                      onClick={() => onClickOnColumn(column)}
+                      onClick={() => onClickOnColumn?.(column)}
                       key={column}>
                       {dataPoint}
                     </td>

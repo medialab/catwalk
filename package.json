@@ -18,8 +18,7 @@
     "prettier:check": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --check",
     "prettier": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --write",
     "reinstall": "rimraf ./node_modules && npm i",
-    "storybook": "start-storybook -p 6006",
-    "ts:check:strict": "tsc --noEmit -p tsconfig.strict.json"
+    "storybook": "start-storybook -p 6006"
   },
   "kotatsu": {
     "config": "./webpack.config.js",
@@ -102,24 +101,5 @@
     "react-window": "^1.8.7",
     "uuid": "^9.0.0"
   },
-  "prettier": "@yomguithereal/prettier-config",
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "env": {
-      "browser": true,
-      "node": true
-    },
-    "globals": {
-      "React": true,
-      "JSX": true
-    },
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "eslint-config-prettier"
-    ]
-  }
+  "prettier": "@yomguithereal/prettier-config"
 }

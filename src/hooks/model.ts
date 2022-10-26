@@ -19,7 +19,7 @@ interface AnnotationConfigActions {
 }
 
 export function useAnnotationConfig(): [
-  AnnotationConfig,
+  AnnotationConfig | null,
   AnnotationConfigActions
 ] {
   const [annotationConfig, setAnnotationConfig] = useAtom(annotationConfigAtom);
