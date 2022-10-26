@@ -1,17 +1,17 @@
 import type {DownloadType} from '../../types';
-import Modal, {ModalPropsBase} from './Modal';
+import Modal from './Modal';
 import Button from '../Button';
 import InfoPin from '../InfoPin';
 import {useI18nMessages} from '../../hooks';
 
-interface DownloadModalProps extends ModalPropsBase {
+interface DownloadModalProps {
+  onClose?: () => void;
   onDownloadChoice?: (type: DownloadType) => void;
 }
 
 export default function DownloadModal({
-  isOpen,
-  onClose,
-  onDownloadChoice
+  onDownloadChoice,
+  onClose
 }: DownloadModalProps) {
   const {
     downloadFooterModalTitle,
@@ -25,7 +25,7 @@ export default function DownloadModal({
   } = useI18nMessages();
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal onClose={onClose}>
       <div className="DownloadFooterModalContent">
         <h3>{downloadFooterModalTitle}</h3>
         <ul>

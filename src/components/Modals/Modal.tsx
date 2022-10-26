@@ -1,21 +1,18 @@
 import classNames from 'classnames';
 
-export interface ModalPropsBase {
-  isOpen?: boolean;
-  onClose?: () => void;
-}
-
-interface ModalProps extends ModalPropsBase {
+interface ModalProps {
   children: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 function Modal({
   children,
   className,
   style,
-  isOpen = false,
+  isOpen = true,
   onClose
 }: ModalProps) {
   return (

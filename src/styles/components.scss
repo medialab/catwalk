@@ -708,7 +708,7 @@
 
   &.is-open {
     z-index: 1000;
-    background: color_translucid_dark;
+    background: $color_translucid_dark;
     pointer-events: all;
     opacity: 1;
   }

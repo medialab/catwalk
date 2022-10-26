@@ -1,14 +1,17 @@
 import Button from '../Button';
-import {useI18nMessages, useDisplayModal} from '../../hooks';
+import {useI18nMessages} from '../../hooks';
 
-function DownloadFooter() {
+interface DownloadFooterProps {
+  onClick?: () => void;
+}
+
+function DownloadFooter({onClick}: DownloadFooterProps) {
   const {downloadFooterDownload} = useI18nMessages();
-  const displayModal = useDisplayModal();
 
   return (
     <>
       <footer className="DownloadFooter">
-        <Button isFullWidth onClick={() => displayModal('download')}>
+        <Button isFullWidth onClick={onClick}>
           {downloadFooterDownload}
         </Button>
       </footer>

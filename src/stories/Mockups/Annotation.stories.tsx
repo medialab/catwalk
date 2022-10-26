@@ -14,6 +14,7 @@ import MainRow from '../../components/Layout/MainRow';
 import DownloadFooter from '../../components/DownloadFooter';
 import TagsColumn from '../../components/TagsColumn';
 import Railway from '../../components/Railway';
+import DownloadModal from '../../components/Modals/DownloadModal';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -110,10 +111,6 @@ const MockTagsColumn = ({
   );
 };
 
-const MockDownloadFooter = () => {
-  return <DownloadFooter />;
-};
-
 export const Default = Template.bind({});
 Default.args = {
   children: (
@@ -121,7 +118,7 @@ Default.args = {
       <MockRailway />
       <MainColumn>
         <MockMainRow />
-        <MockDownloadFooter />
+        <DownloadFooter />
       </MainColumn>
       <MockTagsColumn />
     </>
@@ -135,7 +132,7 @@ ModelIsEdited.args = {
       <MockRailway />
       <MainColumn>
         <MockMainRow />
-        <MockDownloadFooter />
+        <DownloadFooter />
       </MainColumn>
       <MockTagsColumn isEdited />
     </>
@@ -149,7 +146,7 @@ ModelHasBeenUploadedButIsInvalid.args = {
       <MockRailway />
       <MainColumn>
         <MockMainRow />
-        <MockDownloadFooter />
+        <DownloadFooter />
       </MainColumn>
       <MockTagsColumn isEdited uploadedModelStatus="error" />
     </>
@@ -163,7 +160,7 @@ RailwayIsRefreshable.args = {
       <MockRailway isRefreshable />
       <MainColumn>
         <MockMainRow />
-        <MockDownloadFooter />
+        <DownloadFooter />
       </MainColumn>
       <MockTagsColumn />
     </>
@@ -177,7 +174,7 @@ RailwayIsEdited.args = {
       <MockRailway isEdited />
       <MainColumn>
         <MockMainRow />
-        <MockDownloadFooter />
+        <DownloadFooter />
       </MainColumn>
       <MockTagsColumn />
     </>
@@ -191,7 +188,7 @@ RailwayANavKeyIsEdited.args = {
       <MockRailway isEdited editedKeyAssignCommand="prev" />
       <MainColumn>
         <MockMainRow />
-        <MockDownloadFooter />
+        <DownloadFooter />
       </MainColumn>
       <MockTagsColumn />
     </>
@@ -206,9 +203,10 @@ DownloadModalIsOpen.args = {
       <MockRailway />
       <MainColumn>
         <MockMainRow />
-        <MockDownloadFooter />
+        <DownloadFooter />
       </MainColumn>
       <MockTagsColumn />
+      <DownloadModal />
     </>
   )
 };
