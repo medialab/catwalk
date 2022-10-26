@@ -21,6 +21,15 @@ export default function LandingView({setView}: ViewProps) {
     percent: 0
   });
 
+  async function fileToDataPreview(file: File) {
+    const data = await parseCsvFile(file, progress => {
+      setCurrentProgress(progress);
+    });
+
+    setCSVData(data);
+    setView('data-preview');
+  }
+
   return (
     <>
       <IntroParagraph />
@@ -30,16 +39,23 @@ export default function LandingView({setView}: ViewProps) {
             accept="csv"
             onFilesDrop={async file => {
               setIsLoading(true);
-              const data = await parseCsvFile(file, progress => {
-                setCurrentProgress(progress);
-              });
-              setCSVData(data);
-              setView('data-preview');
+              fileToDataPreview(file);
             }}
           />
           <SamplePicker
-            options={[{value: 'super', label: 'Super fichier'}]}
-            onChange={sampleName => console.log(sampleName, 'was chosen')}
+            options={[
+              {value: '/public/samples/dummy.csv', label: 'Super Fichier'}
+            ]}
+            onChange={async sampleName => {
+              setIsLoading(true);
+              const file = await fetch(sampleName)
+                .then(res => res.blob())
+                .then(
+                  resBlob =>
+                    new File([resBlob], sampleName, {type: resBlob.type})
+                );
+              fileToDataPreview(file);
+            }}
           />
         </>
       )}
