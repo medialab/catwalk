@@ -43,9 +43,6 @@ export default function LandingView({setView}: ViewProps) {
             }}
           />
           <SamplePicker
-            options={[
-              {value: '/public/samples/dummy.csv', label: 'Super Fichier'}
-            ]}
             onChange={async sampleName => {
               setIsLoading(true);
               const file = await fetch(sampleName)

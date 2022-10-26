@@ -12,12 +12,6 @@ import SamplePicker from '../../components/SamplePicker/SamplePicker';
 import LoadingCartel from '../../components/LoadingCartel';
 import MainRow from '../../components/Layout/MainRow';
 
-const mockSamplesOptions = [
-  {value: 'tweets', label: 'tweets'},
-  {value: 'youtubeVideos', label: 'youtube videos'},
-  {value: 'websites', label: 'websites'}
-];
-
 function ParagraphIntroduction() {
   const {introductionText} = useI18nMessages();
   return <p>{introductionText}</p>;
@@ -51,7 +45,7 @@ Default.args = {
         <Header />
         <ParagraphIntroduction />
         <Dropzone onFilesDrop={console.log} />
-        <SamplePicker onChange={console.log} options={mockSamplesOptions} />
+        <SamplePicker onChange={console.log} />
       </MainRow>
       <Footer />
     </MainColumn>
@@ -67,7 +61,7 @@ InvalidFile.args = {
         <ParagraphIntroduction />
         <Dropzone onFilesDrop={console.log} />
         <NotificationInvalidFile />
-        <SamplePicker onChange={console.log} options={mockSamplesOptions} />
+        <SamplePicker onChange={console.log} />
       </MainRow>
       <Footer />
     </MainColumn>
