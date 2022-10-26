@@ -1,3 +1,3 @@
 export * from './context';
-export * from './data';
 export * from './keypress';
+export * from './model';

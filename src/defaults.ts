@@ -4,7 +4,7 @@ import type {MediaPreviewType, AnnotationConfig, CSVColumns} from './types';
 
 export const DEFAULT_MEDIA_PREVIEW_TYPE: MediaPreviewType = 'twitter-tweet';
 
-type CreateDefaultAnnotationConfigParams = {
+export type CreateDefaultAnnotationConfigParams = {
   columns: CSVColumns;
   selectedColumn: string;
   previewType: MediaPreviewType;
