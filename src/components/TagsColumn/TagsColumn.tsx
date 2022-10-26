@@ -38,6 +38,7 @@ function TagsColumn({
   } = useI18nMessages();
   return (
     <aside
+      key="tags-column"
       className={classNames('TagsColumn', {
         'is-edited': isEdited
       })}>
@@ -86,6 +87,12 @@ function TagsColumn({
         </div>
       </div>
     </aside>
+  );
+}
+
+export function HiddenTagsColumn() {
+  return (
+    <aside key="tags-column" className="TagsColumn" style={{display: 'none'}} />
   );
 }
 

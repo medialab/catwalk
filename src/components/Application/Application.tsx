@@ -10,6 +10,8 @@ import MainColumn from '../Layout/MainColumn';
 import MainRow from '../Layout/MainRow';
 import Header from '../Header';
 import Footer from '../Footer';
+import {HiddenRailway} from '../Railway';
+import {HiddenTagsColumn} from '../TagsColumn';
 
 import '../../styles/entrypoint.scss';
 
@@ -27,6 +29,7 @@ export default function Application() {
   return (
     <LangContext.Provider value="en">
       <Layout mode={view === 'annotation' ? 'annotation' : 'landing'}>
+        <HiddenRailway />
         <MainColumn>
           <MainRow>
             <Header
@@ -40,6 +43,7 @@ export default function Application() {
           </MainRow>
           <Footer />
         </MainColumn>
+        <HiddenTagsColumn />
       </Layout>
     </LangContext.Provider>
   );

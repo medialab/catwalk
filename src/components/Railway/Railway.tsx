@@ -91,6 +91,7 @@ function Railway({
 
   return (
     <div
+      key="railway"
       className={classNames('Railway', {
         'is-edited': isEdited,
         'is-refreshable': isRefreshable
@@ -189,6 +190,10 @@ function Railway({
       </Modal>
     </div>
   );
+}
+
+export function HiddenRailway() {
+  return <div key="railway" className="Railway" style={{display: 'none'}} />;
 }
 
 export default Railway;
