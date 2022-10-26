@@ -1,6 +1,6 @@
 import {createRoot} from 'react-dom/client';
 
-const container = document.getElementById('catwalk');
+const container = document.getElementById('catwalk') as HTMLDivElement;
 const root = createRoot(container);
 
 function renderApplication() {

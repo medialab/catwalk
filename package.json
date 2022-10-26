@@ -18,7 +18,8 @@
     "prettier:check": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --check",
     "prettier": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --write",
     "reinstall": "rimraf ./node_modules && npm i",
-    "storybook": "start-storybook -p 6006"
+    "storybook": "start-storybook -p 6006",
+    "ts:check:strict": "tsc --noEmit -p tsconfig.strict.json"
   },
   "kotatsu": {
     "config": "./webpack.config.js",
