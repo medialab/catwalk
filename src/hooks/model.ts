@@ -1,16 +1,13 @@
-import {useAtom, SetStateAction} from 'jotai';
+import {useAtom} from 'jotai';
 
-import type {CSVData, AnnotationConfig} from '../types';
+import type {AnnotationConfig} from '../types';
 import {dataAtom, annotationConfigAtom} from '../atoms';
 import {
   CreateDefaultAnnotationConfigParams,
   createDefaultAnnotationConfig
 } from '../defaults';
 
-export function useCSVData(): [
-  CSVData | null,
-  (action: SetStateAction<CSVData | null>) => void
-] {
+export function useCSVData() {
   return useAtom(dataAtom);
 }
 

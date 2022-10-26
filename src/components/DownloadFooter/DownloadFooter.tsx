@@ -1,69 +1,17 @@
-import type {DownloadType} from '../../types';
-import {useI18nMessages} from '../../hooks';
 import Button from '../Button';
-import InfoPin from '../InfoPin';
-import Modal from '../Modal';
+import {useI18nMessages, useDisplayModal} from '../../hooks';
 
-type DownloadFooterProps = {
-  hasModalOpen?: boolean;
-  onModalOpen?: () => void;
-  onModalClose?: () => void;
-  onDownloadChoice?: (type: DownloadType) => void;
-};
-
-function DownloadFooter({
-  hasModalOpen = false,
-  onModalOpen,
-  onModalClose,
-  onDownloadChoice
-}: DownloadFooterProps) {
-  const {
-    downloadFooterDownload,
-    downloadFooterModalTitle,
-    downloadFooterModalDlData,
-    downloadFooterModalDlDataHelp,
-    downloadFooterModalDlModel,
-    downloadFooterModalDlModelHelp,
-    downloadFooterModalDlEverything,
-    downloadFooterModalDlEverythingHelp,
-    modalCancel
-  } = useI18nMessages();
+function DownloadFooter() {
+  const {downloadFooterDownload} = useI18nMessages();
+  const displayModal = useDisplayModal();
 
   return (
     <>
       <footer className="DownloadFooter">
-        <Button isFullWidth onClick={onModalOpen}>
+        <Button isFullWidth onClick={() => displayModal('download')}>
           {downloadFooterDownload}
         </Button>
       </footer>
-      <Modal isOpen={hasModalOpen} onClose={onModalClose}>
-        <div className="DownloadFooterModalContent">
-          <h3>{downloadFooterModalTitle}</h3>
-          <ul>
-            <li>
-              <Button onClick={() => onDownloadChoice?.('data')}>
-                <span>{downloadFooterModalDlData}</span>
-                <InfoPin message={downloadFooterModalDlDataHelp} />
-              </Button>
-            </li>
-            <li>
-              <Button onClick={() => onDownloadChoice?.('model')}>
-                <span>{downloadFooterModalDlModel}</span>
-                <InfoPin message={downloadFooterModalDlModelHelp} />
-              </Button>
-            </li>
-            <li>
-              <Button onClick={() => onDownloadChoice?.('everything')}>
-                <span>{downloadFooterModalDlEverything}</span>
-                <InfoPin message={downloadFooterModalDlEverythingHelp} />
-              </Button>
-            </li>
-            <li>
-              <Button onClick={() => onModalClose}>{modalCancel}</Button>
-            </li>
-          </ul>
-        </div>
-      </Modal>
     </>
   );
 }

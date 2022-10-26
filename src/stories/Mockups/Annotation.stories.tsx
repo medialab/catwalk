@@ -110,18 +110,8 @@ const MockTagsColumn = ({
   );
 };
 
-type MockDownloadFooterProps = {
-  hasModalOpen?: boolean;
-};
-const MockDownloadFooter = ({hasModalOpen}: MockDownloadFooterProps) => {
-  return (
-    <DownloadFooter
-      hasModalOpen={hasModalOpen}
-      onModalOpen={console.log}
-      onModalClose={console.log}
-      onDownloadChoice={console.log}
-    />
-  );
+const MockDownloadFooter = () => {
+  return <DownloadFooter />;
 };
 
 export const Default = Template.bind({});
@@ -208,6 +198,7 @@ RailwayANavKeyIsEdited.args = {
   )
 };
 
+// TODO: fix this
 export const DownloadModalIsOpen = Template.bind({});
 DownloadModalIsOpen.args = {
   children: (
@@ -215,7 +206,7 @@ DownloadModalIsOpen.args = {
       <MockRailway />
       <MainColumn>
         <MockMainRow />
-        <MockDownloadFooter hasModalOpen />
+        <MockDownloadFooter />
       </MainColumn>
       <MockTagsColumn />
     </>

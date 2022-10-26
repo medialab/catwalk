@@ -10,6 +10,7 @@ import MainColumn from '../Layout/MainColumn';
 import MainRow from '../Layout/MainRow';
 import Header from '../Header';
 import Footer from '../Footer';
+import Modals from '../Modals';
 import {HiddenRailway} from '../Railway';
 import {HiddenTagsColumn} from '../TagsColumn';
 
@@ -45,6 +46,7 @@ export default function Application() {
         </MainColumn>
         <HiddenTagsColumn />
       </Layout>
+      <Modals />
     </LangContext.Provider>
   );
 }
