@@ -26,12 +26,22 @@ const ALIASES = {
   Divide: '/'
 };
 
+// We resolve some key aliases and we lowercase only if the key is a single
+// character (to avoid lowercasing special key names such as `Space` etc.)
+function normalizeKey(key: string): string {
+  key = ALIASES[key] || key;
+
+  if (key.length === 1) key = key.toLowerCase();
+
+  return key;
+}
+
 export function useKeypress(key: string, listener: () => void) {
   const listenerRef = useRef<(event: KeyboardEvent) => void>();
 
   useEffect(() => {
     listenerRef.current = event => {
-      const clientKey = ALIASES[event.key] || event.key;
+      const clientKey = normalizeKey(event.key);
 
       if (clientKey === key) listener();
     };

@@ -1,6 +1,7 @@
 import Select from 'react-select';
 
 import type {MediaPreviewType} from '../../types';
+import {DEFAULT_MEDIA_PREVIEW_TYPE} from '../../defaults';
 import {useI18nMessages} from '../../hooks';
 import Notification from '../Notification';
 
@@ -26,7 +27,7 @@ interface MediaPreviewProps {
  * Media preview general component
  */
 function MediaPreview({
-  type = 'twitter-tweet',
+  type = DEFAULT_MEDIA_PREVIEW_TYPE,
   value,
   onPreviewTypeChange
 }: MediaPreviewProps) {

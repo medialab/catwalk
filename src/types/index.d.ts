@@ -42,6 +42,8 @@ export type AnnotationOptions = {
 };
 
 export type AnnotationConfig = {
+  selectedColumn: string;
+  previewType: MediaPreviewType;
   options: AnnotationOptions;
   schema: AnnotationSchema;
 };
