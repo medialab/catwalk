@@ -18,13 +18,13 @@ export const viewAtom = atom<View>(DEFAULT_VIEW);
 export const modalAtom = atom<ModalName | null>(null);
 
 // Data & Schema
-export const currentRowIndexAtom = atom<number>(0);
+export const currentRowIndexAtom = atom<number | null>(null);
 export const currentRowAtom = atom<[index: number, row: CSVRow], number>(
   get => {
     const index = get(currentRowIndexAtom);
     const dataBox = get(dataAtom);
 
-    if (!dataBox)
+    if (!index || !dataBox)
       throw new Error(
         'should not be possible to read from currentRowAtom if data is not loaded!'
       );

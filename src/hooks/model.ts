@@ -9,7 +9,12 @@ import type {
   // Modality,
   // Categorization
 } from '../types';
-import {dataAtom, annotationConfigAtom, annotationStatsAtom} from '../atoms';
+import {
+  dataAtom,
+  annotationConfigAtom,
+  annotationStatsAtom,
+  currentRowIndexAtom
+} from '../atoms';
 import {
   CreateDefaultAnnotationConfigParams,
   createDefaultAnnotationConfig,
@@ -62,6 +67,7 @@ export function useAnnotationConfig(): [
 ] {
   const [annotationConfig, setAnnotationConfig] = useAtom(annotationConfigAtom);
   const [annotationStats, setAnnotationStats] = useAtom(annotationStatsAtom);
+  const setCurrentRowIndex = useSetAtom(currentRowIndexAtom);
   // const [dataBox, setData] = useAtom(dataAtom);
 
   const actions: AnnotationConfigActions = {
@@ -71,6 +77,7 @@ export function useAnnotationConfig(): [
 
       setAnnotationConfig(config);
       setAnnotationStats(Box.of(stats));
+      setCurrentRowIndex(0);
     },
     selectColumn(column) {
       assertConfigExists(annotationConfig);
