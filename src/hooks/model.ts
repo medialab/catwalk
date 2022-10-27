@@ -1,6 +1,5 @@
 import {useAtom, useSetAtom} from 'jotai';
 
-import Box from '../lib/box';
 import type {
   AnnotationConfig,
   AnnotationStats,
@@ -21,18 +20,15 @@ import {
   initializeAnnotationStatsFromConfig
   // setTag
 } from '../model';
+import {useNullableBoxedAtom, useSetNullableBoxedAtom} from './utils';
 
 export function useCSVData(): CSVData | null {
-  const [dataBox] = useAtom(dataAtom);
-  return dataBox ? dataBox.get() : null;
+  const [data] = useNullableBoxedAtom(dataAtom);
+  return data;
 }
 
 export function useSetCSVData() {
-  const setCSVData = useSetAtom(dataAtom);
-
-  return (data: CSVData) => {
-    return setCSVData(Box.of(data));
-  };
+  return useSetNullableBoxedAtom(dataAtom);
 }
 
 interface AnnotationConfigActions {
@@ -51,9 +47,7 @@ function assertConfigExists(
     );
 }
 
-function assertDataExists(
-  data: Box<CSVData> | null
-): asserts data is Box<CSVData> {
+function assertDataExists(data: CSVData | null): asserts data is CSVData {
   if (!data)
     throw new Error(
       `${arguments.callee.name} cannot be used before data is loaded!'`
@@ -66,7 +60,8 @@ export function useAnnotationConfig(): [
   AnnotationConfigActions
 ] {
   const [annotationConfig, setAnnotationConfig] = useAtom(annotationConfigAtom);
-  const [annotationStats, setAnnotationStats] = useAtom(annotationStatsAtom);
+  const [annotationStats, setAnnotationStats] =
+    useNullableBoxedAtom(annotationStatsAtom);
   const setCurrentRowIndex = useSetAtom(currentRowIndexAtom);
   // const [dataBox, setData] = useAtom(dataAtom);
 
@@ -76,7 +71,7 @@ export function useAnnotationConfig(): [
       const stats = initializeAnnotationStatsFromConfig(config);
 
       setAnnotationConfig(config);
-      setAnnotationStats(Box.of(stats));
+      setAnnotationStats(stats);
       setCurrentRowIndex(0);
     },
     selectColumn(column) {
@@ -94,9 +89,5 @@ export function useAnnotationConfig(): [
     // }
   };
 
-  return [
-    annotationConfig,
-    annotationStats ? annotationStats.get() : null,
-    actions
-  ];
+  return [annotationConfig, annotationStats, actions];
 }

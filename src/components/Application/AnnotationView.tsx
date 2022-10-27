@@ -17,7 +17,7 @@ export function RailwayHandler() {
   const [annotationConfig] = useAnnotationConfig();
   const [currentRowIndex, setCurrentRowIndex] = useCurrentRowIndex();
 
-  if (!csvData)
+  if (!csvData || currentRowIndex === null)
     throw new Error(
       'It should not be possible to display Railway without data being loaded!'
     );
@@ -76,7 +76,7 @@ export default function AnnotationView() {
   const [currentRow] = useCurrentRow();
   const displayModal = useDisplayModal();
 
-  if (!csvData)
+  if (!csvData || !currentRow)
     throw new Error(
       'It should not be possible to display AnnotationView without data being loaded!'
     );
