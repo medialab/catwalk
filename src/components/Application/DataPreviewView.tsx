@@ -7,9 +7,9 @@ import InfoPin from '../InfoPin';
 import MediaPreview from '../MediaPreview';
 import {
   useCSVData,
-  useAnnotationConfig,
+  useCreateAnnotationConfig,
   useI18nMessages,
-  useView
+  useSetView
 } from '../../hooks';
 import {DEFAULT_MEDIA_PREVIEW_TYPE} from '../../defaults';
 
@@ -36,9 +36,9 @@ function ValidationButton({validate}) {
 }
 
 export default function DataPreviewView() {
-  const [, setView] = useView();
+  const setView = useSetView();
   const csvData = useCSVData();
-  const [, , {createAnnotationConfig}] = useAnnotationConfig();
+  const createAnnotationConfig = useCreateAnnotationConfig();
   const [selectedColumn, setSelectedColumn] = useState<string | undefined>();
   const [previewType, setPreviewType] = useState<MediaPreviewType>(
     DEFAULT_MEDIA_PREVIEW_TYPE

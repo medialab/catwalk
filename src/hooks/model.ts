@@ -1,26 +1,30 @@
-import {useAtom, useSetAtom} from 'jotai';
+import {useAtom, useSetAtom, useAtomValue} from 'jotai';
 
 import type {
   AnnotationConfig,
   AnnotationStats,
   MediaPreviewType,
-  CSVData
-  // Modality,
-  // Categorization
+  CSVData,
+  Modality,
+  Categorization
 } from '../types';
 import {
   dataAtom,
   annotationConfigAtom,
   annotationStatsAtom,
-  currentRowIndexAtom
+  currentRowAtom
 } from '../atoms';
 import {
   CreateDefaultAnnotationConfigParams,
   createDefaultAnnotationConfig,
-  initializeAnnotationStatsFromConfig
-  // setTag
+  initializeAnnotationStatsFromConfig,
+  mutateToSetTag
 } from '../model';
-import {useNullableBoxedAtom, useSetNullableBoxedAtom} from './utils';
+import {
+  useNullableBoxedAtom,
+  useSetNullableBoxedAtom,
+  useNullableBoxedAtomValue
+} from './utils';
 
 export function useCSVData(): CSVData | null {
   const [data] = useNullableBoxedAtom(dataAtom);
@@ -31,27 +35,27 @@ export function useSetCSVData() {
   return useSetNullableBoxedAtom(dataAtom);
 }
 
+export function useCreateAnnotationConfig(): (
+  params: CreateDefaultAnnotationConfigParams
+) => void {
+  const setAnnotationConfig = useSetAtom(annotationConfigAtom);
+  const setAnnotationStats = useSetNullableBoxedAtom(annotationStatsAtom);
+  const setCurrentRowIndex = useSetAtom(currentRowAtom);
+
+  return params => {
+    const config = createDefaultAnnotationConfig(params);
+    const stats = initializeAnnotationStatsFromConfig(config);
+
+    setAnnotationConfig(config);
+    setAnnotationStats(stats);
+    setCurrentRowIndex(0);
+  };
+}
+
 interface AnnotationConfigActions {
-  createAnnotationConfig(params: CreateDefaultAnnotationConfigParams): void;
   selectColumn(column: string): void;
   setPreviewType(type: MediaPreviewType): void;
-  // setTag(categorization: Categorization, modality: Modality): void;
-}
-
-function assertConfigExists(
-  config: AnnotationConfig | null
-): asserts config is AnnotationConfig {
-  if (!config)
-    throw new Error(
-      `${arguments.callee.name} cannot be used before annotation config is set!'`
-    );
-}
-
-function assertDataExists(data: CSVData | null): asserts data is CSVData {
-  if (!data)
-    throw new Error(
-      `${arguments.callee.name} cannot be used before data is loaded!'`
-    );
+  setTag(categorization: Categorization, modality: Modality): void;
 }
 
 export function useAnnotationConfig(): [
@@ -60,33 +64,37 @@ export function useAnnotationConfig(): [
   AnnotationConfigActions
 ] {
   const [annotationConfig, setAnnotationConfig] = useAtom(annotationConfigAtom);
-  const [annotationStats, setAnnotationStats] =
-    useNullableBoxedAtom(annotationStatsAtom);
-  const setCurrentRowIndex = useSetAtom(currentRowIndexAtom);
-  // const [dataBox, setData] = useAtom(dataAtom);
+  const annotationStats = useNullableBoxedAtomValue(annotationStatsAtom);
+  const [currentRowIndex, currentRow] = useAtomValue(currentRowAtom);
+  const [data, setData] = useNullableBoxedAtom(dataAtom);
+
+  if (
+    !annotationConfig ||
+    !annotationStats ||
+    !currentRow ||
+    !data ||
+    currentRowIndex === undefined
+  )
+    throw new Error(
+      'useAnnotationConfig: it should not be possible to use this hook without data being loaded!'
+    );
 
   const actions: AnnotationConfigActions = {
-    createAnnotationConfig(params) {
-      const config = createDefaultAnnotationConfig(params);
-      const stats = initializeAnnotationStatsFromConfig(config);
-
-      setAnnotationConfig(config);
-      setAnnotationStats(stats);
-      setCurrentRowIndex(0);
-    },
     selectColumn(column) {
-      assertConfigExists(annotationConfig);
       setAnnotationConfig({...annotationConfig, selectedColumn: column});
     },
     setPreviewType(type) {
-      assertConfigExists(annotationConfig);
       setAnnotationConfig({...annotationConfig, previewType: type});
+    },
+    setTag(categorization, modality) {
+      mutateToSetTag(
+        currentRow,
+        annotationStats.counter,
+        categorization,
+        modality
+      );
+      setData(data);
     }
-    // setTag(categorization, modality) {
-    //   assertDataExists(dataBox);
-
-    //   const newData = dataBox.mutate(data => {});
-    // }
   };
 
   return [annotationConfig, annotationStats, actions];

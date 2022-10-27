@@ -11,7 +11,11 @@ import type {
   ModalityStats
 } from '../types';
 import {mapEntries} from '../lib/utils';
-import {DEFAULT_CATEGORIZATION_NAME} from '../defaults';
+import {
+  DEFAULT_CATEGORIZATION_NAME,
+  DEFAULT_ANNOTATION_SORT_ORDER,
+  DEFAULT_CATEGORIZATION_COLOR
+} from '../defaults';
 
 export type CreateDefaultAnnotationConfigParams = {
   columns: CSVColumns;
@@ -42,7 +46,7 @@ export function createDefaultAnnotationConfig({
     selectedColumn,
     previewType,
     options: {
-      sortOrder: 'table',
+      sortOrder: DEFAULT_ANNOTATION_SORT_ORDER,
       navKeyBindings: {
         prev: 'ArrowUp',
         next: 'ArrowDown'
@@ -52,7 +56,7 @@ export function createDefaultAnnotationConfig({
       {
         name: findUnusedDefaultCategorizationName(columns),
         id: uuid(),
-        color: 'cyan',
+        color: DEFAULT_CATEGORIZATION_COLOR,
         modalities: [
           {id: uuid(), name: 'IN', key: 'A'},
           {id: uuid(), name: 'OUT', key: 'Z'},

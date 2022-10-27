@@ -4,6 +4,7 @@ export const DEFAULT_VIEW: View = 'landing';
 export const DEFAULT_MEDIA_PREVIEW_TYPE: MediaPreviewType = 'twitter-tweet';
 export const DEFAULT_ANNOTATION_SORT_ORDER: AnnotationSortOrder = 'table';
 export const DEFAULT_CATEGORIZATION_NAME = 'Status';
+export const DEFAULT_CATEGORIZATION_COLOR = 'cyan';
 
 export const DEFAULT_SAMPLES = [
   {

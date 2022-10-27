@@ -5,7 +5,7 @@ import type {
   Modality
 } from '../types';
 
-export function setTag(
+export function mutateToSetTag(
   row: CSVRow,
   counter: AnnotationCounter,
   categorization: Categorization,

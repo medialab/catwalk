@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {useAtom, useSetAtom, WritableAtom} from 'jotai';
+import {useAtom, useSetAtom, useAtomValue, WritableAtom} from 'jotai';
 
 import Box from '../lib/box';
 
@@ -60,4 +60,12 @@ export function useSetNullableBoxedAtom<T>(
     if (value !== null) setBox(Box.of(value));
     else setBox(null);
   };
+}
+
+export function useNullableBoxedAtomValue<T>(
+  atom: WritableAtom<Box<T> | null, Box<T> | null>
+): T | null {
+  const box = useAtomValue(atom);
+
+  return box ? box.get() : null;
 }

@@ -1,10 +1,14 @@
-import {useAtom} from 'jotai';
+import {useAtom, useSetAtom} from 'jotai';
 
 import type {CSVRow} from '../types';
 import {viewAtom, currentRowAtom, currentRowIndexAtom} from '../atoms';
 
 export function useView() {
   return useAtom(viewAtom);
+}
+
+export function useSetView() {
+  return useSetAtom(viewAtom);
 }
 
 export function useCurrentRowEntry() {

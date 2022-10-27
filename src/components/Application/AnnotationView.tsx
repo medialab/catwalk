@@ -10,7 +10,6 @@ import {
   useCurrentRow,
   useToggleState
 } from '../../hooks';
-import {DEFAULT_ANNOTATION_SORT_ORDER} from '../../defaults';
 
 export function RailwayHandler() {
   const csvData = useCSVData();
@@ -33,7 +32,7 @@ export function RailwayHandler() {
       schema={annotationConfig.schema}
       navKeyBindings={annotationConfig.options.navKeyBindings}
       activeObjectIndex={currentRowIndex}
-      sortOrder={DEFAULT_ANNOTATION_SORT_ORDER}
+      sortOrder={annotationConfig.options.sortOrder}
       onNavToIndex={nextIndex => {
         setCurrentRowIndex(nextIndex);
       }}
@@ -43,7 +42,7 @@ export function RailwayHandler() {
 
 export function TagsColumnHandler() {
   const csvData = useCSVData();
-  const [annotationConfig, annotationStats] = useAnnotationConfig();
+  const [annotationConfig, annotationStats, {setTag}] = useAnnotationConfig();
   const [isEdited, toggleIsEdited] = useToggleState();
 
   if (!csvData)
@@ -64,7 +63,7 @@ export function TagsColumnHandler() {
       total={csvData.rows.length}
       onEditTogglePrompt={toggleIsEdited}
       onTagRequest={event => {
-        // setTag(event);
+        setTag(event.categorization, event.modality);
       }}
     />
   );

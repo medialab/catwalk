@@ -5,7 +5,7 @@ import Dropzone from '../Dropzone';
 import LoadingCartel from '../LoadingCartel';
 import SamplePicker from '../SamplePicker';
 import {parseCsvFile} from '../../lib/parse';
-import {useSetCSVData, useI18nMessages, useView} from '../../hooks';
+import {useSetCSVData, useI18nMessages, useSetView} from '../../hooks';
 
 function IntroParagraph() {
   const {introductionText} = useI18nMessages();
@@ -13,7 +13,7 @@ function IntroParagraph() {
 }
 
 export default function LandingView() {
-  const [, setView] = useView();
+  const setView = useSetView();
   const setCSVData = useSetCSVData();
   const [isLoading, setIsLoading] = useState(false);
   const [currentProgress, setCurrentProgress] = useState<ParseCSVProgress>({
