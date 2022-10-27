@@ -31,7 +31,7 @@ const ALIASES = {
 function normalizeKey(key: string): string {
   key = ALIASES[key] || key;
 
-  if (key.length === 1) key = key.toLowerCase();
+  if (key.length === 1) key = key.toUpperCase();
 
   return key;
 }

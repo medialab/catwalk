@@ -1,13 +1,25 @@
 import classNames from 'classnames';
+
+import type {Modalities, ModalitiesStats} from '../../types';
 import Button from '../Button';
+
+interface CategorizationHeaderProps {
+  isEdited: boolean;
+  name: string;
+  color: string;
+  completedPercentage: number;
+  onDeleteRequest?: () => void;
+}
 
 function CategorizationHeader({
   isEdited,
   name,
   color,
-  completedPortion,
+  completedPercentage,
   onDeleteRequest
-}) {
+}: CategorizationHeaderProps) {
+  const safePercentage = Math.round(completedPercentage * 100);
+
   return (
     <div
       className={classNames('CategorizationHeader', {
@@ -24,7 +36,7 @@ function CategorizationHeader({
           <div
             className="completed-portion-bar"
             style={{
-              width: completedPortion * 100 + '%',
+              width: safePercentage + '%',
               background: color
             }}
           />
@@ -38,7 +50,7 @@ function CategorizationHeader({
             />
           ) : (
             <span className="title-readmode">
-              {name} ({completedPortion * 100 + '%'})
+              {name} ({safePercentage + '%'})
             </span>
           )}
         </span>
@@ -48,6 +60,18 @@ function CategorizationHeader({
       </div>
     </div>
   );
+}
+
+interface ModalityGroupProps {
+  name: string;
+  count: number;
+  share: number;
+  keyboardKey: string;
+  isEdited: boolean;
+
+  onDeleteRequest?: () => void;
+  onKeyBindingEditRequest?: () => void;
+  onTagRequest?: () => void;
 }
 
 function ModalityGroup({
@@ -61,7 +85,7 @@ function ModalityGroup({
   onDeleteRequest,
   onKeyBindingEditRequest,
   onTagRequest
-}) {
+}: ModalityGroupProps) {
   return (
     <li
       className={classNames('ModalityGroup', {
@@ -70,7 +94,7 @@ function ModalityGroup({
       <div className="key-btn-container">
         <Button
           onClick={() =>
-            isEdited ? onKeyBindingEditRequest() : onTagRequest()
+            isEdited ? onKeyBindingEditRequest?.() : onTagRequest?.()
           }>
           {keyboardKey}
         </Button>
@@ -109,20 +133,24 @@ type CategorizationGroupProps = {
   isEdited: boolean;
   name: string;
   color: string;
-  completedPortion: number;
-  modalities: Array<any>;
+  modalities: Modalities;
+  stats: ModalitiesStats;
+  completedPercentage: number;
+  total: number;
   onDeleteCategoryRequest: () => void;
 };
+
 export default function CategorizationGroup({
   isEdited,
   name,
   color,
-  completedPortion,
   modalities,
+  stats,
+  completedPercentage,
+  total,
 
   onDeleteCategoryRequest
 }: CategorizationGroupProps) {
-  const modalitiesTotal = modalities.reduce((sum, {count}) => sum + count, 0);
   return (
     <li
       className={classNames('CategorizationGroup', {
@@ -131,18 +159,20 @@ export default function CategorizationGroup({
       <CategorizationHeader
         isEdited={isEdited}
         name={name}
-        completedPortion={completedPortion}
+        completedPercentage={completedPercentage}
         color={color}
         onDeleteRequest={onDeleteCategoryRequest}
       />
       <ul className="modalities-list">
-        {modalities.map(({name, count, key: keyboardKey}) => {
+        {modalities.map(({name, key: keyboardKey}) => {
+          const modalityStats = stats[name];
+
           return (
             <ModalityGroup
               key={name}
               name={name}
-              count={count}
-              share={count / modalitiesTotal}
+              count={modalityStats.count}
+              share={modalityStats.count / total}
               keyboardKey={keyboardKey}
               isEdited={isEdited}
               onDeleteRequest={console.log}

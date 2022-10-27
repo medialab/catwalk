@@ -6,7 +6,12 @@ export type LayoutMode = 'landing' | 'annotation';
 export type NotificationType = 'error' | 'info';
 export type DownloadType = 'everything' | 'data' | 'model';
 export type ModalName = 'download' | 'railway-nav-key-edit';
+
+/**
+ * Key binding types.
+ */
 export type RailwayKeyBinding = 'prev' | 'next';
+export type NavKeyBindings = Record<RailwayKeyBinding, string>;
 
 /**
  * CSV data types.
@@ -25,11 +30,13 @@ export type Modality = {
   key: string;
 };
 
+export type Modalities = Array<Modality>;
+
 export type Categorization = {
   id: string;
   name: string;
   color: string;
-  modalities: Array<Modality>;
+  modalities: Modalities;
 };
 
 export type AnnotationSchema = Array<Categorization>;
@@ -38,10 +45,7 @@ export type AnnotationSortOrder = 'table' | 'non-annotated' | 'incomplete';
 
 export type AnnotationOptions = {
   sortOrder: AnnotationSortOrder;
-  navKeyBindings: {
-    prev: string;
-    next: string;
-  };
+  navKeyBindings: NavKeyBindings;
 };
 
 export type AnnotationConfig = {
@@ -50,6 +54,18 @@ export type AnnotationConfig = {
   options: AnnotationOptions;
   schema: AnnotationSchema;
 };
+
+/**
+ * Types related to the annotation stats.
+ */
+export type ModalityStats = {count: number};
+export type ModalitiesStats = Record<string, ModalityStats>;
+export type CategorizationStats = {
+  count: number;
+  modalities: ModalitiesStats;
+};
+export type AnnotationCounter = Record<string, CategorizationStats>;
+export type AnnotationStats = {counter: AnnotationCounter};
 
 /**
  * Media preview types.

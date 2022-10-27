@@ -1,8 +1,14 @@
 import {v4 as uuid} from 'uuid';
 
-import type {MediaPreviewType, AnnotationConfig, CSVColumns} from './types';
+import type {
+  MediaPreviewType,
+  AnnotationConfig,
+  CSVColumns,
+  AnnotationSortOrder
+} from './types';
 
 export const DEFAULT_MEDIA_PREVIEW_TYPE: MediaPreviewType = 'twitter-tweet';
+export const DEFAULT_ANNOTATION_SORT_ORDER: AnnotationSortOrder = 'table';
 
 export const DEFAULT_SAMPLES = [
   {
@@ -61,9 +67,9 @@ export function createDefaultAnnotationConfig({
         id: uuid(),
         color: 'cyan',
         modalities: [
-          {id: uuid(), name: 'IN', key: 'a'},
-          {id: uuid(), name: 'OUT', key: 'z'},
-          {id: uuid(), name: 'UNDECIDED', key: 'e'}
+          {id: uuid(), name: 'IN', key: 'A'},
+          {id: uuid(), name: 'OUT', key: 'Z'},
+          {id: uuid(), name: 'UNDECIDED', key: 'E'}
         ]
       }
     ]

@@ -1,8 +1,9 @@
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
 import {
-  mockAnnotationModel,
+  mockAnnotationConfig,
   mockAnnotationStats,
+  mockAnnotationTotal,
   generateMockAnnotatedTweets
 } from './mockData';
 
@@ -66,9 +67,9 @@ const MockRailway = ({
     <Railway
       // data & model
       rows={annotatedTweets20}
-      navKeyBindings={mockAnnotationModel.options.navKeyBindings}
-      sortOrder={mockAnnotationModel.options.sortOrder}
-      schema={mockAnnotationModel.schema}
+      navKeyBindings={mockAnnotationConfig.options.navKeyBindings}
+      sortOrder={mockAnnotationConfig.options.sortOrder}
+      schema={mockAnnotationConfig.schema}
       // controlled state
       isEdited={isEdited}
       isRefreshable={isRefreshable}
@@ -100,10 +101,11 @@ const MockTagsColumn = ({
 }: MockTagsColumnProps) => {
   return (
     <TagsColumn
-      model={mockAnnotationModel}
+      schema={mockAnnotationConfig.schema}
       isEdited={!!isEdited}
       uploadedModelStatus={uploadedModelStatus}
       stats={mockAnnotationStats}
+      total={mockAnnotationTotal}
       onModelFilesDrop={console.log}
       onEditTogglePrompt={console.log}
       onNewCategorizationPrompt={console.log}

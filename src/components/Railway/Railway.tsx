@@ -1,16 +1,18 @@
 import classNames from 'classnames';
 
-import type {CSVRows, AnnotationSortOrder, AnnotationSchema} from '../../types';
+import type {
+  CSVRows,
+  AnnotationSortOrder,
+  AnnotationSchema,
+  NavKeyBindings
+} from '../../types';
 import {useI18nMessages} from '../../hooks';
 import Button from '../Button';
 import RailwayItem from './RailwayItem';
 
 type RailwayProps = {
   rows: CSVRows;
-  navKeyBindings: {
-    prev: string;
-    next: string;
-  };
+  navKeyBindings: NavKeyBindings;
   schema: AnnotationSchema;
   sortOrder: AnnotationSortOrder;
   activeObjectIndex: number;
@@ -20,16 +22,16 @@ type RailwayProps = {
   keyAssignIsEdited?: boolean;
   editedKeyAssignCommand?: string; // @todo next or prev
 
-  onEditOpenPrompt: () => void;
-  onEditClosePrompt: () => void;
-  onNavKeyAssignOpenPrompt: (commandId: string) => void;
-  onNavKeyAssignClosePrompt: () => void;
+  onEditOpenPrompt?: () => void;
+  onEditClosePrompt?: () => void;
+  onNavKeyAssignOpenPrompt?: (commandId: string) => void;
+  onNavKeyAssignClosePrompt?: () => void;
 
-  onRefreshSort: () => void;
-  onNavToSibling: (direction: string) => void;
-  onNavToIndex: (index: number) => void;
-  onNavKeyAssignChoice: (command: string, key: string) => void;
-  onSortOrderChange: (sortOrder: AnnotationSortOrder) => void;
+  onRefreshSort?: () => void;
+  onNavToSibling?: (direction: string) => void;
+  onNavToIndex?: (index: number) => void;
+  onNavKeyAssignChoice?: (command: string, key: string) => void;
+  onSortOrderChange?: (sortOrder: AnnotationSortOrder) => void;
 };
 
 function Railway({
@@ -94,7 +96,7 @@ function Railway({
                 schema={schema}
                 key={rowIndex}
                 isActive={rowIndex === activeObjectIndex}
-                onClick={() => onNavToIndex(rowIndex)}
+                onClick={() => onNavToIndex?.(rowIndex)}
               />
             );
           })}
@@ -103,12 +105,12 @@ function Railway({
           <Button
             isFullWidth
             isActive={isEdited}
-            onClick={() => onEditOpenPrompt()}>
+            onClick={() => onEditOpenPrompt?.()}>
             *
           </Button>
         </div>
         <div className="refresh-container">
-          <Button isFullWidth onClick={() => onRefreshSort()}>
+          <Button isFullWidth onClick={() => onRefreshSort?.()}>
             <span>⟳</span>
           </Button>
         </div>
@@ -130,13 +132,13 @@ function Railway({
           ].map(({icon, id, binding}) => (
             <div className="arrow-item-container" key={id}>
               <div className="arrow-button-container">
-                <Button onClick={() => onNavToSibling(id)}>{icon}</Button>
+                <Button onClick={() => onNavToSibling?.(id)}>{icon}</Button>
               </div>
               <span className="key-binding-info">
                 {railwayArrowsKeyBinding} <code>{binding}</code>
               </span>
               <Button
-                onClick={() => onNavKeyAssignOpenPrompt(id)}
+                onClick={() => onNavKeyAssignOpenPrompt?.(id)}
                 className="edit-key-assign-btn">
                 {railwayArrowsEditKey}
               </Button>
@@ -148,7 +150,7 @@ function Railway({
           <ul>
             {sortOrderOptions.map(({value, label}) => {
               const handleClick = () => {
-                onSortOrderChange(value);
+                onSortOrderChange?.(value);
               };
               return (
                 <li key={value}>

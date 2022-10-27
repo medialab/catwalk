@@ -1,4 +1,10 @@
 import classNames from 'classnames';
+
+import type {
+  AnnotationSchema,
+  Categorization,
+  AnnotationStats
+} from '../../types';
 import {useI18nMessages} from '../../hooks';
 import Button from '../Button';
 import Dropzone from '../Dropzone';
@@ -6,21 +12,23 @@ import Notification from '../Notification';
 import CategorizationGroup from './CategorizationGroup';
 
 type TagsColumnProps = {
-  model: object;
-  isEdited: boolean;
-  stats: Array<any>;
+  isEdited?: boolean;
+  schema: AnnotationSchema;
+  stats: AnnotationStats;
+  total: number;
   uploadedModelStatus?: 'error' | 'pending' | 'processing';
-  onNewCategorizationPrompt: () => void;
-  onModelFilesDrop: (file: File) => void;
-  onEditTogglePrompt: () => void;
+  onNewCategorizationPrompt?: () => void;
+  onModelFilesDrop?: (file: File) => void;
+  onEditTogglePrompt?: () => void;
 
-  onDeleteCategoryRequest: (category: object) => void;
+  onDeleteCategoryRequest?: (category: Categorization) => void;
 };
 
 function TagsColumn({
-  model,
-  isEdited,
+  isEdited = false,
+  schema,
   stats,
+  total,
   uploadedModelStatus,
 
   onModelFilesDrop,
@@ -36,6 +44,9 @@ function TagsColumn({
     tagsEditionDropModelFilePrompt,
     tagsEditionNewCategorization
   } = useI18nMessages();
+
+  const counter = stats.counter;
+
   return (
     <aside
       key="tags-column"
@@ -43,16 +54,22 @@ function TagsColumn({
         'is-edited': isEdited
       })}>
       <ul className="main-row">
-        {stats.map((category, categoryId) => {
+        {schema.map(categorization => {
+          const categorizationStats = counter[categorization.name];
+
           return (
             <CategorizationGroup
-              key={categoryId}
-              name={category.name}
-              completedPortion={category.completedPortion}
-              modalities={category.modalities}
-              color={category.color}
+              key={categorization.id}
+              name={categorization.name}
+              completedPercentage={categorizationStats.count / total}
+              total={categorizationStats.count}
+              stats={categorizationStats.modalities}
+              modalities={categorization.modalities}
+              color={categorization.color}
               isEdited={isEdited}
-              onDeleteCategoryRequest={() => onDeleteCategoryRequest(category)}
+              onDeleteCategoryRequest={() =>
+                onDeleteCategoryRequest?.(categorization)
+              }
             />
           );
         })}
