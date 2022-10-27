@@ -53,4 +53,7 @@ export type AnnotationConfig = {
 /**
  * Media preview types.
  */
-export type MediaPreviewType = 'twitter-tweet' | 'youtube-video';
+export type MediaPreviewType =
+  | 'twitter-tweet'
+  | 'youtube-video'
+  | 'website-iframe';
