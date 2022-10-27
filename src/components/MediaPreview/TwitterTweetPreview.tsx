@@ -2,13 +2,13 @@ import {TwitterEmbed} from 'react-social-media-embed';
 
 export const label = 'mediatypeLabelTwitterTweet';
 
-export function canPreview(value: string) {
+export function canPreview(value: URL) {
   // TODO: improve this heuristic
-  return value.trim().startsWith('https://twitter.com/');
+  return true;
 }
 
 function TwitterTweetPreview({value}) {
-  return <TwitterEmbed url={value.trim()} />;
+  return <TwitterEmbed url={value.href} />;
 }
 
 export const Component = TwitterTweetPreview;

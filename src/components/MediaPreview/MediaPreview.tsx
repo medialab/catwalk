@@ -11,8 +11,8 @@ import * as websiteIFrame from './WebsitePreview';
 
 interface MediaPreviewSpecification {
   label: string;
-  canPreview: (value: string) => boolean;
-  Component: React.FC<{value: string}>;
+  canPreview: (value: URL) => boolean;
+  Component: React.FC<{value}>;
 }
 
 const PREVIEW_MAP: Record<MediaPreviewType, MediaPreviewSpecification> = {
@@ -52,6 +52,7 @@ function MediaPreview({
 
   const selectedOption = PREVIEW_OPTIONS.find(option => option.value === type);
   const {canPreview, Component: PreviewComponent} = PREVIEW_MAP[type];
+  const url = new URL(value.trim());
 
   return (
     <main className="MediaPreview">
@@ -69,8 +70,8 @@ function MediaPreview({
         </div>
       </div>
       <div className="object-preview-container">
-        {canPreview(value) ? (
-          <PreviewComponent value={value} />
+        {canPreview(url) ? (
+          <PreviewComponent value={url} />
         ) : (
           <Notification isType="error">{mediapreviewCantPreview}</Notification>
         )}

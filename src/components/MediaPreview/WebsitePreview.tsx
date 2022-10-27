@@ -1,12 +1,18 @@
 export const label = 'mediatypeLabelWebsiteIframe';
 
-export function canPreview(value: string) {
+export function canPreview(value: URL) {
   // TODO: improve this heuristic
-  return value.trim().startsWith('http') || value.trim().startsWith('www');
+  return true;
 }
 
 function WebsitePreview({value}) {
-  return <iframe src={value.trim()} width="100%" height="300"></iframe>;
+  return (
+    <iframe
+      src={value.href}
+      width="100%"
+      height="300"
+      sandbox="allow-same-origin"></iframe>
+  );
 }
 
 export const Component = WebsitePreview;
