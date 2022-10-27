@@ -59,6 +59,7 @@ function MediaPreview({
         <div>{mediapreviewChooseAType}</div>
         <div>
           <Select
+            menuPlacement="auto"
             onChange={e => e && onPreviewTypeChange?.(e.value)}
             options={PREVIEW_OPTIONS}
             isSearchable={false}

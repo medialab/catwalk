@@ -1,5 +1,7 @@
 import {useEffect, useState, useCallback} from 'react';
 
+import type {AnnotationSchema, Categorization, Modality} from '../types';
+
 // NOTE: those aliases are not organized to favor newest browser standards
 // over older ones (such as IE, old Firefox etc.), but favor human comprehension
 // in a potential configuration file.
@@ -36,13 +38,14 @@ function normalizeKey(key: string): string {
   return key;
 }
 
-type VoidListener = () => void;
+type Listener = (key: string) => void;
+type TypedListener<T> = (event: T) => void;
 type LockListenerError = 'cancelled';
 type LockListener = (error: LockListenerError | null, key?: string) => void;
 
 // Using this global register not to multiply the event listeners on window
 class KeypressListeners {
-  map: Map<string, Set<VoidListener>>;
+  map: Map<string, Set<Listener>>;
   lockListener: LockListener | null;
 
   constructor() {
@@ -63,7 +66,7 @@ class KeypressListeners {
 
       if (!listenersForKey) return;
 
-      listenersForKey.forEach(fn => fn());
+      listenersForKey.forEach(fn => fn(key));
     });
   }
 
@@ -89,7 +92,7 @@ class KeypressListeners {
     this.lockListener = null;
   }
 
-  add(key: string, listener: VoidListener): void {
+  add(key: string, listener: Listener): void {
     key = normalizeKey(key);
 
     let listenersForKey = this.map.get(key);
@@ -102,7 +105,7 @@ class KeypressListeners {
     listenersForKey.add(listener);
   }
 
-  delete(key: string, listener: VoidListener): void {
+  delete(key: string, listener: Listener): void {
     key = normalizeKey(key);
 
     const listenersForKey = this.map.get(key);
@@ -116,15 +119,58 @@ class KeypressListeners {
 
 const LISTENERS = new KeypressListeners();
 
-// NOTE: currently it does not "refresh" on listener change, beware...
-export function useKeypress(key: string, listener: VoidListener) {
+export function useKeypress(key: string, listener: Listener) {
   useEffect(() => {
     LISTENERS.add(key, listener);
 
     return () => {
       LISTENERS.delete(key, listener);
     };
-  }, [key]);
+  }, [key, listener]);
+}
+
+export function useMultipleKeypress<T>(
+  mapping: Record<string, T>,
+  listener: TypedListener<T>
+) {
+  useEffect(() => {
+    const normalizedMapping: Record<string, T> = {};
+    const genericListener = (key: string) => {
+      const value = normalizedMapping[key];
+      listener(value);
+    };
+
+    for (const key in mapping) {
+      normalizedMapping[normalizeKey(key)] = mapping[key];
+      LISTENERS.add(key, genericListener);
+    }
+
+    return () => {
+      for (const key in normalizedMapping) {
+        LISTENERS.delete(key, genericListener);
+      }
+    };
+  }, [mapping, listener]);
+}
+
+type AnnotationConfigKeypress = {
+  categorization: Categorization;
+  modality: Modality;
+};
+
+export function useAnnotationSchemaKeypress(
+  schema: AnnotationSchema,
+  listener: TypedListener<AnnotationConfigKeypress>
+) {
+  const mapping: Record<string, AnnotationConfigKeypress> = {};
+
+  schema.forEach(categorization => {
+    categorization.modalities.forEach(modality => {
+      mapping[modality.key] = {categorization, modality};
+    });
+  });
+
+  return useMultipleKeypress(mapping, listener);
 }
 
 export function useAskForKeypress(): [

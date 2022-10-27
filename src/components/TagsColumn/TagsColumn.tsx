@@ -5,7 +5,7 @@ import type {
   Categorization,
   AnnotationStats
 } from '../../types';
-import {useI18nMessages} from '../../hooks';
+import {useI18nMessages, useAnnotationSchemaKeypress} from '../../hooks';
 import Button from '../Button';
 import Dropzone from '../Dropzone';
 import Notification from '../Notification';
@@ -44,6 +44,10 @@ function TagsColumn({
     tagsEditionDropModelFilePrompt,
     tagsEditionNewCategorization
   } = useI18nMessages();
+
+  // useAnnotationSchemaKeypress(schema, event => {
+  //   console.log(event);
+  // });
 
   const counter = stats.counter;
 

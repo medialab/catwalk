@@ -21,9 +21,12 @@ function Dropzone({
   dndPromptMessage,
   accept = 'csv'
 }: DropzoneProps) {
-  const onDrop = useCallback((acceptedFiles: Array<File>) => {
-    if (onFilesDrop) onFilesDrop(acceptedFiles[0]);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: Array<File>) => {
+      if (onFilesDrop) onFilesDrop(acceptedFiles[0]);
+    },
+    [onFilesDrop]
+  );
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
   const {dndPromptActive, dndPromptInactive} = useI18nMessages();
 

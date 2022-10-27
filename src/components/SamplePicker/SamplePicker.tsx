@@ -15,6 +15,7 @@ function SamplePicker({onChange}: SamplePickerProps) {
       <div>{chooseADataSample}</div>
       <div>
         <Select
+          menuPlacement="auto"
           onChange={e => e && onChange?.(e.value)}
           options={DEFAULT_SAMPLES}
           isSearchable={false}
