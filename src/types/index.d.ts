@@ -5,7 +5,8 @@ export type View = 'landing' | 'data-preview' | 'annotation';
 export type LayoutMode = 'landing' | 'annotation';
 export type NotificationType = 'error' | 'info';
 export type DownloadType = 'everything' | 'data' | 'model';
-export type ModalName = 'download';
+export type ModalName = 'download' | 'railway-nav-key-edit';
+export type RailwayKeyBinding = 'prev' | 'next';
 
 /**
  * CSV data types.

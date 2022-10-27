@@ -15,6 +15,7 @@ import DownloadFooter from '../../components/DownloadFooter';
 import TagsColumn from '../../components/TagsColumn';
 import Railway from '../../components/Railway';
 import DownloadModal from '../../components/Modals/DownloadModal';
+import {RailwayNavKeyEditModal} from '../../components/Modals/KeyEditModal';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -191,11 +192,11 @@ RailwayANavKeyIsEdited.args = {
         <DownloadFooter />
       </MainColumn>
       <MockTagsColumn />
+      <RailwayNavKeyEditModal binding="prev" />
     </>
   )
 };
 
-// TODO: fix this
 export const DownloadModalIsOpen = Template.bind({});
 DownloadModalIsOpen.args = {
   children: (

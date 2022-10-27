@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import type {CSVRows, AnnotationSortOrder, AnnotationSchema} from '../../types';
 import {useI18nMessages} from '../../hooks';
 import Button from '../Button';
-import Modal from '../Modal';
 import RailwayItem from './RailwayItem';
 
 type RailwayProps = {
@@ -42,15 +41,10 @@ function Railway({
 
   isEdited = false,
   isRefreshable = false,
-  keyAssignIsEdited,
-  editedKeyAssignCommand,
 
   onEditOpenPrompt,
   onEditClosePrompt,
   onNavKeyAssignOpenPrompt,
-  onNavKeyAssignClosePrompt,
-
-  onNavKeyAssignChoice,
 
   onRefreshSort,
   onNavToSibling,
@@ -65,13 +59,7 @@ function Railway({
     railwaySortModeIncomplete,
 
     railwayArrowsKeyBinding,
-    railwayArrowsEditKey,
-
-    modalCancel,
-    railwayKeyassignModalPrev,
-    railwayKeyassignModalNext,
-    railwayKeyassignModalTitle,
-    modalKeyAssignMessage
+    railwayArrowsEditKey
   } = useI18nMessages();
 
   const sortOrderOptions: Array<{value: AnnotationSortOrder; label: string}> = [
@@ -176,18 +164,6 @@ function Railway({
           </ul>
         </div>
       </div>
-      <Modal isOpen={!!keyAssignIsEdited} onClose={onNavKeyAssignClosePrompt}>
-        <h3>
-          {railwayKeyassignModalTitle}
-          <code>
-            {editedKeyAssignCommand === 'next'
-              ? railwayKeyassignModalNext
-              : railwayKeyassignModalPrev}
-          </code>
-        </h3>
-        <p>{modalKeyAssignMessage}</p>
-        <Button onClick={onNavKeyAssignClosePrompt}>{modalCancel}</Button>
-      </Modal>
     </div>
   );
 }
