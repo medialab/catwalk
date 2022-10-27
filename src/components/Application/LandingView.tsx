@@ -43,15 +43,15 @@ export default function LandingView() {
             }}
           />
           <SamplePicker
-            onChange={async sampleName => {
+            onChange={sampleName => {
               setIsLoading(true);
-              const file = await fetch(sampleName)
+              fetch(sampleName)
                 .then(res => res.blob())
-                .then(
-                  resBlob =>
+                .then(resBlob =>
+                  fileToDataPreview(
                     new File([resBlob], sampleName, {type: resBlob.type})
+                  )
                 );
-              fileToDataPreview(file);
             }}
           />
         </>
