@@ -1,3 +1,6 @@
+// Class used to wrap a large value that should be mutated for performance
+// reasons, all while keeping changing references so that shallow equality
+// can work on updates.
 export default class Box<T> {
   value: T;
 
@@ -12,5 +15,9 @@ export default class Box<T> {
   mutate(mutator: (value: T) => void): Box<T> {
     mutator(this.value);
     return new Box(this.value);
+  }
+
+  static of<I>(value: I): Box<I> {
+    return new Box(value);
   }
 }

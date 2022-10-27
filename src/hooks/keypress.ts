@@ -153,16 +153,16 @@ export function useMultipleKeypress<T>(
   }, [mapping, listener]);
 }
 
-type AnnotationConfigKeypress = {
+export type AnnotationConfigKeypressEvent = {
   categorization: Categorization;
   modality: Modality;
 };
 
 export function useAnnotationSchemaKeypress(
   schema: AnnotationSchema,
-  listener: TypedListener<AnnotationConfigKeypress>
+  listener: TypedListener<AnnotationConfigKeypressEvent>
 ) {
-  const mapping: Record<string, AnnotationConfigKeypress> = {};
+  const mapping: Record<string, AnnotationConfigKeypressEvent> = {};
 
   schema.forEach(categorization => {
     categorization.modalities.forEach(modality => {

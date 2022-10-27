@@ -37,7 +37,7 @@ function ValidationButton({validate}) {
 
 export default function DataPreviewView() {
   const [, setView] = useView();
-  const [csvData] = useCSVData();
+  const csvData = useCSVData();
   const [, , {createAnnotationConfig}] = useAnnotationConfig();
   const [selectedColumn, setSelectedColumn] = useState<string | undefined>();
   const [previewType, setPreviewType] = useState<MediaPreviewType>(

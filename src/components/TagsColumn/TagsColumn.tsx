@@ -5,7 +5,11 @@ import type {
   Categorization,
   AnnotationStats
 } from '../../types';
-import {useI18nMessages, useAnnotationSchemaKeypress} from '../../hooks';
+import {
+  useI18nMessages,
+  useAnnotationSchemaKeypress,
+  AnnotationConfigKeypressEvent
+} from '../../hooks';
 import Button from '../Button';
 import Dropzone from '../Dropzone';
 import Notification from '../Notification';
@@ -17,6 +21,7 @@ type TagsColumnProps = {
   stats: AnnotationStats;
   total: number;
   uploadedModelStatus?: 'error' | 'pending' | 'processing';
+  onTagRequest?: (event: AnnotationConfigKeypressEvent) => void;
   onNewCategorizationPrompt?: () => void;
   onModelFilesDrop?: (file: File) => void;
   onEditTogglePrompt?: () => void;
@@ -31,6 +36,7 @@ function TagsColumn({
   total,
   uploadedModelStatus,
 
+  onTagRequest,
   onModelFilesDrop,
   onEditTogglePrompt,
   onNewCategorizationPrompt,
@@ -45,9 +51,9 @@ function TagsColumn({
     tagsEditionNewCategorization
   } = useI18nMessages();
 
-  // useAnnotationSchemaKeypress(schema, event => {
-  //   console.log(event);
-  // });
+  useAnnotationSchemaKeypress(schema, event => {
+    onTagRequest?.(event);
+  });
 
   const counter = stats.counter;
 

@@ -1,9 +1,11 @@
-import {useAtom} from 'jotai';
+import {useAtom, useSetAtom} from 'jotai';
 
+import Box from '../lib/box';
 import type {
   AnnotationConfig,
   AnnotationStats,
-  MediaPreviewType
+  MediaPreviewType,
+  CSVData
 } from '../types';
 import {dataAtom, annotationConfigAtom, annotationStatsAtom} from '../atoms';
 import {
@@ -12,8 +14,17 @@ import {
   initializeAnnotationStatsFromConfig
 } from '../model';
 
-export function useCSVData() {
-  return useAtom(dataAtom);
+export function useCSVData(): CSVData | null {
+  const [dataBox] = useAtom(dataAtom);
+  return dataBox ? dataBox.get() : null;
+}
+
+export function useSetCSVData() {
+  const setCSVData = useSetAtom(dataAtom);
+
+  return (data: CSVData) => {
+    return setCSVData(Box.of(data));
+  };
 }
 
 interface AnnotationConfigActions {
@@ -36,7 +47,7 @@ export function useAnnotationConfig(): [
       const stats = initializeAnnotationStatsFromConfig(config);
 
       setAnnotationConfig(config);
-      setAnnotationStats(stats);
+      setAnnotationStats(Box.of(stats));
     },
     selectColumn(column) {
       if (!annotationConfig)
@@ -56,5 +67,9 @@ export function useAnnotationConfig(): [
     }
   };
 
-  return [annotationConfig, annotationStats, actions];
+  return [
+    annotationConfig,
+    annotationStats ? annotationStats.get() : null,
+    actions
+  ];
 }

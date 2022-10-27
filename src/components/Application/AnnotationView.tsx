@@ -13,7 +13,7 @@ import {
 import {DEFAULT_ANNOTATION_SORT_ORDER} from '../../defaults';
 
 export function RailwayHandler() {
-  const [csvData] = useCSVData();
+  const csvData = useCSVData();
   const [annotationConfig] = useAnnotationConfig();
   const [currentRowIndex, setCurrentRowIndex] = useCurrentRowIndex();
 
@@ -42,7 +42,7 @@ export function RailwayHandler() {
 }
 
 export function TagsColumnHandler() {
-  const [csvData] = useCSVData();
+  const csvData = useCSVData();
   const [annotationConfig, annotationStats] = useAnnotationConfig();
   const [isEdited, toggleIsEdited] = useToggleState();
 
@@ -68,7 +68,7 @@ export function TagsColumnHandler() {
 }
 
 export default function AnnotationView() {
-  const [csvData] = useCSVData();
+  const csvData = useCSVData();
   const [annotationConfig, , {setPreviewType}] = useAnnotationConfig();
   const [currentRow] = useCurrentRow();
   const displayModal = useDisplayModal();
