@@ -11,3 +11,20 @@ export function mapEntries<I, V, K extends string = string>(
 
   return result;
 }
+
+export type TryPromiseResult<T> =
+  | [error: unknown, result: null]
+  | [error: null, result: T];
+
+export function tryPromise<T>(
+  promise: Promise<T>
+): Promise<TryPromiseResult<T>> {
+  return promise.then(
+    result => {
+      return [null, result];
+    },
+    error => {
+      return [error, null];
+    }
+  );
+}
