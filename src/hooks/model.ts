@@ -1,19 +1,12 @@
 import {useAtom} from 'jotai';
 
-import type {
-  AnnotationConfig,
-  AnnotationStats,
-  CategorizationStats,
-  Categorization,
-  Modality,
-  ModalityStats
-} from '../types';
-import {mapEntries} from '../lib/utils';
+import type {AnnotationConfig, AnnotationStats} from '../types';
 import {dataAtom, annotationConfigAtom, annotationStatsAtom} from '../atoms';
 import {
   CreateDefaultAnnotationConfigParams,
-  createDefaultAnnotationConfig
-} from '../defaults';
+  createDefaultAnnotationConfig,
+  initializeAnnotationStatsFromConfig
+} from '../model';
 
 export function useCSVData() {
   return useAtom(dataAtom);
@@ -34,31 +27,7 @@ export function useAnnotationConfig(): [
   const actions: AnnotationConfigActions = {
     createAnnotationConfig(params) {
       const config = createDefaultAnnotationConfig(params);
-
-      const stats: AnnotationStats = {
-        counter: mapEntries<Categorization, CategorizationStats>(
-          config.schema,
-          categorization => {
-            return [
-              categorization.name,
-              {
-                count: 0,
-                modalities: mapEntries<Modality, ModalityStats>(
-                  categorization.modalities,
-                  modality => {
-                    return [
-                      modality.name,
-                      {
-                        count: 0
-                      }
-                    ];
-                  }
-                )
-              }
-            ];
-          }
-        )
-      };
+      const stats = initializeAnnotationStatsFromConfig(config);
 
       setAnnotationConfig(config);
       setAnnotationStats(stats);
