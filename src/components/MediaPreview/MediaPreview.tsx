@@ -6,6 +6,7 @@ import {useI18nMessages} from '../../hooks';
 import Notification from '../Notification';
 
 import * as twitterTweet from './TwitterTweetPreview';
+import * as youtubeVideo from './YoutubeVideoPreview';
 
 interface MediaPreviewSpecification {
   label: string;
@@ -14,7 +15,8 @@ interface MediaPreviewSpecification {
 }
 
 const PREVIEW_MAP: Record<MediaPreviewType, MediaPreviewSpecification> = {
-  'twitter-tweet': twitterTweet
+  'twitter-tweet': twitterTweet,
+  'youtube-video': youtubeVideo
 };
 
 interface MediaPreviewProps {
