@@ -1,6 +1,3 @@
-import {useState} from 'react';
-
-import type {View} from '../../types';
 import LandingView from './LandingView';
 import DataPreviewView from './DataPreviewView';
 import AnnotationView, {
@@ -14,16 +11,17 @@ import MainRow from '../Layout/MainRow';
 import Header from '../Header';
 import Footer from '../Footer';
 import Modals from '../Modals';
+import {useView} from '../../hooks';
 
 import '../../styles/entrypoint.scss';
 
 export default function Application() {
-  const [view, setView] = useState<View>('landing');
+  const [view, setView] = useView();
 
-  let viewChild = <LandingView setView={setView} />;
+  let viewChild = <LandingView />;
 
   if (view === 'data-preview') {
-    viewChild = <DataPreviewView setView={setView} />;
+    viewChild = <DataPreviewView />;
   } else if (view === 'annotation') {
     viewChild = <AnnotationView />;
   }

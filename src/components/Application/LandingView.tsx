@@ -1,19 +1,19 @@
 import {useState} from 'react';
 
 import type {ParseCSVProgress} from '../../lib/parse';
-import type {ViewProps} from './types';
 import Dropzone from '../Dropzone';
 import LoadingCartel from '../LoadingCartel';
 import SamplePicker from '../SamplePicker';
 import {parseCsvFile} from '../../lib/parse';
-import {useCSVData, useI18nMessages} from '../../hooks';
+import {useCSVData, useI18nMessages, useView} from '../../hooks';
 
 function IntroParagraph() {
   const {introductionText} = useI18nMessages();
   return <p>{introductionText}</p>;
 }
 
-export default function LandingView({setView}: ViewProps) {
+export default function LandingView() {
+  const [, setView] = useView();
   const [, setCSVData] = useCSVData();
   const [isLoading, setIsLoading] = useState(false);
   const [currentProgress, setCurrentProgress] = useState<ParseCSVProgress>({

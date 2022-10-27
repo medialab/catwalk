@@ -1,12 +1,16 @@
 import {useState} from 'react';
 
 import type {MediaPreviewType} from '../../types';
-import type {ViewProps} from './types';
 import Button from '../Button';
 import TablePreview from '../TablePreview';
 import InfoPin from '../InfoPin';
 import MediaPreview from '../MediaPreview';
-import {useCSVData, useAnnotationConfig, useI18nMessages} from '../../hooks';
+import {
+  useCSVData,
+  useAnnotationConfig,
+  useI18nMessages,
+  useView
+} from '../../hooks';
 import {DEFAULT_MEDIA_PREVIEW_TYPE} from '../../defaults';
 
 function ColumnSelectionPrompt() {
@@ -31,7 +35,8 @@ function ValidationButton({validate}) {
   );
 }
 
-export default function DataPreviewView({setView}: ViewProps) {
+export default function DataPreviewView() {
+  const [, setView] = useView();
   const [csvData] = useCSVData();
   const [, , {createAnnotationConfig}] = useAnnotationConfig();
   const [selectedColumn, setSelectedColumn] = useState<string | undefined>();
