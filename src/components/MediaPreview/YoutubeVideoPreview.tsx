@@ -16,14 +16,20 @@ function YoutubeVideoPreview({value}) {
         width="100%"
         height="300"></iframe>
     );
-  } /* else {
-    const response = await fetch("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=QnmJEHjPuIU&ab_channel=BFMTV&format=json")
+  } else {
+    /*     const response = await fetch("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=QnmJEHjPuIU&ab_channel=BFMTV&format=json")
     .then(response => response.json())
     .then(data => data.html)
     console.log(response)
-    return response
-
-  }; */
+    return response */
+    return (
+      <iframe
+        src={value.href}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        width="100%"
+        height="300"></iframe>
+    );
+  }
 
   /*   return <YouTubeEmbed url={value} />;
    */
