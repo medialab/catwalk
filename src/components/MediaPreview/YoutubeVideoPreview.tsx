@@ -15,7 +15,9 @@ function YoutubeVideoPreview({value}) {
   return (
     <iframe
       src={value.trim()}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      width="100%"
+      height="300"></iframe>
   );
   /*   return <YouTubeEmbed url={value.trim()} />;
    */

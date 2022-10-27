@@ -6,7 +6,7 @@ export function canPreview(value: string) {
 }
 
 function WebsitePreview({value}) {
-  return <iframe src={value.trim()}></iframe>;
+  return <iframe src={value.trim()} width="100%" height="300"></iframe>;
 }
 
 export const Component = WebsitePreview;
