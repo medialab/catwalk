@@ -1,6 +1,10 @@
 import {useAtom} from 'jotai';
 
-import type {AnnotationConfig, AnnotationStats} from '../types';
+import type {
+  AnnotationConfig,
+  AnnotationStats,
+  MediaPreviewType
+} from '../types';
 import {dataAtom, annotationConfigAtom, annotationStatsAtom} from '../atoms';
 import {
   CreateDefaultAnnotationConfigParams,
@@ -14,6 +18,8 @@ export function useCSVData() {
 
 interface AnnotationConfigActions {
   createAnnotationConfig(params: CreateDefaultAnnotationConfigParams): void;
+  selectColumn(column: string): void;
+  setPreviewType(type: MediaPreviewType): void;
 }
 
 export function useAnnotationConfig(): [
@@ -31,6 +37,22 @@ export function useAnnotationConfig(): [
 
       setAnnotationConfig(config);
       setAnnotationStats(stats);
+    },
+    selectColumn(column) {
+      if (!annotationConfig)
+        throw new Error(
+          'selectColumn cannot be used before annotation config is set!'
+        );
+
+      setAnnotationConfig({...annotationConfig, selectedColumn: column});
+    },
+    setPreviewType(type) {
+      if (!annotationConfig)
+        throw new Error(
+          'setPreviewType cannot be used before annotation config is set!'
+        );
+
+      setAnnotationConfig({...annotationConfig, previewType: type});
     }
   };
 

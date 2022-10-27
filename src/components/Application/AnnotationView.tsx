@@ -59,7 +59,7 @@ export function TagsColumnWrapper({isShown = false}) {
 
 export default function AnnotationView() {
   const [csvData] = useCSVData();
-  const [annotationConfig] = useAnnotationConfig();
+  const [annotationConfig, , {setPreviewType}] = useAnnotationConfig();
   const displayModal = useDisplayModal();
 
   if (!csvData)
@@ -76,6 +76,7 @@ export default function AnnotationView() {
     <>
       <MediaPreview
         type={annotationConfig.previewType}
+        onPreviewTypeChange={setPreviewType}
         value={csvData.rows[0][annotationConfig.selectedColumn]}
       />
       <DownloadFooter onClick={() => displayModal('download')} />
