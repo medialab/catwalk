@@ -116,6 +116,7 @@ class KeypressListeners {
 
 const LISTENERS = new KeypressListeners();
 
+// NOTE: currently it does not "refresh" on listener change, beware...
 export function useKeypress(key: string, listener: VoidListener) {
   useEffect(() => {
     LISTENERS.add(key, listener);
@@ -123,10 +124,9 @@ export function useKeypress(key: string, listener: VoidListener) {
     return () => {
       LISTENERS.delete(key, listener);
     };
-  }, []);
+  }, [key]);
 }
 
-// TODO: useCallback
 export function useAskForKeypress(): [
   isAskingFoKeypress: boolean,
   askForKeypress: () => Promise<string>,
