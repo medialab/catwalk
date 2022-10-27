@@ -7,7 +7,10 @@ import MediaPreview from '../../components/MediaPreview';
 export default {
   title: 'Components/Preview',
   argTypes: {
-    type: {options: ['twitter-tweet'], control: 'select'}
+    type: {
+      options: ['twitter-tweet', 'youtube-video', 'website-iframe'],
+      control: 'select'
+    }
   },
   component: MediaPreview
 } as ComponentMeta<typeof MediaPreview>;
@@ -26,4 +29,17 @@ export const Twitter = Template.bind({});
 Twitter.args = {
   type: 'twitter-tweet',
   value: 'https://twitter.com/medialab_ScPo/status/1583391821539213314'
+};
+
+export const Youtube = Template.bind({});
+Youtube.args = {
+  type: 'youtube-video',
+  value: 'http://youtu.be/BQQ5ipH6UtM'
+};
+
+export const Website = Template.bind({});
+Website.args = {
+  type: 'website-iframe',
+  value:
+    'https://www.humanite.fr/politique/yannick-jadot/yannick-jadot-se-pose-en-rempart-contre-les-lobbies-743679#xtor=RSS-1'
 };
