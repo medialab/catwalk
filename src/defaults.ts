@@ -4,6 +4,25 @@ import type {MediaPreviewType, AnnotationConfig, CSVColumns} from './types';
 
 export const DEFAULT_MEDIA_PREVIEW_TYPE: MediaPreviewType = 'twitter-tweet';
 
+export const DEFAULT_SAMPLES = [
+  {
+    value: '/public/samples/tweets_medialab.csv',
+    label: 'tweets'
+  },
+  {
+    value: '/public/samples/yt_french_presidential_election_2022.csv',
+    label: 'youtube videos'
+  },
+  {
+    value: '/public/samples/images_german_castles_in_1980.csv',
+    label: 'photos'
+  },
+  {
+    value: '/public/samples/french_news_sample.csv',
+    label: 'websites'
+  }
+];
+
 export type CreateDefaultAnnotationConfigParams = {
   columns: CSVColumns;
   selectedColumn: string;
