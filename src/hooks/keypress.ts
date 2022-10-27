@@ -28,7 +28,7 @@ const ALIASES: Record<string, string> = {
   Divide: '/'
 };
 
-// We resolve some key aliases and we lowercase only if the key is a single
+// We resolve some key aliases and we uppercase only if the key is a single
 // character (to avoid lowercasing special key names such as `Space` etc.)
 function normalizeKey(key: string): string {
   key = ALIASES[key] || key;
