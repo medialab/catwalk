@@ -1,4 +1,4 @@
-class Box<T> {
+export default class Box<T> {
   value: T;
 
   constructor(value: T) {
