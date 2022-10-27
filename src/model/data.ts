@@ -1,8 +1,13 @@
-import type {CSVRow, AnnotationStats, Categorization, Modality} from '../types';
+import type {
+  CSVRow,
+  AnnotationCounter,
+  Categorization,
+  Modality
+} from '../types';
 
-export function tag(
+export function setTag(
   row: CSVRow,
-  stats: AnnotationStats,
+  counter: AnnotationCounter,
   categorization: Categorization,
   modality: Modality
 ): void {
@@ -11,10 +16,21 @@ export function tag(
   const currentValue = row[field];
   const newValue = modality.name;
 
-  if (currentValue) {
-    stats[field][currentValue] -= 1;
+  // Actually we are untagging
+  if (currentValue === newValue) {
+    counter[field].modalities[currentValue].count--;
+    delete row[field];
+    counter[field].count--;
+    return;
   }
 
-  stats[field][newValue] += 1;
+  // Decrementing stats for current value
+  if (currentValue !== undefined) {
+    counter[field].modalities[currentValue].count--;
+  } else {
+    counter[field].count++;
+  }
+
+  counter[field].modalities[newValue].count++;
   row[field] = newValue;
 }

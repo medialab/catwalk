@@ -6,12 +6,15 @@ import type {
   AnnotationStats,
   MediaPreviewType,
   CSVData
+  // Modality,
+  // Categorization
 } from '../types';
 import {dataAtom, annotationConfigAtom, annotationStatsAtom} from '../atoms';
 import {
   CreateDefaultAnnotationConfigParams,
   createDefaultAnnotationConfig,
   initializeAnnotationStatsFromConfig
+  // setTag
 } from '../model';
 
 export function useCSVData(): CSVData | null {
@@ -31,6 +34,25 @@ interface AnnotationConfigActions {
   createAnnotationConfig(params: CreateDefaultAnnotationConfigParams): void;
   selectColumn(column: string): void;
   setPreviewType(type: MediaPreviewType): void;
+  // setTag(categorization: Categorization, modality: Modality): void;
+}
+
+function assertConfigExists(
+  config: AnnotationConfig | null
+): asserts config is AnnotationConfig {
+  if (!config)
+    throw new Error(
+      `${arguments.callee.name} cannot be used before annotation config is set!'`
+    );
+}
+
+function assertDataExists(
+  data: Box<CSVData> | null
+): asserts data is Box<CSVData> {
+  if (!data)
+    throw new Error(
+      `${arguments.callee.name} cannot be used before data is loaded!'`
+    );
 }
 
 export function useAnnotationConfig(): [
@@ -40,6 +62,7 @@ export function useAnnotationConfig(): [
 ] {
   const [annotationConfig, setAnnotationConfig] = useAtom(annotationConfigAtom);
   const [annotationStats, setAnnotationStats] = useAtom(annotationStatsAtom);
+  // const [dataBox, setData] = useAtom(dataAtom);
 
   const actions: AnnotationConfigActions = {
     createAnnotationConfig(params) {
@@ -50,21 +73,18 @@ export function useAnnotationConfig(): [
       setAnnotationStats(Box.of(stats));
     },
     selectColumn(column) {
-      if (!annotationConfig)
-        throw new Error(
-          'selectColumn cannot be used before annotation config is set!'
-        );
-
+      assertConfigExists(annotationConfig);
       setAnnotationConfig({...annotationConfig, selectedColumn: column});
     },
     setPreviewType(type) {
-      if (!annotationConfig)
-        throw new Error(
-          'setPreviewType cannot be used before annotation config is set!'
-        );
-
+      assertConfigExists(annotationConfig);
       setAnnotationConfig({...annotationConfig, previewType: type});
     }
+    // setTag(categorization, modality) {
+    //   assertDataExists(dataBox);
+
+    //   const newData = dataBox.mutate(data => {});
+    // }
   };
 
   return [
