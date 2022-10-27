@@ -62,6 +62,7 @@
     "@storybook/manager-webpack5": "^6.5.13",
     "@storybook/react": "^6.5.13",
     "@storybook/testing-library": "^0.0.13",
+    "@types/comma-number": "^2.1.0",
     "@types/file-saver": "^2.0.5",
     "@types/lodash": "^4.14.186",
     "@types/papaparse": "^5.3.5",

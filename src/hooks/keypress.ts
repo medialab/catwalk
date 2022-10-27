@@ -7,7 +7,7 @@ import type {AnnotationSchema, Categorization, Modality} from '../types';
 // in a potential configuration file.
 // For instance, 'Space' is easily more understandable in a YAML config file
 // than a plain empty looking string such as ' '.
-const ALIASES = {
+const ALIASES: Record<string, string> = {
   Win: 'Meta',
   Scroll: 'ScrollLock',
   Spacebar: 'Space',

@@ -1,17 +1,24 @@
 // TODO: use YouTubeEmbed
 /* import {YouTubeEmbed} from 'react-social-media-embed';
  */
-export const label = 'mediatypeLabelYoutubeVideo';
+import type {InternationalizedString} from '../../../i18n';
+import type {PreviewComponentProps} from './types';
 
-export function canPreview(value: URL) {
-  return value.hostname === 'youtu.be' || value.hostname === 'www.youtube.com';
+export const label: InternationalizedString = 'mediatypeLabelYoutubeVideo';
+
+export function canPreview(value: string) {
+  const url = new URL(value);
+
+  return url.hostname === 'youtu.be' || url.hostname === 'www.youtube.com';
 }
 
-function YoutubeVideoPreview({value}) {
-  if (value.pathname.startsWith('/embed')) {
+function YoutubeVideoPreview({value}: PreviewComponentProps) {
+  const url = new URL(value);
+
+  if (url.pathname.startsWith('/embed')) {
     return (
       <iframe
-        src={value.href}
+        src={url.href}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         width="100%"
         height="300"></iframe>
@@ -24,7 +31,7 @@ function YoutubeVideoPreview({value}) {
     return response */
     return (
       <iframe
-        src={value.href}
+        src={url.href}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         width="100%"
         height="300"></iframe>

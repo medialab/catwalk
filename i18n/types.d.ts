@@ -1,6 +1,6 @@
 // !!! DO NOT EDIT: This file has been automatically generated
 // !!! To update it, use `npm run dts-gen`
-interface InternationalizedStrings {
+export interface InternationalizedStrings {
   test: string;
   tagline: string;
   headerBacklink: string;
@@ -47,9 +47,4 @@ interface InternationalizedStrings {
   tagsEditionProcessingModelFile: string;
   tagsEditionDropModelFilePrompt: string;
   tagsEditionNewCategorization: string;
-}
-
-declare module '*.yml' {
-  const strings: InternationalizedStrings;
-  export default strings;
 }

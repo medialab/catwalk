@@ -25,7 +25,11 @@ function ColumnSelectionPrompt() {
   );
 }
 
-function ValidationButton({validate}) {
+interface ValidationButtonProps {
+  validate: () => void;
+}
+
+function ValidationButton({validate}: ValidationButtonProps) {
   const {previewValidation} = useI18nMessages();
 
   return (

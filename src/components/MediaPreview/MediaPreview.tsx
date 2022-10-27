@@ -7,12 +7,12 @@ import Notification from '../Notification';
 
 import * as twitterTweet from './TwitterTweetPreview';
 import * as youtubeVideo from './YoutubeVideoPreview';
-import * as websiteIFrame from './WebsitePreview';
+import * as websiteIFrame from './WebsiteIframePreview';
 
 interface MediaPreviewSpecification {
   label: string;
-  canPreview: (value: URL) => boolean;
-  Component: React.FC<{value}>;
+  canPreview: (value: string) => boolean;
+  Component: React.FC<{value: string}>;
 }
 
 const PREVIEW_MAP: Record<MediaPreviewType, MediaPreviewSpecification> = {
@@ -35,12 +35,13 @@ function MediaPreview({
   value,
   onPreviewTypeChange
 }: MediaPreviewProps) {
+  const i18nMessages = useI18nMessages();
+
   const {
     mediapreviewCantPreview,
     mediapreviewChooseAType,
-    mediapreviewChooseATypePlaceholder,
-    ...i18nMessages
-  } = useI18nMessages();
+    mediapreviewChooseATypePlaceholder
+  } = i18nMessages;
 
   /**
    * Note: preview options labels are language-dependent,
@@ -52,7 +53,6 @@ function MediaPreview({
 
   const selectedOption = PREVIEW_OPTIONS.find(option => option.value === type);
   const {canPreview, Component: PreviewComponent} = PREVIEW_MAP[type];
-  const url = new URL(value.trim());
 
   return (
     <main className="MediaPreview">
@@ -70,8 +70,8 @@ function MediaPreview({
         </div>
       </div>
       <div className="object-preview-container">
-        {canPreview(url) ? (
-          <PreviewComponent value={url} />
+        {canPreview(value) ? (
+          <PreviewComponent value={value} />
         ) : (
           <Notification isType="error">{mediapreviewCantPreview}</Notification>
         )}
