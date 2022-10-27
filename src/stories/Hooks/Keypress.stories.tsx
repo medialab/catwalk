@@ -30,6 +30,11 @@ function KeypressTester({
       <p>
         You can reset by pressing <strong>{resetKeyBinding}</strong>
       </p>
+      <input
+        type="text"
+        style={{width: '400px'}}
+        placeholder="Type things here to test that hotkey does not work..."
+      />
     </div>
   );
 }

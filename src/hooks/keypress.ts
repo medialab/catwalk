@@ -37,10 +37,13 @@ function normalizeKey(key: string): string {
 }
 
 export function useKeypress(key: string, listener: () => void) {
+  key = normalizeKey(key);
   const listenerRef = useRef<(event: KeyboardEvent) => void>();
 
   useEffect(() => {
     listenerRef.current = event => {
+      if (document.activeElement !== document.body) return;
+
       const clientKey = normalizeKey(event.key);
 
       if (clientKey === key) listener();
