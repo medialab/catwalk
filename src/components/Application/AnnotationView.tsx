@@ -7,7 +7,8 @@ import {
   useAnnotationConfig,
   useDisplayModal,
   useCurrentRowIndex,
-  useCurrentRow
+  useCurrentRow,
+  useToggleState
 } from '../../hooks';
 import {DEFAULT_ANNOTATION_SORT_ORDER} from '../../defaults';
 
@@ -43,6 +44,7 @@ export function RailwayHandler() {
 export function TagsColumnHandler() {
   const [csvData] = useCSVData();
   const [annotationConfig, annotationStats] = useAnnotationConfig();
+  const [isEdited, toggleIsEdited] = useToggleState();
 
   if (!csvData)
     throw new Error(
@@ -56,9 +58,11 @@ export function TagsColumnHandler() {
 
   return (
     <TagsColumn
+      isEdited={isEdited}
       schema={annotationConfig.schema}
       stats={annotationStats}
       total={csvData.rows.length}
+      onEditTogglePrompt={toggleIsEdited}
     />
   );
 }
