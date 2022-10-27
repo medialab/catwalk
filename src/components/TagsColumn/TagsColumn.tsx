@@ -111,10 +111,4 @@ function TagsColumn({
   );
 }
 
-export function HiddenTagsColumn() {
-  return (
-    <aside key="tags-column" className="TagsColumn" style={{display: 'none'}} />
-  );
-}
-
 export default TagsColumn;

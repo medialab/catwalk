@@ -1,15 +1,20 @@
 import MediaPreview from '../MediaPreview';
 import DownloadFooter from '../DownloadFooter';
-import Railway, {HiddenRailway} from '../Railway';
-import TagsColumn, {HiddenTagsColumn} from '../TagsColumn';
-import {useCSVData, useAnnotationConfig, useDisplayModal} from '../../hooks';
+import Railway from '../Railway';
+import TagsColumn from '../TagsColumn';
+import {
+  useCSVData,
+  useAnnotationConfig,
+  useDisplayModal,
+  useCurrentRowIndex,
+  useCurrentRow
+} from '../../hooks';
 import {DEFAULT_ANNOTATION_SORT_ORDER} from '../../defaults';
 
-export function RailwayWrapper({isShown = false}) {
+export function RailwayHandler() {
   const [csvData] = useCSVData();
   const [annotationConfig] = useAnnotationConfig();
-
-  if (!isShown) return <HiddenRailway />;
+  const [currentRowIndex, setCurrentRowIndex] = useCurrentRowIndex();
 
   if (!csvData)
     throw new Error(
@@ -26,17 +31,18 @@ export function RailwayWrapper({isShown = false}) {
       rows={csvData.rows}
       schema={annotationConfig.schema}
       navKeyBindings={annotationConfig.options.navKeyBindings}
-      activeObjectIndex={0}
+      activeObjectIndex={currentRowIndex}
       sortOrder={DEFAULT_ANNOTATION_SORT_ORDER}
+      onNavToIndex={nextIndex => {
+        setCurrentRowIndex(nextIndex);
+      }}
     />
   );
 }
 
-export function TagsColumnWrapper({isShown = false}) {
+export function TagsColumnHandler() {
   const [csvData] = useCSVData();
   const [annotationConfig, annotationStats] = useAnnotationConfig();
-
-  if (!isShown) return <HiddenTagsColumn />;
 
   if (!csvData)
     throw new Error(
@@ -60,6 +66,7 @@ export function TagsColumnWrapper({isShown = false}) {
 export default function AnnotationView() {
   const [csvData] = useCSVData();
   const [annotationConfig, , {setPreviewType}] = useAnnotationConfig();
+  const [currentRow] = useCurrentRow();
   const displayModal = useDisplayModal();
 
   if (!csvData)
@@ -77,7 +84,7 @@ export default function AnnotationView() {
       <MediaPreview
         type={annotationConfig.previewType}
         onPreviewTypeChange={setPreviewType}
-        value={csvData.rows[0][annotationConfig.selectedColumn]}
+        value={currentRow[annotationConfig.selectedColumn]}
       />
       <DownloadFooter onClick={() => displayModal('download')} />
     </>

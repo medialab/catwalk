@@ -1,1 +1,1 @@
-export {default, HiddenRailway} from './Railway';
+export {default} from './Railway';

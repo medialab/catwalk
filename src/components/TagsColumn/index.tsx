@@ -1,1 +1,1 @@
-export {default, HiddenTagsColumn} from './TagsColumn';
+export {default} from './TagsColumn';

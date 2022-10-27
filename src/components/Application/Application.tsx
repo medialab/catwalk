@@ -1,8 +1,8 @@
 import LandingView from './LandingView';
 import DataPreviewView from './DataPreviewView';
 import AnnotationView, {
-  RailwayWrapper,
-  TagsColumnWrapper
+  RailwayHandler,
+  TagsColumnHandler
 } from './AnnotationView';
 import {LangContext} from '../../contexts';
 import Layout from '../Layout/Layout';
@@ -29,7 +29,7 @@ export default function Application() {
   return (
     <LangContext.Provider value="en">
       <Layout mode={view === 'annotation' ? 'annotation' : 'landing'}>
-        <RailwayWrapper isShown={view === 'annotation'} />
+        {view === 'annotation' && <RailwayHandler />}
         <MainColumn>
           <MainRow>
             <Header
@@ -43,7 +43,7 @@ export default function Application() {
           </MainRow>
           <Footer />
         </MainColumn>
-        <TagsColumnWrapper isShown={view === 'annotation'} />
+        {view === 'annotation' && <TagsColumnHandler />}
       </Layout>
       <Modals />
     </LangContext.Provider>
