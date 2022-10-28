@@ -1,4 +1,6 @@
 import classNames from 'classnames';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import {FixedSizeList} from 'react-window';
 
 import type {
   CSVRows,
@@ -109,17 +111,25 @@ function Railway({
       <div className="railway-background" onClick={onEditClosePrompt} />
       <div className="main-column">
         <ul className="items-container">
-          {rows.map((row, rowIndex) => {
-            return (
-              <RailwayItem
-                row={row}
-                schema={schema}
-                key={rowIndex}
-                isActive={rowIndex === activeRowIndex}
-                onClick={() => onNavToIndex?.(rowIndex)}
-              />
-            );
-          })}
+          <AutoSizer disableWidth>
+            {({height}) => {
+              return (
+                <div style={{height}}>
+                  {rows.map((row, rowIndex) => {
+                    return (
+                      <RailwayItem
+                        row={row}
+                        schema={schema}
+                        key={rowIndex}
+                        isActive={rowIndex === activeRowIndex}
+                        onClick={() => onNavToIndex?.(rowIndex)}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            }}
+          </AutoSizer>
         </ul>
         <div className="edit-toggle-container">
           <Button

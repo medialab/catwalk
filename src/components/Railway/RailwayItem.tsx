@@ -33,6 +33,7 @@ function RailwayItem({row, schema, isActive, onClick}: RailwayItemProps) {
 
   return (
     <li
+      style={{height: '4px'}}
       className={classNames('RailwayItem', {'is-active': isActive})}
       onClick={onClick}>
       <ul className="main-item-content">
