@@ -25,6 +25,8 @@ function canNavigate(index: number, maxIndex: number, direction: NavDirection) {
   return true;
 }
 
+const MIN_ITEM_HEIGHT = 4 + 1;
+
 type RailwayProps = {
   rows: CSVRows;
   navKeyBindings: NavKeyBindings;
@@ -111,21 +113,43 @@ function Railway({
       <div className="railway-background" onClick={onEditClosePrompt} />
       <div className="main-column">
         <ul className="items-container">
-          <AutoSizer disableWidth>
-            {({height}) => {
+          <AutoSizer>
+            {({height, width}) => {
+              const idealHeightPerItem = Math.floor(height / rows.length);
+
+              const itemSize = Math.max(MIN_ITEM_HEIGHT, idealHeightPerItem);
+
+              console.log(height, itemSize);
+
+              function Row({
+                index,
+                style
+              }: {
+                index: number;
+                style: React.CSSProperties;
+              }) {
+                return (
+                  <RailwayItem
+                    style={style}
+                    row={rows[index]}
+                    schema={schema}
+                    key={index}
+                    isActive={index === activeRowIndex}
+                    onClick={() => onNavToIndex?.(index)}
+                  />
+                );
+              }
+
               return (
-                <div style={{height}}>
-                  {rows.map((row, rowIndex) => {
-                    return (
-                      <RailwayItem
-                        row={row}
-                        schema={schema}
-                        key={rowIndex}
-                        isActive={rowIndex === activeRowIndex}
-                        onClick={() => onNavToIndex?.(rowIndex)}
-                      />
-                    );
-                  })}
+                <div style={{height, width, padding: 0, margin: 0}}>
+                  <FixedSizeList
+                    height={height}
+                    itemCount={rows.length}
+                    itemSize={itemSize}
+                    // overscanCount={50}
+                    width={width}>
+                    {Row}
+                  </FixedSizeList>
                 </div>
               );
             }}

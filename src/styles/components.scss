@@ -25,6 +25,7 @@
     justify-content: stretch;
     box-sizing: border-box;
     .items-container {
+      overflow-y: scroll;
       height: 100%;
       list-style: none;
       padding: 0;

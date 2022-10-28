@@ -7,10 +7,17 @@ interface RailwayItemProps {
   row: CSVRow;
   schema: AnnotationSchema;
   isActive: boolean;
+  style?: React.CSSProperties;
   onClick?: (event: React.MouseEvent<HTMLLIElement>) => void;
 }
 
-function RailwayItem({row, schema, isActive, onClick}: RailwayItemProps) {
+function RailwayItem({
+  row,
+  schema,
+  isActive,
+  style,
+  onClick
+}: RailwayItemProps) {
   const {railwayItemTooltipNoTagging} = useI18nMessages();
 
   // process data for mini viz
@@ -33,7 +40,7 @@ function RailwayItem({row, schema, isActive, onClick}: RailwayItemProps) {
 
   return (
     <li
-      style={{height: '4px'}}
+      style={style}
       className={classNames('RailwayItem', {'is-active': isActive})}
       onClick={onClick}>
       <ul className="main-item-content">
@@ -48,7 +55,7 @@ function RailwayItem({row, schema, isActive, onClick}: RailwayItemProps) {
           />
         ))}
       </ul>
-      <div className="preview-content-container">
+      {/* <div className="preview-content-container">
         <div className="preview-content">
           <div className="media-object-mini-preview">
             media object mini preview @todo
@@ -68,7 +75,7 @@ function RailwayItem({row, schema, isActive, onClick}: RailwayItemProps) {
             })}
           </ul>
         </div>
-      </div>
+      </div> */}
     </li>
   );
 }

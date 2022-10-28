@@ -7,6 +7,7 @@ import {
   generateMockAnnotatedTweets
 } from './mockData';
 
+import type {CSVRows} from '../../types';
 import Header from '../../components/Header';
 import Layout from '../../components/Layout/Layout';
 import MainColumn from '../../components/Layout/MainColumn';
@@ -33,7 +34,9 @@ const Template: ComponentStory<typeof Layout> = ({mode, ...args}) => {
   return <Layout mode="annotation" {...args} />;
 };
 
-const annotatedTweets20 = generateMockAnnotatedTweets(100);
+const annotatedTweets10 = generateMockAnnotatedTweets(10);
+const annotatedTweets100 = generateMockAnnotatedTweets(100);
+const annotatedTweets5000 = generateMockAnnotatedTweets(5000);
 
 /**
  * Wrapping main row code as it does not change between stories
@@ -51,6 +54,7 @@ const MockMainRow = () => {
   );
 };
 interface MockRailwayProps {
+  rows?: CSVRows;
   isEdited?: boolean;
   isRefreshable?: boolean;
   editedKeyAssignCommand?: 'next' | 'prev';
@@ -59,6 +63,7 @@ interface MockRailwayProps {
  * Wrapper for the railway component in order to tweak only story-dependent props
  */
 const MockRailway = ({
+  rows = annotatedTweets100,
   isEdited,
   isRefreshable,
   editedKeyAssignCommand
@@ -66,7 +71,7 @@ const MockRailway = ({
   return (
     <Railway
       // data & model
-      rows={annotatedTweets20}
+      rows={rows}
       navKeyBindings={mockAnnotationConfig.options.navKeyBindings}
       sortOrder={mockAnnotationConfig.options.sortOrder}
       schema={mockAnnotationConfig.schema}
@@ -119,6 +124,34 @@ Default.args = {
   children: (
     <>
       <MockRailway />
+      <MainColumn>
+        <MockMainRow />
+        <DownloadFooter />
+      </MainColumn>
+      <MockTagsColumn />
+    </>
+  )
+};
+
+export const SmallNumberOfRows = Template.bind({});
+SmallNumberOfRows.args = {
+  children: (
+    <>
+      <MockRailway rows={annotatedTweets10} />
+      <MainColumn>
+        <MockMainRow />
+        <DownloadFooter />
+      </MainColumn>
+      <MockTagsColumn />
+    </>
+  )
+};
+
+export const LargeNumberOfRows = Template.bind({});
+LargeNumberOfRows.args = {
+  children: (
+    <>
+      <MockRailway rows={annotatedTweets5000} />
       <MainColumn>
         <MockMainRow />
         <DownloadFooter />
