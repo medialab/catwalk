@@ -19,6 +19,11 @@ export const modalAtom = atom<ModalName | null>(null);
 
 // Data & Schema
 export const currentRowIndexAtom = atom<number | null>(null);
+export const dataAtom = atom<Box<CSVData> | null>(null);
+export const annotationConfigAtom = atom<AnnotationConfig | null>(null);
+export const annotationStatsAtom = atom<Box<AnnotationStats> | null>(null);
+
+// Derived atoms
 export const currentRowAtom = atom<
   [index: number, row: CSVRow] | [index: undefined, row: null],
   number
@@ -40,6 +45,34 @@ export const currentRowAtom = atom<
     set(currentRowIndexAtom, index);
   }
 );
-export const dataAtom = atom<Box<CSVData> | null>(null);
-export const annotationConfigAtom = atom<AnnotationConfig | null>(null);
-export const annotationStatsAtom = atom<Box<AnnotationStats> | null>(null);
+export const columnNamesInUseAtom = atom<Set<string>>(get => {
+  const config = get(annotationConfigAtom);
+
+  const names: Set<string> = new Set();
+
+  config?.schema.forEach(categorization => {
+    names.add(categorization.name);
+  });
+
+  return names;
+});
+export const keysInUseAtom = atom<Set<string>>(get => {
+  const config = get(annotationConfigAtom);
+
+  const keys: Set<string> = new Set();
+
+  if (!config) return keys;
+
+  const navKeyBindings = config.options.navKeyBindings;
+
+  keys.add(navKeyBindings.prev);
+  keys.add(navKeyBindings.next);
+
+  config.schema.forEach(categorization => {
+    categorization.modalities.forEach(modality => {
+      keys.add(modality.key);
+    });
+  });
+
+  return keys;
+});

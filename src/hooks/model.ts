@@ -12,7 +12,9 @@ import {
   dataAtom,
   annotationConfigAtom,
   annotationStatsAtom,
-  currentRowAtom
+  currentRowAtom,
+  columnNamesInUseAtom,
+  keysInUseAtom
 } from '../atoms';
 import {
   CreateDefaultAnnotationConfigParams,
@@ -33,6 +35,14 @@ export function useCSVData(): CSVData | null {
 
 export function useSetCSVData() {
   return useSetNullableBoxedAtom(dataAtom);
+}
+
+export function useColumnNamesInUse() {
+  return useAtomValue(columnNamesInUseAtom);
+}
+
+export function useKeysInUse() {
+  return useAtomValue(keysInUseAtom);
 }
 
 export function useCreateAnnotationConfig(): (
