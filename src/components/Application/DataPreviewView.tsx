@@ -65,7 +65,7 @@ export default function DataPreviewView() {
         onClickOnColumn={setSelectedColumn}
       />
       <ColumnSelectionPrompt />
-      {selectedColumn && (
+      {selectedColumn !== undefined && (
         <>
           <MediaPreview
             value={rows[0][selectedColumn]}
