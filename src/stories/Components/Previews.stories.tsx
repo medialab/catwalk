@@ -34,8 +34,8 @@ Twitter.args = {
 export const Youtube = Template.bind({});
 Youtube.args = {
   type: 'youtube-video',
-  value: 'https://www.youtube.com/embed/QnmJEHjPuIU'
-  /*   value: 'https://www.youtube.com/watch?v=QnmJEHjPuIU&ab_channel=BFMTV'
+  value: 'https://youtu.be/QnmJEHjPuIU'
+  /*   value: 'QnmJEHjPuIU'
    */
 };
 

@@ -1,45 +1,40 @@
-// TODO: use YouTubeEmbed
-/* import {YouTubeEmbed} from 'react-social-media-embed';
- */
+import {YouTubeEmbed} from 'react-social-media-embed';
+
 import type {InternationalizedString} from '../../../i18n';
 import type {PreviewComponentProps} from './types';
 
 export const label: InternationalizedString = 'mediatypeLabelYoutubeVideo';
 
-export function canPreview(value: string) {
-  const url = new URL(value);
+function isVideoId(value: string) {
+  const videoIdRe = /^[a-zA-Z0-9_-]{11}$/;
 
-  return url.hostname === 'youtu.be' || url.hostname === 'www.youtube.com';
+  return value.match(videoIdRe) ? true : false;
+}
+
+function extractYoutubeVideoId(value: string) {
+  const videoUrlRe =
+    /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#&?]*).*/;
+
+  if (isVideoId(value)) {
+    return value;
+  }
+
+  const match = value.match(videoUrlRe);
+
+  return match && match[1] && isVideoId(match[1]) ? match[1] : false;
+}
+
+export function canPreview(value: string) {
+  return extractYoutubeVideoId(value) ? true : false;
 }
 
 function YoutubeVideoPreview({value}: PreviewComponentProps) {
-  const url = new URL(value);
-
-  if (url.pathname.startsWith('/embed')) {
-    return (
-      <iframe
-        src={url.href}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        width="100%"
-        height="300"></iframe>
-    );
-  } else {
-    /*     const response = await fetch("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=QnmJEHjPuIU&ab_channel=BFMTV&format=json")
-    .then(response => response.json())
-    .then(data => data.html)
-    console.log(response)
-    return response */
-    return (
-      <iframe
-        src={url.href}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        width="100%"
-        height="300"></iframe>
-    );
-  }
-
-  /*   return <YouTubeEmbed url={value} />;
-   */
+  return (
+    <YouTubeEmbed
+      url={'http://www.youtube.com/watch?v=' + extractYoutubeVideoId(value)}
+      width="100%"
+    />
+  );
 }
 
 export const Component = YoutubeVideoPreview;
