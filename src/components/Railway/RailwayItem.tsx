@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import {useMemo} from 'react';
 
 import type {CSVRow, AnnotationSchema} from '../../types';
 import {useI18nMessages} from '../../hooks';
@@ -7,34 +6,31 @@ import {useI18nMessages} from '../../hooks';
 interface RailwayItemProps {
   row: CSVRow;
   schema: AnnotationSchema;
-  isActive?: boolean;
+  isActive: boolean;
   onClick?: (event: React.MouseEvent<HTMLLIElement>) => void;
 }
 
-function RailwayItem({
-  row,
-  schema,
-  isActive = false,
-  onClick
-}: RailwayItemProps) {
+function RailwayItem({row, schema, isActive, onClick}: RailwayItemProps) {
   const {railwayItemTooltipNoTagging} = useI18nMessages();
+
   // process data for mini viz
-  const vizData = useMemo(() => {
-    return schema.reduce((items, {name, color, modalities}) => {
-      const value =
-        row[name] &&
-        modalities.find(({name: modalityName}) => modalityName === row[name]);
-      return [
-        ...items,
-        {
-          name: name,
-          color: color,
-          isActive: !!value,
-          value: value ? value.name : undefined
-        }
-      ];
-    }, []);
-  }, [row, schema]);
+  // NOTE: @robindemourat I dropped the useMemo here because the row does not
+  // actually change reference since I mutate for performance.
+  const vizData = schema.reduce((items, {name, color, modalities}) => {
+    const value =
+      row[name] &&
+      modalities.find(({name: modalityName}) => modalityName === row[name]);
+    return [
+      ...items,
+      {
+        name: name,
+        color: color,
+        isActive: !!value,
+        value: value ? value.name : undefined
+      }
+    ];
+  }, []);
+
   return (
     <li
       className={classNames('RailwayItem', {'is-active': isActive})}

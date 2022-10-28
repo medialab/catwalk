@@ -12,6 +12,18 @@ export function mapEntries<I, V, K extends string = string>(
   return result;
 }
 
+export function flipObject<K extends keyof any, V extends keyof any>(
+  o: Record<K, V>
+): Record<V, K> {
+  const t = {} as Record<V, K>;
+
+  for (const k in o) {
+    t[o[k]] = k;
+  }
+
+  return t;
+}
+
 export type TryPromiseResult<T> =
   | [error: unknown, result: null]
   | [error: null, result: T];

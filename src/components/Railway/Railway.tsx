@@ -7,9 +7,21 @@ import type {
   NavKeyBindings,
   NavDirection
 } from '../../types';
-import {useI18nMessages} from '../../hooks';
+import {useI18nMessages, useMultipleKeypress} from '../../hooks';
 import Button from '../Button';
 import RailwayItem from './RailwayItem';
+import {flipObject} from '../../lib/utils';
+
+// TODO: this could be displayed visually (ux)
+function canNavigate(index: number, maxIndex: number, direction: NavDirection) {
+  if (direction === 'next') {
+    if (index >= maxIndex) return false;
+  } else {
+    if (index <= 0) return false;
+  }
+
+  return true;
+}
 
 type RailwayProps = {
   rows: CSVRows;
@@ -65,9 +77,12 @@ function Railway({
     railwayArrowsEditKey
   } = useI18nMessages();
 
-  // useMultipleKeypress<NavDirection>(navKeyBindings, direction => {
-  //   onNavToSibling?.(direction);
-  // });
+  const maxRowIndex = rows.length - 1;
+
+  useMultipleKeypress<NavDirection>(flipObject(navKeyBindings), direction => {
+    if (!canNavigate(activeRowIndex, maxRowIndex, direction)) return;
+    onNavToSibling?.(direction);
+  });
 
   const sortOrderOptions: Array<{value: AnnotationSortOrder; label: string}> = [
     {
@@ -83,8 +98,6 @@ function Railway({
       label: railwaySortModeIncomplete
     }
   ];
-
-  const maxRowIndex = rows.length - 1;
 
   return (
     <div
@@ -141,13 +154,8 @@ function Railway({
               <div className="arrow-button-container">
                 <Button
                   onClick={() => {
-                    // TODO: this could be displayed visually (ux)
-                    if (direction === 'next') {
-                      if (activeRowIndex >= maxRowIndex) return;
-                    } else {
-                      if (activeRowIndex <= 0) return;
-                    }
-
+                    if (!canNavigate(activeRowIndex, maxRowIndex, direction))
+                      return;
                     onNavToSibling?.(direction);
                   }}>
                   {icon}
