@@ -75,7 +75,7 @@ const MockRailway = ({
       isRefreshable={isRefreshable}
       keyAssignIsEdited={editedKeyAssignCommand !== undefined}
       editedKeyAssignCommand={editedKeyAssignCommand}
-      activeObjectIndex={0}
+      activeRowIndex={0}
       // callbacks
       onEditOpenPrompt={console.log}
       onEditClosePrompt={console.log}

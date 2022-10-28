@@ -1,3 +1,5 @@
+import {useState} from 'react';
+
 import MediaPreview from '../MediaPreview';
 import DownloadFooter from '../DownloadFooter';
 import Railway from '../Railway';
@@ -15,6 +17,7 @@ export function RailwayHandler() {
   const csvData = useCSVData();
   const [annotationConfig] = useAnnotationConfig();
   const [currentRowIndex, setCurrentRowIndex] = useCurrentRowIndex();
+  const [isEdited, setIsEdited] = useState(false);
 
   if (!csvData || currentRowIndex === null)
     throw new Error(
@@ -28,14 +31,21 @@ export function RailwayHandler() {
 
   return (
     <Railway
+      isEdited={isEdited}
       rows={csvData.rows}
       schema={annotationConfig.schema}
       navKeyBindings={annotationConfig.options.navKeyBindings}
-      activeObjectIndex={currentRowIndex}
+      activeRowIndex={currentRowIndex}
       sortOrder={annotationConfig.options.sortOrder}
       onNavToIndex={nextIndex => {
         setCurrentRowIndex(nextIndex);
       }}
+      onNavToSibling={direction => {
+        const nextIndex = currentRowIndex + (direction === 'next' ? 1 : -1);
+        setCurrentRowIndex(nextIndex);
+      }}
+      onEditOpenPrompt={() => setIsEdited(true)}
+      onEditClosePrompt={() => setIsEdited(false)}
     />
   );
 }

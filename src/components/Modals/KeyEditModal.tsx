@@ -1,4 +1,4 @@
-import type {RailwayKeyBinding} from '../../types';
+import type {NavDirection} from '../../types';
 import Button from '../Button';
 import Modal from './Modal';
 import {useI18nMessages} from '../../hooks';
@@ -24,7 +24,7 @@ export default function KeyEditModal({onClose, title}: KeyEditModalProps) {
 }
 
 interface RailwayNavKeyEditModalProps extends KeyEditModalCommonProps {
-  binding: RailwayKeyBinding;
+  binding: NavDirection;
 }
 
 export function RailwayNavKeyEditModal({

@@ -4,7 +4,8 @@ import type {
   CSVRows,
   AnnotationSortOrder,
   AnnotationSchema,
-  NavKeyBindings
+  NavKeyBindings,
+  NavDirection
 } from '../../types';
 import {useI18nMessages} from '../../hooks';
 import Button from '../Button';
@@ -15,7 +16,7 @@ type RailwayProps = {
   navKeyBindings: NavKeyBindings;
   schema: AnnotationSchema;
   sortOrder: AnnotationSortOrder;
-  activeObjectIndex: number;
+  activeRowIndex: number;
 
   isEdited?: boolean;
   isRefreshable?: boolean;
@@ -24,11 +25,11 @@ type RailwayProps = {
 
   onEditOpenPrompt?: () => void;
   onEditClosePrompt?: () => void;
-  onNavKeyAssignOpenPrompt?: (commandId: string) => void;
+  onNavKeyAssignOpenPrompt?: (direction: NavDirection) => void;
   onNavKeyAssignClosePrompt?: () => void;
 
   onRefreshSort?: () => void;
-  onNavToSibling?: (direction: string) => void;
+  onNavToSibling?: (direction: NavDirection) => void;
   onNavToIndex?: (index: number) => void;
   onNavKeyAssignChoice?: (command: string, key: string) => void;
   onSortOrderChange?: (sortOrder: AnnotationSortOrder) => void;
@@ -39,7 +40,7 @@ function Railway({
   schema,
   sortOrder = 'table',
   navKeyBindings,
-  activeObjectIndex = 0,
+  activeRowIndex = 0,
 
   isEdited = false,
   isRefreshable = false,
@@ -64,6 +65,10 @@ function Railway({
     railwayArrowsEditKey
   } = useI18nMessages();
 
+  // useMultipleKeypress<NavDirection>(navKeyBindings, direction => {
+  //   onNavToSibling?.(direction);
+  // });
+
   const sortOrderOptions: Array<{value: AnnotationSortOrder; label: string}> = [
     {
       value: 'table',
@@ -78,6 +83,8 @@ function Railway({
       label: railwaySortModeIncomplete
     }
   ];
+
+  const maxRowIndex = rows.length - 1;
 
   return (
     <div
@@ -95,7 +102,7 @@ function Railway({
                 row={row}
                 schema={schema}
                 key={rowIndex}
-                isActive={rowIndex === activeObjectIndex}
+                isActive={rowIndex === activeRowIndex}
                 onClick={() => onNavToIndex?.(rowIndex)}
               />
             );
@@ -121,24 +128,36 @@ function Railway({
           {[
             {
               icon: '↑',
-              id: 'prev',
+              direction: 'prev' as const,
               binding: navKeyBindings.prev
             },
             {
               icon: '↓',
-              id: 'next',
+              direction: 'next' as const,
               binding: navKeyBindings.next
             }
-          ].map(({icon, id, binding}) => (
-            <div className="arrow-item-container" key={id}>
+          ].map(({icon, direction, binding}) => (
+            <div className="arrow-item-container" key={direction}>
               <div className="arrow-button-container">
-                <Button onClick={() => onNavToSibling?.(id)}>{icon}</Button>
+                <Button
+                  onClick={() => {
+                    // TODO: this could be displayed visually (ux)
+                    if (direction === 'next') {
+                      if (activeRowIndex >= maxRowIndex) return;
+                    } else {
+                      if (activeRowIndex <= 0) return;
+                    }
+
+                    onNavToSibling?.(direction);
+                  }}>
+                  {icon}
+                </Button>
               </div>
               <span className="key-binding-info">
                 {railwayArrowsKeyBinding} <code>{binding}</code>
               </span>
               <Button
-                onClick={() => onNavKeyAssignOpenPrompt?.(id)}
+                onClick={() => onNavKeyAssignOpenPrompt?.(direction)}
                 className="edit-key-assign-btn">
                 {railwayArrowsEditKey}
               </Button>

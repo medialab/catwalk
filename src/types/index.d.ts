@@ -10,8 +10,8 @@ export type ModalName = 'download' | 'railway-nav-key-edit';
 /**
  * Key binding types.
  */
-export type RailwayKeyBinding = 'prev' | 'next';
-export type NavKeyBindings = Record<RailwayKeyBinding, string>;
+export type NavDirection = 'prev' | 'next';
+export type NavKeyBindings = Record<NavDirection, string>;
 
 /**
  * CSV data types.
