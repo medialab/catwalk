@@ -20,6 +20,7 @@ export interface InternationalizedStrings {
   mediatypeLabelTwitterTweet: string;
   mediatypeLabelYoutubeVideo: string;
   mediatypeLabelWebsiteIframe: string;
+  mediatypeLabelImage: string;
   footerHtml: string;
   downloadFooterDownload: string;
   downloadFooterModalTitle: string;
