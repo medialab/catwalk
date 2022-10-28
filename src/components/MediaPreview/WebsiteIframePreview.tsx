@@ -10,11 +10,16 @@ export function canPreview(value: string) {
 
 function WebsiteIframePreview({value}: PreviewComponentProps) {
   return (
-    <iframe
-      src={value}
-      width="100%"
-      height="300"
-      sandbox="allow-same-origin"></iframe>
+    <div>
+      <p>
+        <a href={value}>{value}</a>
+      </p>
+      <iframe
+        src={value}
+        width="100%"
+        height="300"
+        sandbox="allow-same-origin"></iframe>
+    </div>
   );
 }
 
