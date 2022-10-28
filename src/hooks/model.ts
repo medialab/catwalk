@@ -48,7 +48,7 @@ export function useKeysInUse() {
 export function useCreateAnnotationConfig(): (
   params: CreateDefaultAnnotationConfigParams
 ) => void {
-  const setAnnotationConfig = useSetAtom(annotationConfigAtom);
+  const setAnnotationConfig = useSetNullableBoxedAtom(annotationConfigAtom);
   const setAnnotationStats = useSetNullableBoxedAtom(annotationStatsAtom);
   const setCurrentRowIndex = useSetAtom(currentRowAtom);
 
@@ -73,7 +73,8 @@ export function useAnnotationConfig(): [
   AnnotationStats | null,
   AnnotationConfigActions
 ] {
-  const [annotationConfig, setAnnotationConfig] = useAtom(annotationConfigAtom);
+  const [annotationConfig, setAnnotationConfig] =
+    useNullableBoxedAtom(annotationConfigAtom);
   const annotationStats = useNullableBoxedAtomValue(annotationStatsAtom);
   const [currentRowIndex, currentRow] = useAtomValue(currentRowAtom);
   const [data, setData] = useNullableBoxedAtom(dataAtom);
