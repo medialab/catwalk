@@ -6,12 +6,15 @@ export type PersistentCacheError =
   | 'transaction-error'
   | 'transaction-aborted';
 
-export class PersistentCache<Store extends string> {
+export default class PersistentCache<
+  Stores,
+  Keys extends {[S in keyof Stores]?: IDBValidKey}
+> {
   name: string;
   db: IDBDatabase | null = null;
-  stores: Set<Store>;
+  stores: Set<keyof Stores & string>;
 
-  constructor(name: string, stores: Array<Store>) {
+  constructor(name: string, stores: Array<keyof Stores & string>) {
     this.name = name;
     this.stores = new Set(stores);
   }
@@ -44,7 +47,6 @@ export class PersistentCache<Store extends string> {
 
           this.stores.forEach(name => {
             const objectStore = this.db?.createObjectStore(name);
-
             if (!objectStore) return reject('cant-create-store');
           });
 
@@ -72,7 +74,7 @@ export class PersistentCache<Store extends string> {
   }
 
   transaction(
-    stores: Array<Store>,
+    stores: Array<keyof Stores & string>,
     mode: IDBTransactionMode,
     callback: (transaction: IDBTransaction) => void
   ): Promise<void> {
@@ -91,5 +93,15 @@ export class PersistentCache<Store extends string> {
         t.commit();
       }
     );
+  }
+
+  set<Store extends keyof Stores & string, Key extends keyof Keys>(
+    store: Store,
+    key: Keys[Key],
+    item: Stores[Store]
+  ): Promise<void> {
+    return this.transaction([store], 'readwrite', t => {
+      t.objectStore(store).add(item, key);
+    });
   }
 }

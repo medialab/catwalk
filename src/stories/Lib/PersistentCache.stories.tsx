@@ -1,9 +1,20 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import {useState} from 'react';
+import {random, randomString} from 'pandemonium';
 
-import {PersistentCache} from '../../lib/cache';
+import PersistentCache from '../../lib/cache';
 
-const cache = new PersistentCache('catwalk-storybook', ['items']);
+interface Stores {
+  items: {name: string; age: number};
+}
+
+interface Keys {
+  items: number;
+}
+
+const cache = new PersistentCache<Stores, Keys>('catwalk-storybook', ['items']);
+
+let id = 0;
 
 function PersistentCacheTester() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +37,19 @@ function PersistentCacheTester() {
         </p>
       )}
       {isOpen && <p>Database is now open!</p>}
+      {isOpen && (
+        <p>
+          <button
+            onClick={async () => {
+              await cache.set('items', id++, {
+                name: randomString(5, 10),
+                age: random(21, 87)
+              });
+            }}>
+            add
+          </button>
+        </p>
+      )}
       <p>
         <button
           onClick={async () => {
