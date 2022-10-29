@@ -8,7 +8,6 @@ import Notification from '../Notification';
 import * as twitterTweet from './TwitterTweetPreview';
 import * as youtubeVideo from './YoutubeVideoPreview';
 import * as websiteIFrame from './WebsiteIframePreview';
-import * as image from './ImagePreview';
 
 interface MediaPreviewSpecification {
   label: string;
@@ -19,8 +18,7 @@ interface MediaPreviewSpecification {
 const PREVIEW_MAP: Record<MediaPreviewType, MediaPreviewSpecification> = {
   'twitter-tweet': twitterTweet,
   'youtube-video': youtubeVideo,
-  'website-iframe': websiteIFrame,
-  image: image
+  'website-iframe': websiteIFrame
 };
 
 interface MediaPreviewProps {
