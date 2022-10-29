@@ -73,4 +73,5 @@ export type AnnotationStats = {counter: AnnotationCounter};
 export type MediaPreviewType =
   | 'twitter-tweet'
   | 'youtube-video'
-  | 'website-iframe';
+  | 'website-iframe'
+  | 'image';
