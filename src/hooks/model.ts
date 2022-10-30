@@ -4,12 +4,14 @@ import type {
   AnnotationConfig,
   AnnotationStats,
   MediaPreviewType,
+  AnnotationSortOrder,
   CSVData,
   Modality,
   Categorization
 } from '../types';
 import {
   dataAtom,
+  argsortAtom,
   annotationConfigAtom,
   annotationStatsAtom,
   currentRowAtom,
@@ -22,7 +24,8 @@ import {
   initializeAnnotationStatsFromConfig,
   mutateToSetTag
 } from '../model';
-import {useBoxedAtom, useSetBoxedAtom} from './utils';
+import sort, {indices} from '../lib/sort';
+import {useBoxedAtom, useSetBoxedAtom, useBoxedAtomValue} from './utils';
 
 export function useCSVData(): CSVData | null {
   const [data] = useBoxedAtom(dataAtom);
@@ -30,7 +33,17 @@ export function useCSVData(): CSVData | null {
 }
 
 export function useSetCSVData() {
-  return useSetBoxedAtom(dataAtom);
+  const setCsvData = useSetBoxedAtom(dataAtom);
+  const setArgsort = useSetBoxedAtom(argsortAtom);
+
+  return (data: CSVData) => {
+    setCsvData(data);
+    setArgsort(indices(data.rows));
+  };
+}
+
+export function useArgsort() {
+  return useBoxedAtomValue(argsortAtom);
 }
 
 export function useColumnNamesInUse() {
@@ -62,6 +75,7 @@ interface AnnotationConfigActions {
   selectColumn(column: string): void;
   setPreviewType(type: MediaPreviewType): void;
   setTag(categorization: Categorization, modality: Modality): void;
+  setSortOrder(order: AnnotationSortOrder): void;
 }
 
 export function useAnnotationConfig(): [
@@ -71,6 +85,7 @@ export function useAnnotationConfig(): [
 ] {
   const [annotationConfig, refreshAnnotationConfig] =
     useBoxedAtom(annotationConfigAtom);
+  const [argsort, refreshArgsort] = useBoxedAtom(argsortAtom);
   const [annotationStats, refreshAnnotationStats] =
     useBoxedAtom(annotationStatsAtom);
   const [currentRowIndex, currentRow] = useAtomValue(currentRowAtom);
@@ -79,6 +94,7 @@ export function useAnnotationConfig(): [
   if (
     !annotationConfig ||
     !annotationStats ||
+    !argsort ||
     !currentRow ||
     !data ||
     currentRowIndex === undefined
@@ -105,6 +121,12 @@ export function useAnnotationConfig(): [
       );
       refreshData();
       refreshAnnotationStats();
+    },
+    setSortOrder(order) {
+      annotationConfig.options.sortOrder = order;
+      sort(annotationConfig.schema, order, data.rows, argsort);
+      refreshAnnotationConfig();
+      refreshArgsort();
     }
   };
 

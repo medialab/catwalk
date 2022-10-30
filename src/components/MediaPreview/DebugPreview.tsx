@@ -21,7 +21,7 @@ const debugPreviewSpecs: PreviewSpecification<string> = {
         <table>
           {Object.keys(row).map(column => {
             return (
-              <tr>
+              <tr key={column}>
                 <td>
                   <strong>{column}</strong>
                 </td>

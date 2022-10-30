@@ -15,7 +15,7 @@ import {
 
 export function RailwayHandler() {
   const csvData = useCSVData();
-  const [annotationConfig] = useAnnotationConfig();
+  const [annotationConfig, , {setSortOrder}] = useAnnotationConfig();
   const [currentRowIndex, setCurrentRowIndex] = useCurrentRowIndex();
   const [isEdited, setIsEdited] = useState(false);
 
@@ -46,6 +46,9 @@ export function RailwayHandler() {
       }}
       onEditOpenPrompt={() => setIsEdited(true)}
       onEditClosePrompt={() => setIsEdited(false)}
+      onSortOrderChange={order => {
+        setSortOrder(order);
+      }}
     />
   );
 }
