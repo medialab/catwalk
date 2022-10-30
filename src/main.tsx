@@ -1,5 +1,7 @@
 import {createRoot} from 'react-dom/client';
-import PersistentCache from './lib/cache';
+import cache from './cache';
+
+window.cache = cache;
 
 const container = document.getElementById('catwalk') as HTMLDivElement;
 const root = createRoot(container);

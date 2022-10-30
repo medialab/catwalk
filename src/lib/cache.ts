@@ -1,5 +1,3 @@
-import {tryPromise} from './utils';
-
 export type PersistentCacheError =
   | 'cant-open-db'
   | 'cant-close'
@@ -7,7 +5,8 @@ export type PersistentCacheError =
   | 'cant-delete-db'
   | 'transaction-error'
   | 'transaction-aborted'
-  | 'cursor-error';
+  | 'cursor-error'
+  | 'cant-get';
 
 type IDBCursorWithValueEvent = Event & {
   target: {result: IDBCursorWithValue | undefined};
@@ -15,7 +14,7 @@ type IDBCursorWithValueEvent = Event & {
 
 export default class PersistentCache<
   Stores,
-  Keys extends {[S in keyof Stores]?: IDBValidKey}
+  Keys extends {[S in keyof Stores]: IDBValidKey}
 > {
   name: string;
   db: IDBDatabase | null = null;
@@ -115,6 +114,21 @@ export default class PersistentCache<
     return this.transaction(store, 'readwrite', t => {
       t.objectStore(store).add(item, key);
       return Promise.resolve();
+    });
+  }
+
+  get<Store extends keyof Stores & string, Key extends keyof Keys>(
+    store: Store,
+    key: Keys[Key]
+  ): Promise<void> {
+    return this.transaction(store, 'readwrite', t => {
+      return new Promise(
+        (resolve, reject: (error: PersistentCacheError) => void) => {
+          const req = t.objectStore(store).get(key);
+          req.onerror = () => reject('cant-get');
+          req.onsuccess = () => resolve();
+        }
+      );
     });
   }
 
