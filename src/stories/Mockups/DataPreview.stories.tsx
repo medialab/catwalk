@@ -87,7 +87,10 @@ ColumnSelected.args = {
 
         <MediaPreview
           type="twitter-tweet"
-          value="https://twitter.com/robindemourat/status/1580220856965693441"
+          row={{
+            url: 'https://twitter.com/robindemourat/status/1580220856965693441'
+          }}
+          selectedColumn="url"
           onPreviewTypeChange={console.log}
         />
         <ValidationButton />
@@ -111,7 +114,8 @@ InvalidPreview.args = {
 
         <MediaPreview
           type="twitter-tweet"
-          value="mmichel"
+          row={{name: 'michel'}}
+          selectedColumn="name"
           onPreviewTypeChange={console.log}
         />
         <ValidationButton />

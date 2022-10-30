@@ -9,7 +9,7 @@ import {
   useAnnotationConfig,
   useDisplayModal,
   useCurrentRowIndex,
-  useCurrentRow,
+  useCurrentRowEntry,
   useToggleState
 } from '../../hooks';
 
@@ -19,7 +19,7 @@ export function RailwayHandler() {
   const [currentRowIndex, setCurrentRowIndex] = useCurrentRowIndex();
   const [isEdited, setIsEdited] = useState(false);
 
-  if (!csvData || currentRowIndex === null)
+  if (!csvData || currentRowIndex === undefined)
     throw new Error(
       'It should not be possible to display Railway without data being loaded!'
     );
@@ -82,10 +82,10 @@ export function TagsColumnHandler() {
 export default function AnnotationView() {
   const csvData = useCSVData();
   const [annotationConfig, , {setPreviewType}] = useAnnotationConfig();
-  const [currentRow] = useCurrentRow();
+  const [[currentRowIndex, currentRow]] = useCurrentRowEntry();
   const displayModal = useDisplayModal();
 
-  if (!csvData || !currentRow)
+  if (!csvData || !currentRow || currentRowIndex === undefined)
     throw new Error(
       'It should not be possible to display AnnotationView without data being loaded!'
     );
@@ -99,8 +99,10 @@ export default function AnnotationView() {
     <>
       <MediaPreview
         type={annotationConfig.previewType}
+        selectedColumn={annotationConfig.selectedColumn}
+        row={currentRow}
+        rowIndex={currentRowIndex}
         onPreviewTypeChange={setPreviewType}
-        value={currentRow[annotationConfig.selectedColumn]}
       />
       <DownloadFooter onClick={() => displayModal('download')} />
     </>

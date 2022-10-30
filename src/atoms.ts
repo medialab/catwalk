@@ -18,7 +18,7 @@ export const viewAtom = atom<View>(DEFAULT_VIEW);
 export const modalAtom = atom<ModalName | null>(null);
 
 // Data & Schema
-export const currentRowIndexAtom = atom<number | null>(null);
+export const currentRowIndexAtom = atom<number | undefined>(undefined);
 export const dataAtom = atom<Box<CSVData> | null>(null);
 export const annotationConfigAtom = atom<Box<AnnotationConfig> | null>(null);
 export const annotationStatsAtom = atom<Box<AnnotationStats> | null>(null);
@@ -32,7 +32,7 @@ export const currentRowAtom = atom<
     const index = get(currentRowIndexAtom);
     const dataBox = get(dataAtom);
 
-    if (index === null || !dataBox) return [undefined, null];
+    if (index === undefined || !dataBox) return [undefined, null];
 
     const data = dataBox.get();
 

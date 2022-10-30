@@ -68,7 +68,9 @@ export default function DataPreviewView() {
       {selectedColumn !== undefined && (
         <>
           <MediaPreview
-            value={rows[0][selectedColumn]}
+            selectedColumn={selectedColumn}
+            row={rows[0]}
+            rowIndex={0}
             type={previewType}
             onPreviewTypeChange={setPreviewType}
           />

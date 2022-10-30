@@ -47,7 +47,10 @@ const MockMainRow = () => {
       <Header allowBackLink onBackLinkClick={console.log} />
       <MediaPreview
         type="twitter-tweet"
-        value="https://twitter.com/robindemourat/status/1580220856965693441"
+        selectedColumn="url"
+        row={{
+          url: 'https://twitter.com/robindemourat/status/1580220856965693441'
+        }}
         onPreviewTypeChange={console.log}
       />
     </MainRow>

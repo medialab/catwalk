@@ -1,6 +1,6 @@
 import Select from 'react-select';
 
-import type {MediaPreviewType} from '../../types';
+import type {MediaPreviewType, CSVRow} from '../../types';
 import {DEFAULT_MEDIA_PREVIEW_TYPE} from '../../defaults';
 import {useI18nMessages} from '../../hooks';
 import Notification from '../Notification';
@@ -25,7 +25,9 @@ const PREVIEW_MAP: Record<MediaPreviewType, MediaPreviewSpecification> = {
 
 interface MediaPreviewProps {
   type?: MediaPreviewType;
-  value: string;
+  selectedColumn: string;
+  row: CSVRow;
+  rowIndex?: number;
   onPreviewTypeChange?: (type: MediaPreviewType) => void;
 }
 
@@ -34,7 +36,9 @@ interface MediaPreviewProps {
  */
 function MediaPreview({
   type = DEFAULT_MEDIA_PREVIEW_TYPE,
-  value,
+  selectedColumn,
+  row,
+  rowIndex,
   onPreviewTypeChange
 }: MediaPreviewProps) {
   const i18nMessages = useI18nMessages();
@@ -55,6 +59,8 @@ function MediaPreview({
 
   const selectedOption = PREVIEW_OPTIONS.find(option => option.value === type);
   const {canPreview, Component: PreviewComponent} = PREVIEW_MAP[type];
+
+  const value = row[selectedColumn];
 
   return (
     <main className="MediaPreview">

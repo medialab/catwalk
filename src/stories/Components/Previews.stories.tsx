@@ -28,27 +28,33 @@ const Template: ComponentStory<typeof MediaPreview> = args => {
 export const Twitter = Template.bind({});
 Twitter.args = {
   type: 'twitter-tweet',
-  value: 'https://twitter.com/medialab_ScPo/status/1583391821539213314'
+  row: {
+    url: 'https://twitter.com/medialab_ScPo/status/1583391821539213314'
+  },
+  selectedColumn: 'url'
 };
 
 export const Youtube = Template.bind({});
 Youtube.args = {
   type: 'youtube-video',
-  value: 'https://youtu.be/QnmJEHjPuIU'
-  /*   value: 'QnmJEHjPuIU'
-   */
+  row: {url: 'https://youtu.be/QnmJEHjPuIU'},
+  selectedColumn: 'url'
 };
 
 export const Website = Template.bind({});
 Website.args = {
   type: 'website-iframe',
-  value:
-    'https://www.humanite.fr/politique/yannick-jadot/yannick-jadot-se-pose-en-rempart-contre-les-lobbies-743679#xtor=RSS-1'
+  row: {
+    url: 'https://www.humanite.fr/politique/yannick-jadot/yannick-jadot-se-pose-en-rempart-contre-les-lobbies-743679#xtor=RSS-1'
+  },
+  selectedColumn: 'url'
 };
 
 export const Image = Template.bind({});
 Image.args = {
   type: 'image',
-  value:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Merseburg%2C_Schloss_--_1980_--_4.jpg/800px-Merseburg%2C_Schloss_--_1980_--_4.jpg'
+  row: {
+    url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Merseburg%2C_Schloss_--_1980_--_4.jpg/800px-Merseburg%2C_Schloss_--_1980_--_4.jpg'
+  },
+  selectedColumn: 'url'
 };
