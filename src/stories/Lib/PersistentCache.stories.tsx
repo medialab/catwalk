@@ -4,8 +4,13 @@ import {random, randomString} from 'pandemonium';
 
 import PersistentCache from '../../lib/cache';
 
+interface CacheItem {
+  name: string;
+  age: number;
+}
+
 interface Stores {
-  items: {name: string; age: number};
+  items: CacheItem;
 }
 
 interface Keys {
@@ -18,6 +23,17 @@ let id = 0;
 
 function PersistentCacheTester() {
   const [isOpen, setIsOpen] = useState(false);
+  const [cacheData, setCacheData] = useState<Array<CacheItem>>([]);
+
+  const refresh = async () => {
+    const data: Array<CacheItem> = [];
+
+    await cache.forEach('items', item => {
+      data.push(item);
+    });
+
+    setCacheData(data);
+  };
 
   return (
     <div>
@@ -30,6 +46,7 @@ function PersistentCacheTester() {
           <button
             onClick={async () => {
               await cache.open();
+              await refresh();
               setIsOpen(true);
             }}>
             open
@@ -38,6 +55,28 @@ function PersistentCacheTester() {
       )}
       {isOpen && <p>Database is now open!</p>}
       {isOpen && (
+        <div style={{overflowY: 'auto', maxHeight: '400px', width: '200px'}}>
+          <table>
+            <thead style={{textAlign: 'left'}}>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cacheData.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{item.name}</td>
+                    <td>{item.age}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {isOpen && (
         <p>
           <button
             onClick={async () => {
@@ -45,8 +84,15 @@ function PersistentCacheTester() {
                 name: randomString(5, 10),
                 age: random(21, 87)
               });
+              await refresh();
             }}>
             add
+          </button>
+          <button
+            onClick={async () => {
+              await refresh();
+            }}>
+            refresh
           </button>
         </p>
       )}
@@ -55,6 +101,7 @@ function PersistentCacheTester() {
           onClick={async () => {
             await cache.delete();
             setIsOpen(false);
+            setCacheData([]);
           }}>
           delete
         </button>

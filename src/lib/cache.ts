@@ -1,10 +1,17 @@
+import {tryPromise} from './utils';
+
 export type PersistentCacheError =
   | 'cant-open-db'
   | 'cant-close'
   | 'cant-create-store'
   | 'cant-delete-db'
   | 'transaction-error'
-  | 'transaction-aborted';
+  | 'transaction-aborted'
+  | 'cursor-error';
+
+type IDBCursorWithValueEvent = Event & {
+  target: {result: IDBCursorWithValue | undefined};
+};
 
 export default class PersistentCache<
   Stores,
@@ -49,8 +56,6 @@ export default class PersistentCache<
             const objectStore = this.db?.createObjectStore(name);
             if (!objectStore) return reject('cant-create-store');
           });
-
-          resolve();
         };
       }
     );
@@ -74,9 +79,9 @@ export default class PersistentCache<
   }
 
   transaction(
-    stores: Array<keyof Stores & string>,
+    stores: Array<keyof Stores & string> | (keyof Stores & string),
     mode: IDBTransactionMode,
-    callback: (transaction: IDBTransaction) => void
+    callback: (transaction: IDBTransaction) => Promise<void>
   ): Promise<void> {
     const db = this.assertIsOpen(this.db);
 
@@ -85,12 +90,19 @@ export default class PersistentCache<
         const t = db.transaction(stores, mode);
 
         t.onerror = () => reject('transaction-error');
-        t.onabort = () => reject('transaction-aborted');
+        // t.onabort = () => reject('transaction-aborted');
         t.oncomplete = () => resolve();
 
-        callback(t);
-
-        t.commit();
+        return callback(t).then(
+          () => {
+            t.commit();
+            resolve();
+          },
+          error => {
+            t.abort();
+            reject(error);
+          }
+        );
       }
     );
   }
@@ -100,8 +112,34 @@ export default class PersistentCache<
     key: Keys[Key],
     item: Stores[Store]
   ): Promise<void> {
-    return this.transaction([store], 'readwrite', t => {
+    return this.transaction(store, 'readwrite', t => {
       t.objectStore(store).add(item, key);
+      return Promise.resolve();
+    });
+  }
+
+  forEach<Store extends keyof Stores & string, Key extends keyof Keys>(
+    store: Store,
+    callback: (item: Stores[Store], index: Keys[Key]) => void
+  ): Promise<void> {
+    return this.transaction(store, 'readonly', t => {
+      return new Promise(
+        (resolve, reject: (error: PersistentCacheError) => void) => {
+          const cursorRequest = t.objectStore(store).openCursor();
+
+          cursorRequest.onerror = () => reject('cursor-error');
+          cursorRequest.onsuccess = (event: IDBCursorWithValueEvent) => {
+            const cursor = event.target.result;
+
+            if (cursor) {
+              callback(cursor.value as Stores[Store], cursor.key as Keys[Key]);
+              cursor.continue();
+            } else {
+              return resolve();
+            }
+          };
+        }
+      );
     });
   }
 }
