@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "Catwalk Annotation Config",
+  "type": "object",
+  "properties": {
+    "selectedColumn": {
+      "type": "string"
+    }
+  }
+}

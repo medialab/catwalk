@@ -6,7 +6,8 @@ export type PersistentCacheError =
   | 'transaction-error'
   | 'transaction-aborted'
   | 'cursor-error'
-  | 'cant-get';
+  | 'cant-get'
+  | 'cant-count';
 
 type IDBCursorWithValueEvent = Event & {
   target: {result: IDBCursorWithValue | undefined};
@@ -137,6 +138,18 @@ export default class PersistentCache<
             objectStore.put(updatedItem, key);
             return resolve();
           };
+        }
+      );
+    });
+  }
+
+  count<Store extends keyof Stores & string>(store: Store): Promise<number> {
+    return this.transaction(store, 'readonly', t => {
+      return new Promise(
+        (resolve, reject: (error: PersistentCacheError) => void) => {
+          const req = t.objectStore(store).count();
+          req.onerror = () => reject('cant-count');
+          req.onsuccess = () => resolve(req.result);
         }
       );
     });
