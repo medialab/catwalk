@@ -1,17 +1,17 @@
 import {TwitterEmbed} from 'react-social-media-embed';
 
-import type {InternationalizedString} from '../../../i18n/';
-import type {PreviewComponentProps} from './types';
+import type {PreviewSpecification} from './types';
 
-export const label: InternationalizedString = 'mediatypeLabelTwitterTweet';
+const twitterTweetPreviewSpecs: PreviewSpecification<string> = {
+  label: 'mediatypeLabelTwitterTweet',
+  parse(value) {
+    if (!value.includes('twitter.com')) return null;
 
-export function canPreview(value: string) {
-  // TODO: improve this heuristic
-  return value.includes('twitter.com');
-}
+    return value;
+  },
+  Component({value}) {
+    return <TwitterEmbed url={value} />;
+  }
+};
 
-function TwitterTweetPreview({value}: PreviewComponentProps) {
-  return <TwitterEmbed url={value} />;
-}
-
-export const Component = TwitterTweetPreview;
+export default twitterTweetPreviewSpecs;

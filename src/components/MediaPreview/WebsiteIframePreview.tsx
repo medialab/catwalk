@@ -1,26 +1,24 @@
-import type {InternationalizedString} from '../../../i18n';
-import type {PreviewComponentProps} from './types';
+import type {PreviewSpecification} from './types';
 
-export const label: InternationalizedString = 'mediatypeLabelWebsiteIframe';
+const websiteIframePreviewSpecs: PreviewSpecification<string> = {
+  label: 'mediatypeLabelWebsiteIframe',
+  parse(value) {
+    return value;
+  },
+  Component({value}) {
+    return (
+      <div>
+        <p>
+          <a href={value}>{value}</a>
+        </p>
+        <iframe
+          src={value}
+          width="100%"
+          height="300"
+          sandbox="allow-same-origin"></iframe>
+      </div>
+    );
+  }
+};
 
-export function canPreview(value: string) {
-  // TODO: improve this heuristic
-  return true;
-}
-
-function WebsiteIframePreview({value}: PreviewComponentProps) {
-  return (
-    <div>
-      <p>
-        <a href={value}>{value}</a>
-      </p>
-      <iframe
-        src={value}
-        width="100%"
-        height="300"
-        sandbox="allow-same-origin"></iframe>
-    </div>
-  );
-}
-
-export const Component = WebsiteIframePreview;
+export default websiteIframePreviewSpecs;

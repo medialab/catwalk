@@ -1,15 +1,13 @@
-import type {InternationalizedString} from '../../../i18n';
-import type {PreviewComponentProps} from './types';
+import type {PreviewSpecification} from './types';
 
-export const label: InternationalizedString = 'mediatypeLabelImage';
+const imagePreviewSpecs: PreviewSpecification<string> = {
+  label: 'mediatypeLabelImage',
+  parse(value) {
+    return value;
+  },
+  Component({value}) {
+    return <img src={value} width="100%" />;
+  }
+};
 
-export function canPreview(value: string) {
-  // TODO: improve this heuristic
-  return true;
-}
-
-function ImagePreview({value}: PreviewComponentProps) {
-  return <img src={value} width="100%" />;
-}
-
-export const Component = ImagePreview;
+export default imagePreviewSpecs;
