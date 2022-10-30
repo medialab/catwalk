@@ -21,6 +21,7 @@ export interface InternationalizedStrings {
   mediatypeLabelYoutubeVideo: string;
   mediatypeLabelWebsiteIframe: string;
   mediatypeLabelImage: string;
+  mediatypeLabelDebug: string;
   footerHtml: string;
   downloadFooterDownload: string;
   downloadFooterModalTitle: string;

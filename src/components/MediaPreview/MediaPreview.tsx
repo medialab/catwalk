@@ -6,12 +6,14 @@ import {DEFAULT_MEDIA_PREVIEW_TYPE} from '../../defaults';
 import {useI18nMessages} from '../../hooks';
 import Notification from '../Notification';
 
+import debug from './DebugPreview';
 import twitterTweet from './TwitterTweetPreview';
 import youtubeVideo from './YoutubeVideoPreview';
 import websiteIFrame from './WebsiteIframePreview';
 import image from './ImagePreview';
 
 const PREVIEW_MAP = {
+  debug: debug,
   'twitter-tweet': twitterTweet,
   'youtube-video': youtubeVideo,
   'website-iframe': websiteIFrame,

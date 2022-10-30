@@ -71,6 +71,7 @@ export type AnnotationStats = {counter: AnnotationCounter};
  * Media preview types.
  */
 export type MediaPreviewType =
+  | 'debug'
   | 'twitter-tweet'
   | 'youtube-video'
   | 'website-iframe'
