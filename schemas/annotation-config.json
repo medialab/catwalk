@@ -1,10 +1,86 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "title": "Catwalk Annotation Config",
-  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AnnotationSortOrder": {
+      "enum": ["incomplete", "non-annotated", "table"],
+      "type": "string"
+    },
+    "MediaPreviewType": {
+      "description": "Media preview types.",
+      "enum": [
+        "debug",
+        "image",
+        "twitter-tweet",
+        "website-iframe",
+        "youtube-video"
+      ],
+      "type": "string"
+    },
+    "NavKeyBindings": {
+      "properties": {
+        "next": {
+          "type": "string"
+        },
+        "prev": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
   "properties": {
+    "options": {
+      "properties": {
+        "navKeyBindings": {
+          "$ref": "#/definitions/NavKeyBindings"
+        },
+        "sortOrder": {
+          "$ref": "#/definitions/AnnotationSortOrder"
+        }
+      },
+      "type": "object"
+    },
+    "previewType": {
+      "$ref": "#/definitions/MediaPreviewType"
+    },
+    "schema": {
+      "items": {
+        "properties": {
+          "color": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "modalities": {
+            "items": {
+              "description": "Types related to the annotation schema.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
     "selectedColumn": {
       "type": "string"
     }
-  }
+  },
+  "type": "object"
 }
