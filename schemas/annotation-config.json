@@ -1,11 +1,32 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "AnnotationSortOrder": {
-      "enum": ["incomplete", "non-annotated", "table"],
-      "type": "string"
+  "additionalProperties": false,
+  "properties": {
+    "options": {
+      "additionalProperties": false,
+      "properties": {
+        "navKeyBindings": {
+          "additionalProperties": false,
+          "properties": {
+            "next": {
+              "type": "string"
+            },
+            "prev": {
+              "type": "string"
+            }
+          },
+          "required": ["next", "prev"],
+          "type": "object"
+        },
+        "sortOrder": {
+          "enum": ["incomplete", "non-annotated", "table"],
+          "type": "string"
+        }
+      },
+      "required": ["navKeyBindings", "sortOrder"],
+      "type": "object"
     },
-    "MediaPreviewType": {
+    "previewType": {
       "description": "Media preview types.",
       "enum": [
         "debug",
@@ -16,35 +37,9 @@
       ],
       "type": "string"
     },
-    "NavKeyBindings": {
-      "properties": {
-        "next": {
-          "type": "string"
-        },
-        "prev": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    }
-  },
-  "properties": {
-    "options": {
-      "properties": {
-        "navKeyBindings": {
-          "$ref": "#/definitions/NavKeyBindings"
-        },
-        "sortOrder": {
-          "$ref": "#/definitions/AnnotationSortOrder"
-        }
-      },
-      "type": "object"
-    },
-    "previewType": {
-      "$ref": "#/definitions/MediaPreviewType"
-    },
     "schema": {
       "items": {
+        "additionalProperties": false,
         "properties": {
           "color": {
             "type": "string"
@@ -54,6 +49,7 @@
           },
           "modalities": {
             "items": {
+              "additionalProperties": false,
               "description": "Types related to the annotation schema.",
               "properties": {
                 "id": {
@@ -66,6 +62,7 @@
                   "type": "string"
                 }
               },
+              "required": ["id", "key", "name"],
               "type": "object"
             },
             "type": "array"
@@ -74,6 +71,7 @@
             "type": "string"
           }
         },
+        "required": ["color", "id", "modalities", "name"],
         "type": "object"
       },
       "type": "array"
@@ -82,5 +80,6 @@
       "type": "string"
     }
   },
+  "required": ["options", "previewType", "schema", "selectedColumn"],
   "type": "object"
 }

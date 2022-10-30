@@ -18,7 +18,7 @@
     "prettier:check": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --check",
     "prettier": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --write",
     "reinstall": "rimraf ./node_modules && npm i",
-    "schema-gen": "typescript-json-schema src/types/index.d.ts AnnotationConfig > schemas/annotation-config.json && prettier schemas/annotation-config.json --write",
+    "schema-gen": "typescript-json-schema --no-refs --noExtraProps --required src/types/index.d.ts AnnotationConfig > schemas/annotation-config.json && prettier schemas/annotation-config.json --write",
     "storybook": "start-storybook -p 6006",
     "test": "ts-mocha 'test/**/*.ts'"
   },
