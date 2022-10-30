@@ -22,11 +22,7 @@ import {
   initializeAnnotationStatsFromConfig,
   mutateToSetTag
 } from '../model';
-import {
-  useNullableBoxedAtom,
-  useSetNullableBoxedAtom,
-  useNullableBoxedAtomValue
-} from './utils';
+import {useNullableBoxedAtom, useSetNullableBoxedAtom} from './utils';
 
 export function useCSVData(): CSVData | null {
   const [data] = useNullableBoxedAtom(dataAtom);
@@ -75,7 +71,8 @@ export function useAnnotationConfig(): [
 ] {
   const [annotationConfig, setAnnotationConfig] =
     useNullableBoxedAtom(annotationConfigAtom);
-  const annotationStats = useNullableBoxedAtomValue(annotationStatsAtom);
+  const [annotationStats, setAnnotationStats] =
+    useNullableBoxedAtom(annotationStatsAtom);
   const [currentRowIndex, currentRow] = useAtomValue(currentRowAtom);
   const [data, setData] = useNullableBoxedAtom(dataAtom);
 
@@ -104,7 +101,11 @@ export function useAnnotationConfig(): [
         categorization,
         modality
       );
+
+      // TODO: we could have void functions to refresh to better fit the
+      // semantics
       setData(data);
+      setAnnotationStats(annotationStats);
     }
   };
 
