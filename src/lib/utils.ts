@@ -12,9 +12,10 @@ export function mapEntries<I, V, K extends string = string>(
   return result;
 }
 
-export function flipObject<K extends keyof any, V extends keyof any>(
-  o: Record<K, V>
-): Record<V, K> {
+export function flipObject<
+  K extends string | number | symbol,
+  V extends string | number | symbol
+>(o: Record<K, V>): Record<V, K> {
   const t = {} as Record<V, K>;
 
   for (const k in o) {

@@ -1,4 +1,4 @@
-import {useAtom, useSetAtom, useAtomValue} from 'jotai';
+import {useSetAtom, useAtomValue} from 'jotai';
 
 import type {
   AnnotationConfig,
