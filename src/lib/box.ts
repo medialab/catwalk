@@ -16,6 +16,10 @@ export default class Box<T> {
     return new Box(value);
   }
 
+  refresh(): Box<T> {
+    return new Box(this.value);
+  }
+
   mutate(mutator: (value: T) => void): Box<T> {
     mutator(this.value);
     return new Box(this.value);

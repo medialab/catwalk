@@ -15,25 +15,15 @@ export function useToggleState(defaultValue = false): [boolean, () => void] {
 }
 
 export function useBoxedAtom<T>(
-  atom: WritableAtom<Box<T>, Box<T>>
-): [T, (newValue: T) => void] {
-  const [box, setBox] = useAtom(atom);
-
-  return [
-    box.get(),
-    (value: T): void => {
-      setBox(Box.of(value));
-    }
-  ];
-}
-
-export function useNullableBoxedAtom<T>(
   atom: WritableAtom<Box<T> | null, Box<T> | null>
-): [T | null, (newValue: T | null) => void] {
+): [T | null, () => void, (newValue: T | null) => void] {
   const [box, setBox] = useAtom(atom);
 
   return [
     box !== null ? box.get() : null,
+    (): void => {
+      setBox(box !== null ? box.refresh() : null);
+    },
     (value: T | null): void => {
       if (value !== null) setBox(Box.of(value));
       else setBox(null);
@@ -42,16 +32,6 @@ export function useNullableBoxedAtom<T>(
 }
 
 export function useSetBoxedAtom<T>(
-  atom: WritableAtom<Box<T>, Box<T>>
-): (newValue: T) => void {
-  const setBox = useSetAtom(atom);
-
-  return (value: T): void => {
-    setBox(Box.of(value));
-  };
-}
-
-export function useSetNullableBoxedAtom<T>(
   atom: WritableAtom<Box<T> | null, Box<T> | null>
 ): (newValue: T | null) => void {
   const setBox = useSetAtom(atom);
@@ -62,7 +42,7 @@ export function useSetNullableBoxedAtom<T>(
   };
 }
 
-export function useNullableBoxedAtomValue<T>(
+export function useBoxedAtomValue<T>(
   atom: WritableAtom<Box<T> | null, Box<T> | null>
 ): T | null {
   const box = useAtomValue(atom);

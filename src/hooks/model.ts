@@ -22,15 +22,15 @@ import {
   initializeAnnotationStatsFromConfig,
   mutateToSetTag
 } from '../model';
-import {useNullableBoxedAtom, useSetNullableBoxedAtom} from './utils';
+import {useBoxedAtom, useSetBoxedAtom} from './utils';
 
 export function useCSVData(): CSVData | null {
-  const [data] = useNullableBoxedAtom(dataAtom);
+  const [data] = useBoxedAtom(dataAtom);
   return data;
 }
 
 export function useSetCSVData() {
-  return useSetNullableBoxedAtom(dataAtom);
+  return useSetBoxedAtom(dataAtom);
 }
 
 export function useColumnNamesInUse() {
@@ -44,8 +44,8 @@ export function useKeysInUse() {
 export function useCreateAnnotationConfig(): (
   params: CreateDefaultAnnotationConfigParams
 ) => void {
-  const setAnnotationConfig = useSetNullableBoxedAtom(annotationConfigAtom);
-  const setAnnotationStats = useSetNullableBoxedAtom(annotationStatsAtom);
+  const setAnnotationConfig = useSetBoxedAtom(annotationConfigAtom);
+  const setAnnotationStats = useSetBoxedAtom(annotationStatsAtom);
   const setCurrentRowIndex = useSetAtom(currentRowAtom);
 
   return params => {
@@ -69,12 +69,12 @@ export function useAnnotationConfig(): [
   AnnotationStats | null,
   AnnotationConfigActions
 ] {
-  const [annotationConfig, setAnnotationConfig] =
-    useNullableBoxedAtom(annotationConfigAtom);
-  const [annotationStats, setAnnotationStats] =
-    useNullableBoxedAtom(annotationStatsAtom);
+  const [annotationConfig, refreshAnnotationConfig] =
+    useBoxedAtom(annotationConfigAtom);
+  const [annotationStats, refreshAnnotationStats] =
+    useBoxedAtom(annotationStatsAtom);
   const [currentRowIndex, currentRow] = useAtomValue(currentRowAtom);
-  const [data, setData] = useNullableBoxedAtom(dataAtom);
+  const [data, refreshData] = useBoxedAtom(dataAtom);
 
   if (
     !annotationConfig ||
@@ -89,10 +89,12 @@ export function useAnnotationConfig(): [
 
   const actions: AnnotationConfigActions = {
     selectColumn(column) {
-      setAnnotationConfig({...annotationConfig, selectedColumn: column});
+      annotationConfig.selectedColumn = column;
+      refreshAnnotationConfig();
     },
     setPreviewType(type) {
-      setAnnotationConfig({...annotationConfig, previewType: type});
+      annotationConfig.previewType = type;
+      refreshAnnotationConfig();
     },
     setTag(categorization, modality) {
       mutateToSetTag(
@@ -101,11 +103,8 @@ export function useAnnotationConfig(): [
         categorization,
         modality
       );
-
-      // TODO: we could have void functions to refresh to better fit the
-      // semantics
-      setData(data);
-      setAnnotationStats(annotationStats);
+      refreshData();
+      refreshAnnotationStats();
     }
   };
 
