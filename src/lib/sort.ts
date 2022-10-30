@@ -23,7 +23,7 @@ export default function sort(
   }
 
   if (order === 'incomplete') {
-    argsort.sort(function (a, b) {
+    argsort.sort((a, b) => {
       const firstRow = rows[a];
       const secondRow = rows[b];
 

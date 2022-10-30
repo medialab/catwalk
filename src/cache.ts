@@ -1,14 +1,16 @@
-import type {CSVRow, CSVRows, AnnotationConfig} from './types';
+import type {CSVRow, CSVRows, AnnotationConfig, CSVArgsort} from './types';
 import PersistentCache from './lib/cache';
 
 interface CatwalkCacheStore {
   rows: CSVRow;
   config: AnnotationConfig;
+  argsort: CSVArgsort;
 }
 
 interface CatwalkCacheStoreKeys {
   rows: number;
   config: 'current-config';
+  argsort: 'current-argsort';
 }
 
 export class CatwalkCache extends PersistentCache<
@@ -16,7 +18,7 @@ export class CatwalkCache extends PersistentCache<
   CatwalkCacheStoreKeys
 > {
   constructor() {
-    super('catwalk-cache', ['rows', 'config']);
+    super('catwalk-cache', ['rows', 'config', 'argsort']);
   }
 
   getConfig() {
