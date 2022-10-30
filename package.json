@@ -11,14 +11,15 @@
     "check"
   ],
   "scripts": {
-    "check": "npm run lint && npm run prettier:check",
+    "check": "npm run lint && npm run prettier:check && npm test",
     "dev": "kotatsu serve ./src/main.tsx --open",
     "dts-gen": "node ./scripts/yaml-dts.js > ./i18n/types.d.ts && prettier i18n/*.d.ts --write",
     "lint": "eslint './src/**/*{.ts,.tsx,.js,.jsx}' './.storybook/*.js'",
     "prettier:check": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --check",
     "prettier": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --write",
     "reinstall": "rimraf ./node_modules && npm i",
-    "storybook": "start-storybook -p 6006"
+    "storybook": "start-storybook -p 6006",
+    "test": "ts-mocha 'test/**/*.ts'"
   },
   "kotatsu": {
     "config": "./webpack.config.js",
@@ -65,6 +66,7 @@
     "@types/comma-number": "^2.1.0",
     "@types/file-saver": "^2.0.5",
     "@types/lodash": "^4.14.186",
+    "@types/mocha": "^10.0.0",
     "@types/papaparse": "^5.3.5",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
@@ -81,12 +83,14 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "gh-pages": "^4.0.0",
     "kotatsu": "^0.23.1",
+    "mocha": "^10.1.0",
     "pandemonium": "^2.4.1",
     "pre-commit": "^1.2.2",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "sass": "^1.55.0",
     "storybook-react-context": "^0.6.0",
+    "ts-mocha": "^10.0.0",
     "typescript": "^4.8.4"
   },
   "dependencies": {

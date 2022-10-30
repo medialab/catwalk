@@ -4,6 +4,7 @@ import type {
   View,
   CSVData,
   CSVRow,
+  CSVArgsort,
   AnnotationConfig,
   ModalName,
   AnnotationStats
@@ -20,6 +21,7 @@ export const modalAtom = atom<ModalName | null>(null);
 // Data & Schema
 export const currentRowIndexAtom = atom<number | undefined>(undefined);
 export const dataAtom = atom<Box<CSVData> | null>(null);
+export const argsortAtom = atom<Box<CSVArgsort> | null>(null);
 export const annotationConfigAtom = atom<Box<AnnotationConfig> | null>(null);
 export const annotationStatsAtom = atom<Box<AnnotationStats> | null>(null);
 
