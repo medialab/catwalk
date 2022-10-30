@@ -19,8 +19,16 @@ export class CatwalkCache extends PersistentCache<
     super('catwalk-cache', ['rows', 'config']);
   }
 
-  updateConfig(config: AnnotationConfig): Promise<void> {
+  getConfig() {
+    return this.get('config', 'current-config');
+  }
+
+  setConfig(config: AnnotationConfig): Promise<void> {
     return this.set('config', 'current-config', config);
+  }
+
+  getRows() {
+    return this.getAll('rows');
   }
 
   addRows(offset: number, rows: CSVRows): Promise<void> {

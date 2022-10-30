@@ -77,25 +77,27 @@ export default class PersistentCache<
     );
   }
 
-  transaction(
+  transaction<T = void>(
     stores: Array<keyof Stores & string> | (keyof Stores & string),
     mode: IDBTransactionMode,
-    callback: (transaction: IDBTransaction) => Promise<void>
-  ): Promise<void> {
+    callback: (transaction: IDBTransaction) => Promise<T>
+  ): Promise<T> {
     const db = this.assertIsOpen(this.db);
 
     return new Promise(
       (resolve, reject: (error: PersistentCacheError) => void) => {
         const t = db.transaction(stores, mode);
 
+        let result: T;
+
         t.onerror = () => reject('transaction-error');
         // t.onabort = () => reject('transaction-aborted');
-        t.oncomplete = () => resolve();
+        t.oncomplete = () => resolve(result);
 
         return callback(t).then(
-          () => {
+          (wrappedResult: T) => {
+            result = wrappedResult;
             t.commit();
-            resolve();
           },
           error => {
             t.abort();
@@ -112,31 +114,69 @@ export default class PersistentCache<
     item: Stores[Store]
   ): Promise<void> {
     return this.transaction(store, 'readwrite', t => {
-      t.objectStore(store).add(item, key);
+      t.objectStore(store).put(item, key);
       return Promise.resolve();
+    });
+  }
+
+  update<Store extends keyof Stores & string, Key extends keyof Keys>(
+    store: Store,
+    key: Keys[Key],
+    updater: (item: Stores[Store]) => Stores[Store]
+  ): Promise<void> {
+    return this.transaction(store, 'readwrite', t => {
+      return new Promise(
+        (resolve, reject: (error: PersistentCacheError) => void) => {
+          const objectStore = t.objectStore(store);
+
+          const req = objectStore.get(key);
+
+          req.onerror = () => reject('cant-get');
+          req.onsuccess = () => {
+            const updatedItem = updater(req.result);
+            objectStore.put(updatedItem, key);
+            return resolve();
+          };
+        }
+      );
     });
   }
 
   get<Store extends keyof Stores & string, Key extends keyof Keys>(
     store: Store,
     key: Keys[Key]
-  ): Promise<void> {
+  ): Promise<Stores[Store] | undefined> {
     return this.transaction(store, 'readwrite', t => {
       return new Promise(
         (resolve, reject: (error: PersistentCacheError) => void) => {
           const req = t.objectStore(store).get(key);
           req.onerror = () => reject('cant-get');
-          req.onsuccess = () => resolve();
+          req.onsuccess = () => resolve(req.result);
         }
       );
     });
   }
 
-  forEach<Store extends keyof Stores & string, Key extends keyof Keys>(
+  getAll<Store extends keyof Stores & string>(
+    store: Store
+  ): Promise<Array<Stores[Store]>> {
+    return this.transaction(store, 'readwrite', t => {
+      return new Promise(
+        (resolve, reject: (error: PersistentCacheError) => void) => {
+          const req = t.objectStore(store).getAll();
+          req.onerror = () => reject('cant-get');
+          req.onsuccess = () => resolve(req.result);
+        }
+      );
+    });
+  }
+
+  forEachWithCursor<Store extends keyof Stores & string>(
     store: Store,
-    callback: (item: Stores[Store], index: Keys[Key]) => void
+    callback: (cursor: IDBCursorWithValue) => void,
+    mode: IDBTransactionMode = 'readonly'
   ): Promise<void> {
-    return this.transaction(store, 'readonly', t => {
+    return this.transaction(store, mode, t => {
       return new Promise(
         (resolve, reject: (error: PersistentCacheError) => void) => {
           const cursorRequest = t.objectStore(store).openCursor();
@@ -146,7 +186,7 @@ export default class PersistentCache<
             const cursor = event.target.result;
 
             if (cursor) {
-              callback(cursor.value as Stores[Store], cursor.key as Keys[Key]);
+              callback(cursor);
               cursor.continue();
             } else {
               return resolve();
@@ -155,5 +195,32 @@ export default class PersistentCache<
         }
       );
     });
+  }
+
+  forEach<Store extends keyof Stores & string, Key extends keyof Keys>(
+    store: Store,
+    callback: (item: Stores[Store], index: Keys[Key]) => void
+  ): Promise<void> {
+    return this.forEachWithCursor(store, cursor => {
+      callback(cursor.value as Stores[Store], cursor.key as Keys[Key]);
+    });
+  }
+
+  updateEach<Store extends keyof Stores & string, Key extends keyof Keys>(
+    store: Store,
+    updater: (item: Stores[Store], index: Keys[Key]) => Stores[Store]
+  ): Promise<void> {
+    return this.forEachWithCursor(
+      store,
+      cursor => {
+        const newValue = updater(
+          cursor.value as Stores[Store],
+          cursor.key as Keys[Key]
+        );
+
+        cursor.update(newValue);
+      },
+      'readwrite'
+    );
   }
 }
