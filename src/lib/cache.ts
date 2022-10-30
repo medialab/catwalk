@@ -78,6 +78,18 @@ export default class PersistentCache<
     );
   }
 
+  validateStores(): boolean {
+    const db = this.assertIsOpen(this.db);
+
+    const actualStores = new Set(Array.from(db.objectStoreNames));
+
+    this.stores.forEach(store => {
+      if (!actualStores.has(store)) return false;
+    });
+
+    return true;
+  }
+
   transaction<T = void>(
     stores: Array<keyof Stores & string> | (keyof Stores & string),
     mode: IDBTransactionMode,

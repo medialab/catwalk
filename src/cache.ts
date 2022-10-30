@@ -1,5 +1,6 @@
 import type {CSVRow, CSVRows, AnnotationConfig} from './types';
 import PersistentCache from './lib/cache';
+import {validateAnnotationConfig} from './validation';
 
 // NOTE: the cache contains a counter of number of items expected
 // in the rows store, to avoid issues where page was reloaded when inserting
@@ -20,7 +21,6 @@ interface CatwalkCacheStoreKeys {
   check: 'check';
 }
 
-// TODO: validate (check count + validate config), openAndValidateOrDelete
 export class CatwalkCache extends PersistentCache<
   CatwalkCacheStore,
   CatwalkCacheStoreKeys
@@ -29,11 +29,19 @@ export class CatwalkCache extends PersistentCache<
     super('catwalk-cache', ['rows', 'config', 'check']);
   }
 
+  getCheck() {
+    return this.get('check', 'check');
+  }
+
   getConfig() {
     return this.get('config', 'config');
   }
 
-  setConfig(config: AnnotationConfig): Promise<void> {
+  setCheck(check: CatwalkCacheCheckItem) {
+    return this.set('check', 'check', check);
+  }
+
+  setConfig(config: AnnotationConfig) {
     return this.set('config', 'config', config);
   }
 
@@ -51,6 +59,35 @@ export class CatwalkCache extends PersistentCache<
 
       return Promise.resolve();
     });
+  }
+
+  async validate(): Promise<boolean> {
+    this.validateStores();
+
+    const check = await this.getCheck();
+
+    if (!check) return false;
+
+    const rowCount = await this.count('rows');
+
+    if (rowCount !== check.count) return false;
+
+    const annotationConfig = await this.getConfig();
+
+    if (!validateAnnotationConfig(annotationConfig)) return false;
+
+    return true;
+  }
+
+  async openAndValidateOrDelete(): Promise<void> {
+    await this.open();
+
+    const isValid = await this.validate();
+
+    if (!isValid) {
+      await this.delete();
+      await this.open();
+    }
   }
 }
 
