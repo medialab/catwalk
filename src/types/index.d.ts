@@ -1,3 +1,5 @@
+import type {PointerArray} from 'mnemonist/utils/typed-arrays';
+
 /**
  * UI state types.
  */
@@ -19,7 +21,7 @@ export type NavKeyBindings = Record<NavDirection, string>;
 export type CSVRow = {[column: string]: string};
 export type CSVColumns = Array<string>;
 export type CSVRows = Array<CSVRow>;
-export type CSVArgsort = Array<number>;
+export type CSVArgsort = PointerArray;
 export type CSVData = {columns: CSVColumns; rows: CSVRows};
 
 /**

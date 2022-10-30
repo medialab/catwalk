@@ -1,11 +1,11 @@
+import {indices as indicesFromLength} from 'mnemonist/utils/typed-arrays';
+
 import type {
   CSVRows,
   CSVArgsort,
   AnnotationSortOrder,
   AnnotationSchema
 } from '../types';
-
-// function compareRowsForIncompleteness() {}
 
 export default function sort(
   schema: AnnotationSchema,
@@ -27,15 +27,24 @@ export default function sort(
       const firstRow = rows[a];
       const secondRow = rows[b];
 
-      return 0;
+      let firstScore = 0;
+      let secondScore = 0;
+
+      schema.forEach(categorization => {
+        if (firstRow[categorization.name] !== undefined) firstScore++;
+        if (secondRow[categorization.name] !== undefined) secondScore++;
+      });
+
+      if (firstScore < secondScore) return -1;
+      else if (firstScore > secondScore) return 1;
+      else if (a < b) return -1;
+      else if (a > b) return 1;
+
+      throw new Error('the `incomplete` comparator should be stable!');
     });
   }
 }
 
-export function range(rows: CSVRows): CSVArgsort {
-  const argsort = new Array(rows.length);
-
-  for (let i = 0, l = rows.length; i < l; i++) argsort[i] = i;
-
-  return argsort;
+export function indices(rows: CSVRows): CSVArgsort {
+  return indicesFromLength(rows.length);
 }
