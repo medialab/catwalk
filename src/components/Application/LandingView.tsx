@@ -22,8 +22,10 @@ export default function LandingView() {
   });
 
   async function fileToDataPreview(file: File) {
-    const data = await parseCsvFile(file, progress => {
-      setCurrentProgress(progress);
+    const data = await parseCsvFile(file, {
+      onProgress: progress => {
+        setCurrentProgress(progress);
+      }
     });
 
     setCSVData(data);
