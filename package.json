@@ -13,7 +13,7 @@
   "scripts": {
     "check": "npm run lint && npm run prettier:check && npm test",
     "dev": "kotatsu serve ./src/main.tsx --open",
-    "dts-gen": "node ./scripts/yaml-dts.js > ./i18n/types.d.ts && prettier i18n/*.d.ts --write",
+    "dts-gen": "node ./scripts/yaml-dts.js && prettier i18n/*.d.ts --write",
     "lint": "eslint './src/**/*{.ts,.tsx,.js,.jsx}' './.storybook/*.js'",
     "prettier:check": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --check",
     "prettier": "prettier './src/**/*{.ts,.tsx,.js,.jsx,.scss}' .storybook --write",
@@ -83,6 +83,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "gh-pages": "^4.0.0",
+    "glob": "^8.0.3",
     "kotatsu": "^0.23.1",
     "mocha": "^10.1.0",
     "pandemonium": "^2.4.1",

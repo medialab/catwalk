@@ -1,32 +1,52 @@
 const YAML = require('yaml');
 const path = require('path');
+const glob = require('glob');
 const fs = require('fs');
 
-const englishMessagesPath = path.join(__dirname, '..', 'i18n', 'en.yml');
+const I18N_DIR = path.join(__dirname, '..', 'i18n');
+
+const englishMessagesPath = path.join(I18N_DIR, 'en.yml');
 const englishMessages = YAML.parse(
   fs.readFileSync(englishMessagesPath, 'utf8')
 );
 
+const langPaths = glob.sync(path.join(I18N_DIR, '*.yml'));
+
+const WARNING = [
+  '// !!! DO NOT EDIT: This file has been automatically generated',
+  '// !!! To update it, use `npm run dts-gen`'
+];
+
 function templateTypescriptDeclaration(messages) {
-  const declaration = [
-    '// !!! DO NOT EDIT: This file has been automatically generated',
-    '// !!! To update it, use `npm run dts-gen`',
-    'export interface InternationalizedStrings {'
-  ];
+  const declaration = WARNING.slice();
+
+  declaration.push('export interface InternationalizedStrings {');
 
   for (const name in messages) {
     declaration.push(`  ${name}: string`);
   }
 
-  // declaration.push('[name: string]: string;');
   declaration.push('}');
   declaration.push('');
-  // declaration.push("declare module '*.yml' {");
-  // declaration.push('  const strings: InternationalizedStrings;');
-  // declaration.push('  export default strings;');
-  // declaration.push('}');
 
   return declaration.join('\n');
 }
 
-console.log(templateTypescriptDeclaration(englishMessages));
+function templateSubTypescriptDeclaration() {
+  const declaration = WARNING.slice();
+
+  declaration.push(`import type {InternationalizedStrings} from './types';`);
+  declaration.push(`declare const strings: InternationalizedStrings;`);
+  declaration.push(`export default strings;`);
+
+  return declaration.join('\n');
+}
+
+fs.writeFileSync(
+  path.join(I18N_DIR, 'types.d.ts'),
+  templateTypescriptDeclaration(englishMessages)
+);
+
+langPaths.forEach(p => {
+  fs.writeFileSync(p + '.d.ts', templateSubTypescriptDeclaration());
+});
