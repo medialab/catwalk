@@ -53,7 +53,9 @@ class KeypressListeners {
 
     window.addEventListener('keyup', event => {
       // We don't want the event to fire if something important has focus
-      if (document.activeElement !== document.body) return;
+      const focusedTag = document.activeElement?.tagName.toLowerCase();
+
+      if (focusedTag === 'input' || focusedTag === 'textarea') return;
 
       const key = normalizeKey(event.key);
 
