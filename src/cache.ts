@@ -7,6 +7,7 @@ import {validateAnnotationConfig} from './validation';
 // rows in the cache and avoid data loss.
 interface CatwalkCacheCheckItem {
   count: number;
+  version: string;
 }
 
 interface CatwalkCacheStore {
@@ -25,6 +26,8 @@ export class CatwalkCache extends PersistentCache<
   CatwalkCacheStore,
   CatwalkCacheStoreKeys
 > {
+  static VERSION = '1.0.0';
+
   constructor() {
     super('catwalk-cache', ['rows', 'config', 'check']);
   }
@@ -37,7 +40,9 @@ export class CatwalkCache extends PersistentCache<
     return this.get('config', 'config');
   }
 
-  setCheck(check: CatwalkCacheCheckItem) {
+  setCheck(partialCheck: Omit<CatwalkCacheCheckItem, 'version'>) {
+    const check = {...partialCheck, version: CatwalkCache.VERSION};
+
     return this.set('check', 'check', check);
   }
 
@@ -67,6 +72,8 @@ export class CatwalkCache extends PersistentCache<
     const check = await this.getCheck();
 
     if (!check) return false;
+
+    if (check.version !== CatwalkCache.VERSION) return false;
 
     const rowCount = await this.count('rows');
 
