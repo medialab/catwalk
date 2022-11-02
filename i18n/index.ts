@@ -10,21 +10,24 @@ const VARIABLES_REGEX = /\{([^}]+)\}/g;
 function compileTemplates(
   strings: InternationalizedStrings
 ): InternationalizedStrings {
-  const output = {};
+  const output = {} as Record<string, unknown>;
 
   for (const name in strings) {
     if (name.endsWith('Template')) {
-      output[name] = params => {
-        return strings[name].replace(VARIABLES_REGEX, (_, name) => {
-          return params[name];
-        });
+      output[name] = (params: Record<string, string | number>) => {
+        return (strings[name as InternationalizedString] as string).replace(
+          VARIABLES_REGEX,
+          (_, name) => {
+            return params[name].toString();
+          }
+        );
       };
     } else {
-      output[name] = strings[name];
+      output[name] = strings[name as InternationalizedString];
     }
   }
 
-  return output as InternationalizedStrings;
+  return output as unknown as InternationalizedStrings;
 }
 
 const i18nMessages = {
