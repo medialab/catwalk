@@ -44,7 +44,7 @@ export type Categorization = {
 
 export type AnnotationSchema = Array<Categorization>;
 
-export type AnnotationSortOrder = 'table' | 'non-annotated' | 'incomplete';
+export type AnnotationSortOrder = 'table' | 'incomplete';
 
 export type AnnotationOptions = {
   sortOrder: AnnotationSortOrder;

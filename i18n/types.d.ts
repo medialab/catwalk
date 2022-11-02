@@ -35,7 +35,6 @@ export interface InternationalizedStrings {
   modalKeyAssignMessage: string;
   railwaySortModeTitle: string;
   railwaySortModeTable: string;
-  railwaySortModeNonAnnotated: string;
   railwaySortModeIncomplete: string;
   railwayItemTooltipNoTagging: string;
   railwayKeyassignModalTitle: string;

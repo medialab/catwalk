@@ -44,7 +44,6 @@ modalKeyAssignMessage: Please type on your keyboard the new key to assign
 
 railwaySortModeTitle: 'sort items by: '
 railwaySortModeTable: order of the table
-railwaySortModeNonAnnotated: non-annotated items first
 railwaySortModeIncomplete: incompletely annotated items first
 
 railwayItemTooltipNoTagging: No tagging yet

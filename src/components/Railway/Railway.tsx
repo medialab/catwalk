@@ -74,7 +74,6 @@ function Railway({
   const {
     railwaySortModeTitle,
     railwaySortModeTable,
-    railwaySortModeNonAnnotated,
     railwaySortModeIncomplete,
 
     railwayArrowsKeyBinding,
@@ -92,10 +91,6 @@ function Railway({
     {
       value: 'table',
       label: railwaySortModeTable
-    },
-    {
-      value: 'non-annotated',
-      label: railwaySortModeNonAnnotated
     },
     {
       value: 'incomplete',

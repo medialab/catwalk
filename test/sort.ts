@@ -29,7 +29,8 @@ describe('Sorting', () => {
     {name: 'John', status: 'IN', color: 'blue'},
     {name: 'Lisa', status: 'OUT'},
     {name: 'Catherine', color: 'red'},
-    {name: 'Damien', status: 'OUT', color: 'blue'}
+    {name: 'Damien', status: 'OUT', color: 'blue'},
+    {name: 'Laura'}
   ];
 
   it('should properly sort by table order.', () => {
@@ -47,7 +48,7 @@ describe('Sorting', () => {
 
     sort(schema, 'incomplete', rows, argsort);
 
-    assert.deepStrictEqual(argsort, new Uint8Array([1, 2, 0, 3]));
+    assert.deepStrictEqual(argsort, new Uint8Array([4, 1, 2, 0, 3]));
 
     sort(schema, 'table', rows, argsort);
 
