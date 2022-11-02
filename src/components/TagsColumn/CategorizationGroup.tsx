@@ -1,6 +1,12 @@
 import classNames from 'classnames';
 
-import type {Modalities, ModalitiesStats} from '../../types';
+import type {
+  Categorization,
+  Modality,
+  Modalities,
+  ModalitiesStats
+} from '../../types';
+import type {AnnotationConfigKeypressEvent} from '../../hooks';
 import Button from '../Button';
 
 interface CategorizationHeaderProps {
@@ -63,23 +69,22 @@ function CategorizationHeader({
 }
 
 interface ModalityGroupProps {
-  name: string;
+  categorization: Categorization;
+  modality: Modality;
   count: number;
   share: number;
-  keyboardKey: string;
   isEdited: boolean;
 
   onDeleteRequest?: () => void;
   onKeyBindingEditRequest?: () => void;
-  onTagRequest?: () => void;
+  onTagRequest?: (event: AnnotationConfigKeypressEvent) => void;
 }
 
 function ModalityGroup({
-  name,
+  categorization,
+  modality,
   count,
   share,
-  keyboardKey,
-
   isEdited,
 
   onDeleteRequest,
@@ -94,9 +99,11 @@ function ModalityGroup({
       <div className="key-btn-container">
         <Button
           onClick={() =>
-            isEdited ? onKeyBindingEditRequest?.() : onTagRequest?.()
+            isEdited
+              ? onKeyBindingEditRequest?.()
+              : onTagRequest?.({categorization, modality})
           }>
-          {keyboardKey}
+          {modality.key}
         </Button>
       </div>
       <div className="title-container">
@@ -111,13 +118,13 @@ function ModalityGroup({
         {isEdited ? (
           <input
             className="title-writemode"
-            value={name}
+            value={modality.name}
             placeholder="Type modality name"
           />
         ) : (
           // <span className="title-readmode">{name} ({count})</span>
           <span className="title-readmode">
-            {name} ({count})
+            {modality.name} ({count})
           </span>
         )}
       </div>
@@ -131,24 +138,23 @@ function ModalityGroup({
 
 type CategorizationGroupProps = {
   isEdited: boolean;
-  name: string;
-  color: string;
+  categorization: Categorization;
   modalities: Modalities;
   stats: ModalitiesStats;
   completedPercentage: number;
   total: number;
-  onDeleteCategoryRequest: () => void;
+  onTagRequest?: (event: AnnotationConfigKeypressEvent) => void;
+  onDeleteCategoryRequest?: () => void;
 };
 
 export default function CategorizationGroup({
   isEdited,
-  name,
-  color,
+  categorization,
   modalities,
   stats,
   completedPercentage,
   total,
-
+  onTagRequest,
   onDeleteCategoryRequest
 }: CategorizationGroupProps) {
   return (
@@ -158,26 +164,25 @@ export default function CategorizationGroup({
       })}>
       <CategorizationHeader
         isEdited={isEdited}
-        name={name}
+        name={categorization.name}
         completedPercentage={completedPercentage}
-        color={color}
+        color={categorization.color}
         onDeleteRequest={onDeleteCategoryRequest}
       />
       <ul className="modalities-list">
-        {modalities.map(({name, key: keyboardKey}) => {
-          const modalityStats = stats[name];
+        {modalities.map(modality => {
+          const modalityStats = stats[modality.name];
 
           return (
             <ModalityGroup
-              key={name}
-              name={name}
+              categorization={categorization}
+              modality={modality}
               count={modalityStats.count}
               share={modalityStats.count / total}
-              keyboardKey={keyboardKey}
               isEdited={isEdited}
               onDeleteRequest={console.log}
               onKeyBindingEditRequest={console.log}
-              onTagRequest={console.log}
+              onTagRequest={onTagRequest}
             />
           );
         })}

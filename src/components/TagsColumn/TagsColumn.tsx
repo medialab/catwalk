@@ -70,13 +70,13 @@ function TagsColumn({
           return (
             <CategorizationGroup
               key={categorization.id}
-              name={categorization.name}
+              categorization={categorization}
               completedPercentage={categorizationStats.count / total}
               total={categorizationStats.count}
               stats={categorizationStats.modalities}
               modalities={categorization.modalities}
-              color={categorization.color}
               isEdited={isEdited}
+              onTagRequest={onTagRequest}
               onDeleteCategoryRequest={() =>
                 onDeleteCategoryRequest?.(categorization)
               }
