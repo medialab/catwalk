@@ -19,16 +19,18 @@ const debugPreviewSpecs: PreviewSpecification<string> = {
         </p>
         <p>Row data:</p>
         <table>
-          {Object.keys(row).map(column => {
-            return (
-              <tr key={column}>
-                <td>
-                  <strong>{column}</strong>
-                </td>
-                <td>{row[column]}</td>
-              </tr>
-            );
-          })}
+          <tbody>
+            {Object.keys(row).map(column => {
+              return (
+                <tr key={column}>
+                  <td>
+                    <strong>{column}</strong>
+                  </td>
+                  <td>{row[column]}</td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
     );

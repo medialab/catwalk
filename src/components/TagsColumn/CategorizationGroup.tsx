@@ -175,10 +175,11 @@ export default function CategorizationGroup({
 
           return (
             <ModalityGroup
+              key={modality.id}
               categorization={categorization}
               modality={modality}
               count={modalityStats.count}
-              share={modalityStats.count / total}
+              share={total === 0 ? 0 : modalityStats.count / total}
               isEdited={isEdited}
               onDeleteRequest={console.log}
               onKeyBindingEditRequest={console.log}
