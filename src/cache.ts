@@ -81,7 +81,7 @@ export class CatwalkCache extends PersistentCache<
     return true;
   }
 
-  async openAndValidateOrDelete(): Promise<void> {
+  async openAndValidateOrDelete(): Promise<boolean> {
     await this.open();
 
     const isValid = await this.validate();
@@ -90,6 +90,8 @@ export class CatwalkCache extends PersistentCache<
       await this.delete();
       await this.open();
     }
+
+    return isValid;
   }
 }
 
