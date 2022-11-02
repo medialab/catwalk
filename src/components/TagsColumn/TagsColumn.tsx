@@ -52,6 +52,7 @@ function TagsColumn({
   } = useI18nMessages();
 
   useAnnotationSchemaKeypress(schema, event => {
+    if (isEdited) return;
     onTagRequest?.(event);
   });
 

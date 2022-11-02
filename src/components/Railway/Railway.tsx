@@ -83,6 +83,7 @@ function Railway({
   const maxRowIndex = rows.length - 1;
 
   useMultipleKeypress<NavDirection>(flipObject(navKeyBindings), direction => {
+    if (isEdited) return;
     if (!canNavigate(activeRowIndex, maxRowIndex, direction)) return;
     onNavToSibling?.(direction);
   });
@@ -128,7 +129,11 @@ function Railway({
                     schema={schema}
                     key={index}
                     isActive={index === activeRowIndex}
-                    onClick={() => onNavToIndex?.(index)}
+                    onClick={() => {
+                      if (isEdited) return;
+
+                      onNavToIndex?.(index);
+                    }}
                   />
                 );
               }
@@ -181,6 +186,8 @@ function Railway({
               <div className="arrow-button-container">
                 <Button
                   onClick={() => {
+                    if (isEdited) return;
+
                     if (!canNavigate(activeRowIndex, maxRowIndex, direction))
                       return;
                     onNavToSibling?.(direction);
