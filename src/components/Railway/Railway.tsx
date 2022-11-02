@@ -114,8 +114,6 @@ function Railway({
 
               const itemSize = Math.max(MIN_ITEM_HEIGHT, idealHeightPerItem);
 
-              console.log(height, itemSize);
-
               function Row({
                 index,
                 style
