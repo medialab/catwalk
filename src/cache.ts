@@ -74,6 +74,8 @@ export class CatwalkCache extends PersistentCache<
 
     const annotationConfig = await this.getConfig();
 
+    if (!annotationConfig) return false;
+
     if (!validateAnnotationConfig(annotationConfig)) return false;
 
     return true;
