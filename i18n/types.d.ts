@@ -7,6 +7,7 @@ export interface InternationalizedStrings {
   notifInvalidFile: string;
   introductionText: string;
   loadingMessage: string;
+  loadingParsedLinesTemplate: (params: {count: string | number}) => string;
   chooseADataSample: string;
   chooseADataSamplePlaceholder: string;
   dndPromptInactive: string;

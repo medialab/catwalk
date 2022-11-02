@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import formatInt from 'comma-number';
 
 import type {ParseCSVProgress} from '../../lib/parse';
 import Dropzone from '../Dropzone';
@@ -13,6 +14,8 @@ function IntroParagraph() {
 }
 
 export default function LandingView() {
+  const {loadingParsedLinesTemplate} = useI18nMessages();
+
   const setView = useSetView();
   const setCSVData = useSetCSVData();
   const [isLoading, setIsLoading] = useState(false);
@@ -61,7 +64,9 @@ export default function LandingView() {
       {isLoading && (
         <LoadingCartel
           loadingPercentage={currentProgress.percent}
-          lines={currentProgress.lines}
+          message={loadingParsedLinesTemplate({
+            count: formatInt(currentProgress.lines)
+          })}
         />
       )}
     </>

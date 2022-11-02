@@ -1,14 +1,13 @@
-import formatInt from 'comma-number';
-
 import {useI18nMessages} from '../../hooks';
 
 interface LoadingCartel {
   loadingPercentage: number;
-  lines?: number;
+  message?: string;
 }
 
-function LoadingCartel({loadingPercentage, lines}: LoadingCartel) {
+function LoadingCartel({loadingPercentage, message}: LoadingCartel) {
   const {loadingMessage} = useI18nMessages();
+
   return (
     <div className="LoadingCartel">
       <div className="animation-container">
@@ -25,7 +24,7 @@ function LoadingCartel({loadingPercentage, lines}: LoadingCartel) {
       </div>
       <h5 className="loading-message">
         {loadingMessage}
-        {!!lines && <span> (parsed {formatInt(lines)} lines)</span>}
+        {!!message && <span> ({message})</span>}
       </h5>
     </div>
   );

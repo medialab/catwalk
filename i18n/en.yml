@@ -7,6 +7,7 @@ headerBacklink: Go back to file upload
 notifInvalidFile: Invalid file ! try again !
 introductionText: Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam amet voluptatem eius dolorum reprehenderit earum. Quis, dolorum cum in vel laudantium adipisci, beatae accusamus voluptatibus quos tenetur explicabo expedita.
 loadingMessage: loading
+loadingParsedLinesTemplate: parsed {count} lines
 chooseADataSample: Choose a data sample
 chooseADataSamplePlaceholder: Select an example dataset
 dndPromptInactive: Drag and drop some files here, or click to select files

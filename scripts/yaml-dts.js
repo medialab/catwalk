@@ -3,6 +3,8 @@ const path = require('path');
 const glob = require('glob');
 const fs = require('fs');
 
+const VARIABLES_REGEX = /\{([^}]+)\}/g;
+
 const I18N_DIR = path.join(__dirname, '..', 'i18n');
 
 const englishMessagesPath = path.join(I18N_DIR, 'en.yml');
@@ -23,7 +25,22 @@ function templateTypescriptDeclaration(messages) {
   declaration.push('export interface InternationalizedStrings {');
 
   for (const name in messages) {
-    declaration.push(`  ${name}: string`);
+    if (name.endsWith('Template')) {
+      let variableNames = Array.from(messages[name].matchAll(VARIABLES_REGEX));
+
+      if (!variableNames.length)
+        throw new Error('name should contain at least a variable!');
+
+      variableNames = Array.from(new Set(variableNames.map(m => m[1])));
+
+      declaration.push(
+        `  ${name}: (params: {${variableNames
+          .map(v => v + ':' + 'string | number')
+          .join(',')}}) => string`
+      );
+    } else {
+      declaration.push(`  ${name}: string`);
+    }
   }
 
   declaration.push('}');
