@@ -14,6 +14,11 @@ export function useLoadCacheEffect() {
 
   useEffect(() => {
     const loadCache = async () => {
+      if (cache.isOpen())
+        throw new Error(
+          'useLoadCacheEffect: we do not yet deal with the case when we go back to landing. Maybe we should use this in splash view instead?'
+        );
+
       const isValid = await cache.openAndValidateOrDelete();
 
       if (isValid) {
@@ -23,7 +28,7 @@ export function useLoadCacheEffect() {
 
         if (!config || !consistencyInfo)
           throw new Error(
-            'inconsistency issue: config/consistencyInfo should be valid at this point!'
+            'useLoadCacheEffect inconsistency issue: config/consistencyInfo should be valid at this point!'
           );
 
         const stats = inferAnnotationStatsFromConfigAndRows(config, rows);

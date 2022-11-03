@@ -35,6 +35,10 @@ export default class PersistentCache<
     return db;
   }
 
+  isOpen(): boolean {
+    return !!this.db;
+  }
+
   open(): Promise<void> {
     return new Promise(
       (resolve, reject: (type: PersistentCacheError) => void) => {
