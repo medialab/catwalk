@@ -6,7 +6,12 @@ import Dropzone from '../Dropzone';
 import LoadingCartel from '../LoadingCartel';
 import SamplePicker from '../SamplePicker';
 import {parseCsvFile} from '../../lib/parse';
-import {useSetCSVData, useI18nMessages, useSetView} from '../../hooks';
+import {
+  useSetCSVData,
+  useI18nMessages,
+  useSetView,
+  useAddRowsToCache
+} from '../../hooks';
 
 function IntroParagraph() {
   const {introductionText} = useI18nMessages();
@@ -15,6 +20,7 @@ function IntroParagraph() {
 
 export default function LandingView() {
   const {loadingParsedLinesTemplate} = useI18nMessages();
+  const addRowsToCache = useAddRowsToCache();
 
   const setView = useSetView();
   const setCSVData = useSetCSVData();
@@ -28,10 +34,13 @@ export default function LandingView() {
     const data = await parseCsvFile(file, {
       onProgress: progress => {
         setCurrentProgress(progress);
+      },
+      onChunk: async ({offset, rows}) => {
+        await addRowsToCache(offset, rows);
       }
     });
 
-    setCSVData(data);
+    await setCSVData(data);
     setView('data-preview');
   }
 

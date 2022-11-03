@@ -2,6 +2,7 @@ import {v4 as uuid} from 'uuid';
 
 import type {
   CSVColumns,
+  CSVRows,
   MediaPreviewType,
   AnnotationConfig,
   AnnotationStats,
@@ -94,4 +95,28 @@ export function initializeAnnotationStatsFromConfig(
       }
     )
   };
+}
+
+export function inferAnnotationStatsFromConfigAndRows(
+  config: AnnotationConfig,
+  rows: CSVRows
+): AnnotationStats {
+  const stats = initializeAnnotationStatsFromConfig(config);
+
+  const counter = stats.counter;
+
+  rows.forEach(row => {
+    config.schema.forEach(categorization => {
+      const categorizationStats = counter[categorization.name];
+
+      const value = row[categorization.name];
+
+      if (value !== undefined) {
+        categorizationStats.count++;
+        categorizationStats.modalities[value].count++;
+      }
+    });
+  });
+
+  return stats;
 }

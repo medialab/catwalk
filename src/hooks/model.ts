@@ -1,5 +1,6 @@
 import {useSetAtom, useAtomValue} from 'jotai';
 
+import cache from '../cache';
 import type {
   AnnotationConfig,
   AnnotationStats,
@@ -36,7 +37,8 @@ export function useSetCSVData() {
   const setCsvData = useSetBoxedAtom(dataAtom);
   const setArgsort = useSetBoxedAtom(argsortAtom);
 
-  return (data: CSVData) => {
+  return async (data: CSVData) => {
+    await cache.seal({count: data.rows.length, columns: data.columns});
     setCsvData(data);
     setArgsort(indices(data.rows));
   };
