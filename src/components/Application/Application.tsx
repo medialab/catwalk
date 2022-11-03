@@ -12,12 +12,13 @@ import MainRow from '../Layout/MainRow';
 import Header from '../Header';
 import Footer from '../Footer';
 import Modals from '../Modals';
-import {useView, useLoadCacheEffect} from '../../hooks';
+import {useView, useLoadCacheEffect, useDisplayModal} from '../../hooks';
 
 import '../../styles/entrypoint.scss';
 
 export default function Application() {
   const [view, setView] = useView();
+  const displayModal = useDisplayModal();
 
   useLoadCacheEffect();
 
@@ -40,8 +41,7 @@ export default function Application() {
             <Header
               allowBackLink={view !== 'splash' && view !== 'landing'}
               onBackLinkClick={() => {
-                // TODO: decide whether to wipe global state here or not wrt csv data
-                setView('landing');
+                displayModal('reset-confirm');
               }}
             />
             {viewChild}

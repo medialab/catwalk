@@ -16,6 +16,7 @@ import {
   annotationConfigAtom,
   annotationStatsAtom,
   currentRowAtom,
+  currentRowIndexAtom,
   columnNamesInUseAtom,
   keysInUseAtom
 } from '../atoms';
@@ -26,6 +27,7 @@ import {
   mutateToSetTag
 } from '../model';
 import sort, {indices} from '../lib/sort';
+import {useSetView} from './ui-state';
 import {useBoxedAtom, useSetBoxedAtom, useBoxedAtomValue} from './utils';
 
 export function useCSVData(): CSVData | null {
@@ -143,4 +145,23 @@ export function useAnnotationConfig(): [
   };
 
   return [annotationConfig, annotationStats, actions];
+}
+
+export function useResetProject() {
+  const setView = useSetView();
+  const setCurrentRowIndex = useSetAtom(currentRowIndexAtom);
+  const setData = useSetBoxedAtom(dataAtom);
+  const setAnnotationConfig = useSetBoxedAtom(annotationConfigAtom);
+  const setArgsort = useSetBoxedAtom(argsortAtom);
+  const setAnnotationStats = useSetBoxedAtom(annotationStatsAtom);
+
+  return async () => {
+    await cache.delete();
+    setData(null);
+    setCurrentRowIndex(undefined);
+    setAnnotationConfig(null);
+    setArgsort(null);
+    setAnnotationStats(null);
+    setView('landing');
+  };
 }

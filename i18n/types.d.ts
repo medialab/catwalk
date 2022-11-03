@@ -1,7 +1,6 @@
 // !!! DO NOT EDIT: This file has been automatically generated
 // !!! To update it, use `npm run dts-gen`
 export interface InternationalizedStrings {
-  test: string;
   tagline: string;
   headerBacklink: string;
   notifInvalidFile: string;
@@ -32,6 +31,9 @@ export interface InternationalizedStrings {
   downloadFooterModalDlModelHelp: string;
   downloadFooterModalDlEverything: string;
   downloadFooterModalDlEverythingHelp: string;
+  resetConfirmModalTitle: string;
+  resetConfirmModalAgree: string;
+  resetConfirmModalCancel: string;
   modalCancel: string;
   modalKeyAssignMessage: string;
   railwaySortModeTitle: string;

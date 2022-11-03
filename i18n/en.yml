@@ -1,6 +1,4 @@
 ---
-test: Coucou michel
-
 tagline: a multi-dimensional categorization tool for web & media data
 headerBacklink: Go back to file upload
 
@@ -38,6 +36,10 @@ downloadFooterModalDlModel: Download your annotation model only
 downloadFooterModalDlModelHelp: Help Download your annotation model only
 downloadFooterModalDlEverything: Download your data and annotation model
 downloadFooterModalDlEverythingHelp: Help Download your data and annotation model
+
+resetConfirmModalTitle: Warning, you will lose annotation data!
+resetConfirmModalAgree: I understand
+resetConfirmModalCancel: Oh no!
 
 modalCancel: cancel
 

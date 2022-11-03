@@ -297,6 +297,15 @@
   }
 }
 
+.ResetConfirmModalContent {
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}
+
 .TagsColumn {
   width: calc(50vw - $layout_annotation_width / 2 - $margin_medium * 2);
   border: 1px solid $color_dark;
