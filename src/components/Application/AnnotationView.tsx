@@ -10,7 +10,8 @@ import {
   useDisplayModal,
   useCurrentRowIndex,
   useCurrentRowEntry,
-  useToggleState
+  useToggleState,
+  useArgsort
 } from '../../hooks';
 
 export function RailwayHandler() {
@@ -18,8 +19,9 @@ export function RailwayHandler() {
   const [annotationConfig, , {setSortOrder}] = useAnnotationConfig();
   const [currentRowIndex, setCurrentRowIndex] = useCurrentRowIndex();
   const [isEdited, setIsEdited] = useState(false);
+  const argsort = useArgsort();
 
-  if (!csvData || currentRowIndex === undefined)
+  if (!csvData || !argsort || currentRowIndex === undefined)
     throw new Error(
       'It should not be possible to display Railway without data being loaded!'
     );
@@ -33,6 +35,7 @@ export function RailwayHandler() {
     <Railway
       isEdited={isEdited}
       rows={csvData.rows}
+      argsort={argsort}
       schema={annotationConfig.schema}
       navKeyBindings={annotationConfig.options.navKeyBindings}
       activeRowIndex={currentRowIndex}

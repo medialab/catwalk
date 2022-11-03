@@ -4,6 +4,7 @@ import {FixedSizeList} from 'react-window';
 
 import type {
   CSVRows,
+  CSVArgsort,
   AnnotationSortOrder,
   AnnotationSchema,
   NavKeyBindings,
@@ -29,6 +30,7 @@ const MIN_ITEM_HEIGHT = 4 + 1;
 
 type RailwayProps = {
   rows: CSVRows;
+  argsort?: CSVArgsort;
   navKeyBindings: NavKeyBindings;
   schema: AnnotationSchema;
   sortOrder: AnnotationSortOrder;
@@ -53,6 +55,7 @@ type RailwayProps = {
 
 function Railway({
   rows,
+  argsort,
   schema,
   sortOrder = 'table',
   navKeyBindings,
@@ -125,7 +128,7 @@ function Railway({
                 return (
                   <RailwayItem
                     style={style}
-                    row={rows[index]}
+                    row={rows[argsort ? argsort[index] : index]}
                     schema={schema}
                     key={index}
                     isActive={index === activeRowIndex}

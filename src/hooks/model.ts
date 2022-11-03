@@ -1,4 +1,4 @@
-import {useSetAtom, useAtomValue} from 'jotai';
+import {useSetAtom, useAtomValue, useAtom} from 'jotai';
 
 import cache from '../cache';
 import type {
@@ -94,7 +94,8 @@ export function useAnnotationConfig(): [
   const [argsort, refreshArgsort] = useBoxedAtom(argsortAtom);
   const [annotationStats, refreshAnnotationStats] =
     useBoxedAtom(annotationStatsAtom);
-  const [currentRowIndex, currentRow] = useAtomValue(currentRowAtom);
+  const [[currentRowIndex, currentRow], setCurrentRowIndex] =
+    useAtom(currentRowAtom);
   const [data, refreshData] = useBoxedAtom(dataAtom);
 
   if (
@@ -134,13 +135,25 @@ export function useAnnotationConfig(): [
       refreshAnnotationStats();
     },
     async setSortOrder(order) {
+      const rowIndexInTableBeforeSort = argsort[currentRowIndex];
+
       annotationConfig.options.sortOrder = order;
       sort(annotationConfig.schema, order, data.rows, argsort);
+
+      const rowIndexInNewArgsort = argsort.findIndex(
+        (i: number) => i === rowIndexInTableBeforeSort
+      );
+
+      if (rowIndexInNewArgsort === undefined)
+        throw new Error(
+          'failed to find new index in argsort for current row. This should not happen theoretically!'
+        );
 
       await cache.setConfig(annotationConfig);
 
       refreshAnnotationConfig();
       refreshArgsort();
+      setCurrentRowIndex(rowIndexInNewArgsort);
     }
   };
 
