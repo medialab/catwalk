@@ -17,7 +17,7 @@ import {useView, useLoadCacheEffect, useDisplayModal} from '../../hooks';
 import '../../styles/entrypoint.scss';
 
 export default function Application() {
-  const [view, setView] = useView();
+  const [view] = useView();
   const displayModal = useDisplayModal();
 
   useLoadCacheEffect();

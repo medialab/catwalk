@@ -157,6 +157,7 @@ export function useResetProject() {
 
   return async () => {
     await cache.delete();
+    await cache.open();
     setData(null);
     setCurrentRowIndex(undefined);
     setAnnotationConfig(null);
