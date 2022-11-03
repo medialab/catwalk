@@ -25,7 +25,7 @@ export default function DownloadModal({
   } = useI18nMessages();
 
   return (
-    <Modal onClose={onClose} canBeEscaped={false}>
+    <Modal onClose={onClose}>
       <div className="DownloadFooterModalContent">
         <h3>{downloadFooterModalTitle}</h3>
         <ul>
