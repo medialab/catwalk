@@ -6,6 +6,7 @@ import {useSetBoxedAtom} from './utils';
 import {useSetView} from './ui-state';
 import {dataAtom, annotationConfigAtom, annotationStatsAtom} from '../atoms'; // TODO: argsort from cache
 
+/* eslint-disable react-hooks/exhaustive-deps */
 export function useLoadCacheEffect() {
   const setView = useSetView();
   const setData = useSetBoxedAtom(dataAtom);
@@ -45,6 +46,7 @@ export function useLoadCacheEffect() {
     loadCache();
   }, []);
 }
+/* eslint-enable react-hooks/exhaustive-deps */
 
 export function useAddRowsToCache() {
   return cache.addRows.bind(cache);
