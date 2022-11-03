@@ -70,6 +70,10 @@ export class CatwalkCache extends PersistentCache<
     });
   }
 
+  setRow(index: number, row: CSVRow) {
+    return this.set('rows', index, row);
+  }
+
   async validate(): Promise<boolean> {
     this.validateStores();
 

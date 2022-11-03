@@ -75,8 +75,8 @@ export function TagsColumnHandler() {
       stats={annotationStats}
       total={csvData.rows.length}
       onEditTogglePrompt={toggleIsEdited}
-      onTagRequest={event => {
-        setTag(event.categorization, event.modality);
+      onTagRequest={async event => {
+        await setTag(event.categorization, event.modality);
       }}
     />
   );

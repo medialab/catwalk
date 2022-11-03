@@ -1,10 +1,18 @@
 import {useEffect} from 'react';
+import {useSetAtom} from 'jotai';
 
 import cache from '../cache';
 import {inferAnnotationStatsFromConfigAndRows} from '../model';
 import {useSetBoxedAtom} from './utils';
 import {useSetView} from './ui-state';
-import {dataAtom, annotationConfigAtom, annotationStatsAtom} from '../atoms'; // TODO: argsort from cache
+import {indices} from '../lib/sort';
+import {
+  dataAtom,
+  annotationConfigAtom,
+  annotationStatsAtom,
+  argsortAtom,
+  currentRowIndexAtom
+} from '../atoms'; // TODO: argsort from cache
 
 /* eslint-disable react-hooks/exhaustive-deps */
 export function useLoadCacheEffect() {
@@ -12,6 +20,8 @@ export function useLoadCacheEffect() {
   const setData = useSetBoxedAtom(dataAtom);
   const setAnnotationConfig = useSetBoxedAtom(annotationConfigAtom);
   const setAnnotationStats = useSetBoxedAtom(annotationStatsAtom);
+  const setCurrentRowIndex = useSetAtom(currentRowIndexAtom);
+  const setArgsort = useSetBoxedAtom(argsortAtom);
 
   useEffect(() => {
     const loadCache = async () => {
@@ -38,6 +48,8 @@ export function useLoadCacheEffect() {
         setAnnotationConfig(config);
         setAnnotationStats(stats);
         setView('annotation');
+        setCurrentRowIndex(0);
+        setArgsort(indices(rows));
       } else {
         setView('landing');
       }

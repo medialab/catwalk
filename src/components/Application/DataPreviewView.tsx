@@ -75,8 +75,12 @@ export default function DataPreviewView() {
             onPreviewTypeChange={setPreviewType}
           />
           <ValidationButton
-            validate={() => {
-              createAnnotationConfig({columns, selectedColumn, previewType});
+            validate={async () => {
+              await createAnnotationConfig({
+                columns,
+                selectedColumn,
+                previewType
+              });
               setView('annotation');
             }}
           />

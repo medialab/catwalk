@@ -63,9 +63,11 @@ export function useCreateAnnotationConfig(): (
   const setAnnotationStats = useSetBoxedAtom(annotationStatsAtom);
   const setCurrentRowIndex = useSetAtom(currentRowAtom);
 
-  return params => {
+  return async params => {
     const config = createDefaultAnnotationConfig(params);
     const stats = initializeAnnotationStatsFromConfig(config);
+
+    await cache.setConfig(config);
 
     setAnnotationConfig(config);
     setAnnotationStats(stats);
@@ -106,27 +108,35 @@ export function useAnnotationConfig(): [
     );
 
   const actions: AnnotationConfigActions = {
-    selectColumn(column) {
+    async selectColumn(column) {
       annotationConfig.selectedColumn = column;
+      await cache.setConfig(annotationConfig);
       refreshAnnotationConfig();
     },
-    setPreviewType(type) {
+    async setPreviewType(type) {
       annotationConfig.previewType = type;
+      await cache.setConfig(annotationConfig);
       refreshAnnotationConfig();
     },
-    setTag(categorization, modality) {
+    async setTag(categorization, modality) {
       mutateToSetTag(
         currentRow,
         annotationStats.counter,
         categorization,
         modality
       );
+
+      await cache.setRow(currentRowIndex, currentRow);
+
       refreshData();
       refreshAnnotationStats();
     },
-    setSortOrder(order) {
+    async setSortOrder(order) {
       annotationConfig.options.sortOrder = order;
       sort(annotationConfig.schema, order, data.rows, argsort);
+
+      await cache.setConfig(annotationConfig);
+
       refreshAnnotationConfig();
       refreshArgsort();
     }
