@@ -64,3 +64,4 @@ tagsEditionInvalidModelFile: Invalid model file !
 tagsEditionProcessingModelFile: Processing file
 tagsEditionDropModelFilePrompt: Drop an existing model file here !
 tagsEditionNewCategorization: Add categorization
+tagsEditionNewModality: Add modality

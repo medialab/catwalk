@@ -431,7 +431,6 @@
     }
 
     &.is-edited {
-      .add-new-categorization-container,
       .add-new-modality-container {
         max-height: 10rem;
       }
@@ -518,6 +517,9 @@
 
   // tagscolumn is edited
   &.is-edited {
+    .add-new-categorization-container {
+      max-height: 10rem;
+    }
     .model-drop-container {
       max-height: 100vh;
     }

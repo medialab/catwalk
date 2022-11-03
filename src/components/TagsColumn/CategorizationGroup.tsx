@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 
+import {useI18nMessages} from '../../hooks';
+
 import type {
   Categorization,
   Modality,
@@ -157,6 +159,8 @@ export default function CategorizationGroup({
   onTagRequest,
   onDeleteCategoryRequest
 }: CategorizationGroupProps) {
+  const {tagsEditionNewModality} = useI18nMessages();
+
   return (
     <li
       className={classNames('CategorizationGroup', {
@@ -189,7 +193,7 @@ export default function CategorizationGroup({
         })}
         <li className="add-new-modality-container">
           <Button isFullWidth onClick={console.log}>
-            Add modality
+            {tagsEditionNewModality}
           </Button>
         </li>
       </ul>

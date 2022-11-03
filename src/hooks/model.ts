@@ -60,7 +60,7 @@ export function useKeysInUse() {
 
 export function useCreateAnnotationConfig(): (
   params: CreateDefaultAnnotationConfigParams
-) => void {
+) => Promise<void> {
   const setAnnotationConfig = useSetBoxedAtom(annotationConfigAtom);
   const setAnnotationStats = useSetBoxedAtom(annotationStatsAtom);
   const setCurrentRowIndex = useSetAtom(currentRowAtom);
@@ -78,10 +78,10 @@ export function useCreateAnnotationConfig(): (
 }
 
 interface AnnotationConfigActions {
-  selectColumn(column: string): void;
-  setPreviewType(type: MediaPreviewType): void;
-  setTag(categorization: Categorization, modality: Modality): void;
-  setSortOrder(order: AnnotationSortOrder): void;
+  selectColumn(column: string): Promise<void>;
+  setPreviewType(type: MediaPreviewType): Promise<void>;
+  setTag(categorization: Categorization, modality: Modality): Promise<void>;
+  setSortOrder(order: AnnotationSortOrder): Promise<void>;
 }
 
 export function useAnnotationConfig(): [

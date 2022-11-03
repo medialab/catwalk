@@ -51,4 +51,5 @@ export interface InternationalizedStrings {
   tagsEditionProcessingModelFile: string;
   tagsEditionDropModelFilePrompt: string;
   tagsEditionNewCategorization: string;
+  tagsEditionNewModality: string;
 }
