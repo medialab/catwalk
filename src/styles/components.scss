@@ -706,6 +706,7 @@
   .modal-content {
     background: $color_bg;
     padding: $margin_medium;
+    z-index: 2000;
   }
 
   &.is-open {

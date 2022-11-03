@@ -25,7 +25,7 @@ export default function DownloadModal({
   } = useI18nMessages();
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={onClose} canBeEscaped={false}>
       <div className="DownloadFooterModalContent">
         <h3>{downloadFooterModalTitle}</h3>
         <ul>
@@ -48,7 +48,7 @@ export default function DownloadModal({
             </Button>
           </li>
           <li>
-            <Button onClick={() => onClose}>{modalCancel}</Button>
+            <Button onClick={onClose}>{modalCancel}</Button>
           </li>
         </ul>
       </div>

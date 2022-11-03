@@ -7,7 +7,7 @@ export type View = 'splash' | 'landing' | 'data-preview' | 'annotation';
 export type LayoutMode = 'landing' | 'annotation';
 export type NotificationType = 'error' | 'info';
 export type DownloadType = 'everything' | 'data' | 'model';
-export type ModalName = 'download' | 'railway-nav-key-edit';
+export type ModalName = 'download' | 'railway-nav-key-edit' | 'reset-confirm';
 
 /**
  * Key binding types.

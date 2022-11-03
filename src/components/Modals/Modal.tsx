@@ -5,6 +5,7 @@ interface ModalProps {
   style?: React.CSSProperties;
   className?: string;
   isOpen?: boolean;
+  canBeEscaped?: boolean;
   onClose?: () => void;
 }
 
@@ -13,6 +14,7 @@ function Modal({
   className,
   style,
   isOpen = true,
+  canBeEscaped = true,
   onClose
 }: ModalProps) {
   return (
@@ -21,7 +23,7 @@ function Modal({
         'is-open': isOpen
       })}
       style={style}>
-      <div className="modal-bg" onClick={onClose} />
+      <div className="modal-bg" onClick={canBeEscaped ? onClose : undefined} />
       <div className="modal-content">{children}</div>
     </div>
   );
