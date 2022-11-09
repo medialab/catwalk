@@ -1,12 +1,12 @@
 // !!! DO NOT EDIT: This file has been automatically generated
 // !!! To update it, use `npm run dts-gen`
-interface InternationalizedStrings {
-  test: string;
+export interface InternationalizedStrings {
   tagline: string;
   headerBacklink: string;
   notifInvalidFile: string;
   introductionText: string;
   loadingMessage: string;
+  loadingParsedLinesTemplate: (params: {count: string | number}) => string;
   chooseADataSample: string;
   chooseADataSamplePlaceholder: string;
   dndPromptInactive: string;
@@ -20,6 +20,8 @@ interface InternationalizedStrings {
   mediatypeLabelTwitterTweet: string;
   mediatypeLabelYoutubeVideo: string;
   mediatypeLabelWebsiteIframe: string;
+  mediatypeLabelImage: string;
+  mediatypeLabelDebug: string;
   footerHtml: string;
   downloadFooterDownload: string;
   downloadFooterModalTitle: string;
@@ -29,11 +31,13 @@ interface InternationalizedStrings {
   downloadFooterModalDlModelHelp: string;
   downloadFooterModalDlEverything: string;
   downloadFooterModalDlEverythingHelp: string;
+  resetConfirmModalTitle: string;
+  resetConfirmModalAgree: string;
+  resetConfirmModalCancel: string;
   modalCancel: string;
   modalKeyAssignMessage: string;
   railwaySortModeTitle: string;
   railwaySortModeTable: string;
-  railwaySortModeNonAnnotated: string;
   railwaySortModeIncomplete: string;
   railwayItemTooltipNoTagging: string;
   railwayKeyassignModalTitle: string;
@@ -47,9 +51,5 @@ interface InternationalizedStrings {
   tagsEditionProcessingModelFile: string;
   tagsEditionDropModelFilePrompt: string;
   tagsEditionNewCategorization: string;
-}
-
-declare module '*.yml' {
-  const strings: InternationalizedStrings;
-  export default strings;
+  tagsEditionNewModality: string;
 }

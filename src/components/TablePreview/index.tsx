@@ -1,3 +1,1 @@
-import TablePreview from './TablePreview';
-
-export default TablePreview;
+export {default} from './TablePreview';

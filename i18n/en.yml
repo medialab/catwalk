@@ -1,12 +1,11 @@
 ---
-test: Coucou michel
-
 tagline: a multi-dimensional categorization tool for web & media data
 headerBacklink: Go back to file upload
 
 notifInvalidFile: Invalid file ! try again !
 introductionText: Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam amet voluptatem eius dolorum reprehenderit earum. Quis, dolorum cum in vel laudantium adipisci, beatae accusamus voluptatibus quos tenetur explicabo expedita.
 loadingMessage: loading
+loadingParsedLinesTemplate: parsed {count} lines
 chooseADataSample: Choose a data sample
 chooseADataSamplePlaceholder: Select an example dataset
 dndPromptInactive: Drag and drop some files here, or click to select files
@@ -24,6 +23,8 @@ mediapreviewChooseATypePlaceholder: Choose a preview format
 mediatypeLabelTwitterTweet: tweet
 mediatypeLabelYoutubeVideo: youtube video
 mediatypeLabelWebsiteIframe: website iframe
+mediatypeLabelImage: image
+mediatypeLabelDebug: debug
 
 footerHtml: Catwalk was created and is maintained by the <a href="https://medialab.sciencespo.fr/" target="blank" rel="noopener">médialab of Sciences Po</a>. Its code is <a href="https://github.com/medialab/catwalk/" target="blank" rel="noopener"> free and open source</a>.
 
@@ -36,13 +37,16 @@ downloadFooterModalDlModelHelp: Help Download your annotation model only
 downloadFooterModalDlEverything: Download your data and annotation model
 downloadFooterModalDlEverythingHelp: Help Download your data and annotation model
 
+resetConfirmModalTitle: Warning, you will lose annotation data!
+resetConfirmModalAgree: I understand
+resetConfirmModalCancel: Oh no!
+
 modalCancel: cancel
 
 modalKeyAssignMessage: Please type on your keyboard the new key to assign
 
 railwaySortModeTitle: 'sort items by: '
 railwaySortModeTable: order of the table
-railwaySortModeNonAnnotated: non-annotated items first
 railwaySortModeIncomplete: incompletely annotated items first
 
 railwayItemTooltipNoTagging: No tagging yet
@@ -60,3 +64,4 @@ tagsEditionInvalidModelFile: Invalid model file !
 tagsEditionProcessingModelFile: Processing file
 tagsEditionDropModelFilePrompt: Drop an existing model file here !
 tagsEditionNewCategorization: Add categorization
+tagsEditionNewModality: Add modality

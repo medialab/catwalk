@@ -1,28 +1,42 @@
 import classNames from 'classnames';
-import {useI18nMessages} from '../../hooks';
+
+import type {
+  AnnotationSchema,
+  Categorization,
+  AnnotationStats
+} from '../../types';
+import {
+  useI18nMessages,
+  useAnnotationSchemaKeypress,
+  AnnotationConfigKeypressEvent
+} from '../../hooks';
 import Button from '../Button';
 import Dropzone from '../Dropzone';
 import Notification from '../Notification';
 import CategorizationGroup from './CategorizationGroup';
 
 type TagsColumnProps = {
-  model: object;
-  isEdited: boolean;
-  stats: Array<any>;
+  isEdited?: boolean;
+  schema: AnnotationSchema;
+  stats: AnnotationStats;
+  total: number;
   uploadedModelStatus?: 'error' | 'pending' | 'processing';
-  onNewCategorizationPrompt: () => void;
-  onModelFilesDrop: (files: Array<object>) => void;
-  onEditTogglePrompt: () => void;
+  onTagRequest?: (event: AnnotationConfigKeypressEvent) => void;
+  onNewCategorizationPrompt?: () => void;
+  onModelFilesDrop?: (file: File) => void;
+  onEditTogglePrompt?: () => void;
 
-  onDeleteCategoryRequest: (category: object) => void;
+  onDeleteCategoryRequest?: (category: Categorization) => void;
 };
 
 function TagsColumn({
-  model,
-  isEdited,
+  isEdited = false,
+  schema,
   stats,
+  total,
   uploadedModelStatus,
 
+  onTagRequest,
   onModelFilesDrop,
   onEditTogglePrompt,
   onNewCategorizationPrompt,
@@ -36,22 +50,37 @@ function TagsColumn({
     tagsEditionDropModelFilePrompt,
     tagsEditionNewCategorization
   } = useI18nMessages();
+
+  useAnnotationSchemaKeypress(schema, event => {
+    if (isEdited) return;
+    onTagRequest?.(event);
+  });
+
+  const counter = stats.counter;
+
   return (
     <aside
+      key="tags-column"
       className={classNames('TagsColumn', {
         'is-edited': isEdited
       })}>
       <ul className="main-row">
-        {stats.map((category, categoryId) => {
+        {schema.map(categorization => {
+          const categorizationStats = counter[categorization.name];
+
           return (
             <CategorizationGroup
-              key={categoryId}
-              name={category.name}
-              completedPortion={category.completedPortion}
-              modalities={category.modalities}
-              color={category.color}
+              key={categorization.id}
+              categorization={categorization}
+              completedPercentage={categorizationStats.count / total}
+              total={categorizationStats.count}
+              stats={categorizationStats.modalities}
+              modalities={categorization.modalities}
               isEdited={isEdited}
-              onDeleteCategoryRequest={() => onDeleteCategoryRequest(category)}
+              onTagRequest={onTagRequest}
+              onDeleteCategoryRequest={() =>
+                onDeleteCategoryRequest?.(categorization)
+              }
             />
           );
         })}

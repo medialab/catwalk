@@ -1,3 +1,1 @@
-import InfoPin from './InfoPin';
-
-export default InfoPin;
+export {default} from './InfoPin';

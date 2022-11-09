@@ -1,3 +1,1 @@
-import LoadingCartel from './LoadingCartel';
-
-export default LoadingCartel;
+export {default} from './LoadingCartel';

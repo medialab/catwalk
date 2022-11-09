@@ -1,0 +1,28 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "React": true,
+    "JSX": true
+  },
+  "plugins": ["@typescript-eslint", "react-hooks"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "eslint-config-prettier"
+  ],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": true
+      }
+    ]
+  }
+}

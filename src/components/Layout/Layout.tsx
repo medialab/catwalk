@@ -1,15 +1,15 @@
 import classNames from 'classnames';
 
-type LayoutMode = 'landing' | 'annotation';
+import {LayoutMode} from '../../types';
 
 interface ContainerProps {
   children: React.ReactNode;
-  style: React.CSSProperties;
-  className: string;
+  style?: React.CSSProperties;
+  className?: string;
   mode: LayoutMode;
 }
 
-export default function Container({
+export default function Layout({
   children,
   style = {},
   className,

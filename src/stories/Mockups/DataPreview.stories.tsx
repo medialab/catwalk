@@ -4,7 +4,7 @@ import {useI18nMessages} from '../../hooks';
 
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-import Layout from '../../components/Layout/Container';
+import Layout from '../../components/Layout/Layout';
 import MainColumn from '../../components/Layout/MainColumn';
 import TablePreview from '../../components/TablePreview';
 import InfoPin from '../../components/InfoPin';
@@ -41,7 +41,7 @@ export default {
 } as ComponentMeta<typeof Layout>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Layout> = args => {
+const Template: ComponentStory<typeof Layout> = ({mode, ...args}) => {
   return <Layout mode="landing" {...args} />;
 };
 
@@ -65,7 +65,7 @@ Default.args = {
     <MainColumn>
       <MainRow>
         <Header allowBackLink onBackLinkClick={console.log} />
-        <TablePreview columns={mockColumns} data={mockData} />
+        <TablePreview columns={mockColumns} rows={mockData} />
         <ColumnSelectionPrompt />
       </MainRow>
       <Footer />
@@ -80,16 +80,17 @@ ColumnSelected.args = {
         <Header allowBackLink onBackLinkClick={console.log} />
         <TablePreview
           columns={mockColumns}
-          data={mockData}
-          selectedColumnId={'titi'}
+          rows={mockData}
+          selectedColumn={'titi'}
         />
         <ColumnSelectionPrompt />
 
         <MediaPreview
-          type="twitter_tweet"
-          data={{
+          type="twitter-tweet"
+          row={{
             url: 'https://twitter.com/robindemourat/status/1580220856965693441'
           }}
+          selectedColumn="url"
           onPreviewTypeChange={console.log}
         />
         <ValidationButton />
@@ -106,16 +107,15 @@ InvalidPreview.args = {
         <Header allowBackLink onBackLinkClick={console.log} />
         <TablePreview
           columns={mockColumns}
-          data={mockData}
-          selectedColumnId={'titi'}
+          rows={mockData}
+          selectedColumn={'titi'}
         />
         <ColumnSelectionPrompt />
 
         <MediaPreview
-          type="twitter_tweet"
-          data={{
-            michel: 'mmichel'
-          }}
+          type="twitter-tweet"
+          row={{name: 'michel'}}
+          selectedColumn="name"
           onPreviewTypeChange={console.log}
         />
         <ValidationButton />

@@ -4,18 +4,26 @@ interface ModalProps {
   children: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  canBeEscaped?: boolean;
+  onClose?: () => void;
 }
 
-function Modal({children, className, style, isOpen, onClose}: ModalProps) {
+function Modal({
+  children,
+  className,
+  style,
+  isOpen = true,
+  canBeEscaped = true,
+  onClose
+}: ModalProps) {
   return (
     <div
       className={classNames('Modal', className, {
         'is-open': isOpen
       })}
       style={style}>
-      <div className="modal-bg" onClick={onClose} />
+      <div className="modal-bg" onClick={canBeEscaped ? onClose : undefined} />
       <div className="modal-content">{children}</div>
     </div>
   );

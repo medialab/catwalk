@@ -1,6 +1,6 @@
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import Layout from '../../components/Layout/Container';
+import Layout from '../../components/Layout/Layout';
 import MainColumn from '../../components/Layout/MainColumn';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

@@ -1,20 +1,27 @@
 import classNames from 'classnames';
 import {useState} from 'react';
 
+import type {CSVColumns, CSVRows} from '../../types';
+
+const MAX_PREVIEW_ROWS = 5;
+
 interface TablePreviewProps {
-  columns: Array<string>;
-  data: Array<object>;
-  selectedColumnId?: string;
+  columns: CSVColumns;
+  rows: CSVRows;
+  selectedColumn?: string;
   onClickOnColumn?: (column: string) => void;
 }
 
 function TablePreview({
   columns = [],
-  data = [],
-  selectedColumnId,
+  rows = [],
+  selectedColumn,
   onClickOnColumn
 }: TablePreviewProps) {
-  const [hoveredColumn, setHoveredColumn] = useState(undefined);
+  const [hoveredColumn, setHoveredColumn] = useState<string | undefined>(
+    undefined
+  );
+
   return (
     <div
       onMouseLeave={() => setHoveredColumn(undefined)}
@@ -25,10 +32,10 @@ function TablePreview({
             {columns.map(column => {
               return (
                 <th
-                  onClick={() => onClickOnColumn(column)}
+                  onClick={() => onClickOnColumn?.(column)}
                   onMouseEnter={() => setHoveredColumn(column)}
                   className={classNames({
-                    'is-active': column === selectedColumnId,
+                    'is-active': column === selectedColumn,
                     'is-hovered': column === hoveredColumn
                   })}
                   key={column}>
@@ -39,19 +46,19 @@ function TablePreview({
           </tr>
         </thead>
         <tbody>
-          {data.map((datum, datumIndex) => {
+          {rows.slice(0, MAX_PREVIEW_ROWS).map((row, rowIndex) => {
             return (
-              <tr key={datumIndex}>
+              <tr key={rowIndex}>
                 {columns.map(column => {
-                  const dataPoint = datum[column];
+                  const dataPoint = row[column];
                   return (
                     <td
                       onMouseEnter={() => setHoveredColumn(column)}
                       className={classNames({
-                        'is-active': column === selectedColumnId,
+                        'is-active': column === selectedColumn,
                         'is-hovered': column === hoveredColumn
                       })}
-                      onClick={() => onClickOnColumn(column)}
+                      onClick={() => onClickOnColumn?.(column)}
                       key={column}>
                       {dataPoint}
                     </td>

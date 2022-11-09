@@ -1,54 +1,72 @@
 import classNames from 'classnames';
-import {useI18nMessages} from '../../hooks';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import {FixedSizeList} from 'react-window';
+
+import type {
+  CSVRows,
+  CSVArgsort,
+  AnnotationSortOrder,
+  AnnotationSchema,
+  NavKeyBindings,
+  NavDirection
+} from '../../types';
+import {useI18nMessages, useMultipleKeypress} from '../../hooks';
 import Button from '../Button';
-import Modal from '../Modal';
 import RailwayItem from './RailwayItem';
+import {flipObject} from '../../lib/utils';
+
+// TODO: this could be displayed visually (ux)
+function canNavigate(index: number, maxIndex: number, direction: NavDirection) {
+  if (direction === 'next') {
+    if (index >= maxIndex) return false;
+  } else {
+    if (index <= 0) return false;
+  }
+
+  return true;
+}
+
+const MIN_ITEM_HEIGHT = 4 + 1;
 
 type RailwayProps = {
-  data: Array<object>;
-  navKeyBindings: {
-    prev: 'string';
-    next: 'string';
-  };
-  schema: object;
-  sortOrder: string;
-  activeObjectIndex: number;
+  rows: CSVRows;
+  argsort?: CSVArgsort;
+  navKeyBindings: NavKeyBindings;
+  schema: AnnotationSchema;
+  sortOrder: AnnotationSortOrder;
+  activeRowIndex: number;
 
-  isEdited: boolean;
+  isEdited?: boolean;
   isRefreshable?: boolean;
   keyAssignIsEdited?: boolean;
   editedKeyAssignCommand?: string; // @todo next or prev
 
-  onEditOpenPrompt: () => void;
-  onEditClosePrompt: () => void;
-  onNavKeyAssignOpenPrompt: (commandId: string) => void;
-  onNavKeyAssignClosePrompt: () => void;
+  onEditOpenPrompt?: () => void;
+  onEditClosePrompt?: () => void;
+  onNavKeyAssignOpenPrompt?: (direction: NavDirection) => void;
+  onNavKeyAssignClosePrompt?: () => void;
 
-  onRefreshSort: () => void;
-  onNavToSibling: (direction: string) => void;
-  onNavToIndex: (index: number) => void;
-  onNavKeyAssignChoice: (command: string, key: string) => void;
-  onSortOrderChange: (sortOrder: string) => void;
+  onRefreshSort?: () => void;
+  onNavToSibling?: (direction: NavDirection) => void;
+  onNavToIndex?: (index: number) => void;
+  onNavKeyAssignChoice?: (command: string, key: string) => void;
+  onSortOrderChange?: (sortOrder: AnnotationSortOrder) => void;
 };
 
 function Railway({
-  data,
+  rows,
+  argsort,
   schema,
   sortOrder = 'table',
   navKeyBindings,
-  activeObjectIndex = 0,
+  activeRowIndex = 0,
 
-  isEdited,
-  isRefreshable,
-  keyAssignIsEdited,
-  editedKeyAssignCommand,
+  isEdited = false,
+  isRefreshable = false,
 
   onEditOpenPrompt,
   onEditClosePrompt,
   onNavKeyAssignOpenPrompt,
-  onNavKeyAssignClosePrompt,
-
-  onNavKeyAssignChoice,
 
   onRefreshSort,
   onNavToSibling,
@@ -59,27 +77,24 @@ function Railway({
   const {
     railwaySortModeTitle,
     railwaySortModeTable,
-    railwaySortModeNonAnnotated,
     railwaySortModeIncomplete,
 
     railwayArrowsKeyBinding,
-    railwayArrowsEditKey,
-
-    modalCancel,
-    railwayKeyassignModalPrev,
-    railwayKeyassignModalNext,
-    railwayKeyassignModalTitle,
-    modalKeyAssignMessage
+    railwayArrowsEditKey
   } = useI18nMessages();
 
-  const sortOrderOptions = [
+  const maxRowIndex = rows.length - 1;
+
+  useMultipleKeypress<NavDirection>(flipObject(navKeyBindings), direction => {
+    if (isEdited) return;
+    if (!canNavigate(activeRowIndex, maxRowIndex, direction)) return;
+    onNavToSibling?.(direction);
+  });
+
+  const sortOrderOptions: Array<{value: AnnotationSortOrder; label: string}> = [
     {
       value: 'table',
       label: railwaySortModeTable
-    },
-    {
-      value: 'non_annotated',
-      label: railwaySortModeNonAnnotated
     },
     {
       value: 'incomplete',
@@ -89,6 +104,7 @@ function Railway({
 
   return (
     <div
+      key="railway"
       className={classNames('Railway', {
         'is-edited': isEdited,
         'is-refreshable': isRefreshable
@@ -96,28 +112,60 @@ function Railway({
       <div className="railway-background" onClick={onEditClosePrompt} />
       <div className="main-column">
         <ul className="items-container">
-          {data.map((datum, datumIndex) => {
-            return (
-              <RailwayItem
-                datum={datum}
-                schema={schema}
-                key={datumIndex}
-                isActive={datumIndex === activeObjectIndex}
-                onClick={() => onNavToIndex(datumIndex)}
-              />
-            );
-          })}
+          <AutoSizer>
+            {({height, width}) => {
+              const idealHeightPerItem = Math.floor(height / rows.length);
+
+              const itemSize = Math.max(MIN_ITEM_HEIGHT, idealHeightPerItem);
+
+              function Row({
+                index,
+                style
+              }: {
+                index: number;
+                style: React.CSSProperties;
+              }) {
+                return (
+                  <RailwayItem
+                    style={style}
+                    row={rows[argsort ? argsort[index] : index]}
+                    schema={schema}
+                    key={index}
+                    isActive={index === activeRowIndex}
+                    onClick={() => {
+                      if (isEdited) return;
+
+                      onNavToIndex?.(index);
+                    }}
+                  />
+                );
+              }
+
+              return (
+                <div style={{height, width, padding: 0, margin: 0}}>
+                  <FixedSizeList
+                    height={height}
+                    itemCount={rows.length}
+                    itemSize={itemSize}
+                    // overscanCount={50}
+                    width={width}>
+                    {Row}
+                  </FixedSizeList>
+                </div>
+              );
+            }}
+          </AutoSizer>
         </ul>
         <div className="edit-toggle-container">
           <Button
             isFullWidth
             isActive={isEdited}
-            onClick={() => onEditOpenPrompt()}>
+            onClick={() => onEditOpenPrompt?.()}>
             *
           </Button>
         </div>
         <div className="refresh-container">
-          <Button isFullWidth onClick={() => onRefreshSort()}>
+          <Button isFullWidth onClick={() => onRefreshSort?.()}>
             <span>⟳</span>
           </Button>
         </div>
@@ -128,24 +176,33 @@ function Railway({
           {[
             {
               icon: '↑',
-              id: 'prev',
+              direction: 'prev' as const,
               binding: navKeyBindings.prev
             },
             {
               icon: '↓',
-              id: 'next',
+              direction: 'next' as const,
               binding: navKeyBindings.next
             }
-          ].map(({icon, id, binding}) => (
-            <div className="arrow-item-container" key={id}>
+          ].map(({icon, direction, binding}) => (
+            <div className="arrow-item-container" key={direction}>
               <div className="arrow-button-container">
-                <Button onClick={() => onNavToSibling(id)}>{icon}</Button>
+                <Button
+                  onClick={() => {
+                    if (isEdited) return;
+
+                    if (!canNavigate(activeRowIndex, maxRowIndex, direction))
+                      return;
+                    onNavToSibling?.(direction);
+                  }}>
+                  {icon}
+                </Button>
               </div>
               <span className="key-binding-info">
                 {railwayArrowsKeyBinding} <code>{binding}</code>
               </span>
               <Button
-                onClick={() => onNavKeyAssignOpenPrompt(id)}
+                onClick={() => onNavKeyAssignOpenPrompt?.(direction)}
                 className="edit-key-assign-btn">
                 {railwayArrowsEditKey}
               </Button>
@@ -157,7 +214,7 @@ function Railway({
           <ul>
             {sortOrderOptions.map(({value, label}) => {
               const handleClick = () => {
-                onSortOrderChange(value);
+                onSortOrderChange?.(value);
               };
               return (
                 <li key={value}>
@@ -173,18 +230,6 @@ function Railway({
           </ul>
         </div>
       </div>
-      <Modal isOpen={keyAssignIsEdited} onClose={onNavKeyAssignClosePrompt}>
-        <h3>
-          {railwayKeyassignModalTitle}
-          <code>
-            {editedKeyAssignCommand === 'next'
-              ? railwayKeyassignModalNext
-              : railwayKeyassignModalPrev}
-          </code>
-        </h3>
-        <p>{modalKeyAssignMessage}</p>
-        <Button onClick={onNavKeyAssignClosePrompt}>{modalCancel}</Button>
-      </Modal>
     </div>
   );
 }

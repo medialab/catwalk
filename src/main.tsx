@@ -1,6 +1,9 @@
 import {createRoot} from 'react-dom/client';
+import cache from './cache';
 
-const container = document.getElementById('catwalk');
+window.cache = cache;
+
+const container = document.getElementById('catwalk') as HTMLDivElement;
 const root = createRoot(container);
 
 function renderApplication() {

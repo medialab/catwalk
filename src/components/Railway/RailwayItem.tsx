@@ -1,28 +1,46 @@
 import classNames from 'classnames';
-import {useMemo} from 'react';
+
+import type {CSVRow, AnnotationSchema} from '../../types';
 import {useI18nMessages} from '../../hooks';
 
-function RailwayItem({datum, schema, isActive, onClick}) {
+interface RailwayItemProps {
+  row: CSVRow;
+  schema: AnnotationSchema;
+  isActive: boolean;
+  style?: React.CSSProperties;
+  onClick?: (event: React.MouseEvent<HTMLLIElement>) => void;
+}
+
+function RailwayItem({
+  row,
+  schema,
+  isActive,
+  style,
+  onClick
+}: RailwayItemProps) {
   const {railwayItemTooltipNoTagging} = useI18nMessages();
+
   // process data for mini viz
-  const vizData = useMemo(() => {
-    return schema.reduce((items, {name, color, modalities}) => {
-      const value =
-        datum[name] &&
-        modalities.find(({name: modalityName}) => modalityName === datum[name]);
-      return [
-        ...items,
-        {
-          name: name,
-          color: color,
-          isActive: value && value !== '',
-          value: value ? value.name : undefined
-        }
-      ];
-    }, []);
-  }, [datum, schema]);
+  // NOTE: @robindemourat I dropped the useMemo here because the row does not
+  // actually change reference since I mutate for performance.
+  const vizData = schema.reduce((items, {name, color, modalities}) => {
+    const value =
+      row[name] &&
+      modalities.find(({name: modalityName}) => modalityName === row[name]);
+    return [
+      ...items,
+      {
+        name: name,
+        color: color,
+        isActive: !!value,
+        value: value ? value.name : undefined
+      }
+    ];
+  }, []);
+
   return (
     <li
+      style={style}
       className={classNames('RailwayItem', {'is-active': isActive})}
       onClick={onClick}>
       <ul className="main-item-content">
@@ -37,7 +55,7 @@ function RailwayItem({datum, schema, isActive, onClick}) {
           />
         ))}
       </ul>
-      <div className="preview-content-container">
+      {/* <div className="preview-content-container">
         <div className="preview-content">
           <div className="media-object-mini-preview">
             media object mini preview @todo
@@ -49,7 +67,7 @@ function RailwayItem({datum, schema, isActive, onClick}) {
                   <span className="color-marker" style={{background: color}} />
                   <strong className="category-name">{name}</strong>
                   <span>{': '}</span>
-                  <span className="datum-value-for-category">
+                  <span className="row-value-for-category">
                     {isActive ? value : railwayItemTooltipNoTagging}
                   </span>
                 </li>
@@ -57,7 +75,7 @@ function RailwayItem({datum, schema, isActive, onClick}) {
             })}
           </ul>
         </div>
-      </div>
+      </div> */}
     </li>
   );
 }

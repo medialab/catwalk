@@ -1,4 +1,4 @@
-type NotificationType = 'error' | 'info';
+import type {NotificationType} from '../../types';
 
 interface NotificationProps {
   children: React.ReactNode;

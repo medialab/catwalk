@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "options": {
+      "additionalProperties": false,
+      "properties": {
+        "navKeyBindings": {
+          "additionalProperties": false,
+          "properties": {
+            "next": {
+              "type": "string"
+            },
+            "prev": {
+              "type": "string"
+            }
+          },
+          "required": ["next", "prev"],
+          "type": "object"
+        },
+        "sortOrder": {
+          "enum": ["incomplete", "non-annotated", "table"],
+          "type": "string"
+        }
+      },
+      "required": ["navKeyBindings", "sortOrder"],
+      "type": "object"
+    },
+    "previewType": {
+      "description": "Media preview types.",
+      "enum": [
+        "debug",
+        "image",
+        "twitter-tweet",
+        "website-iframe",
+        "youtube-video"
+      ],
+      "type": "string"
+    },
+    "schema": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "color": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "modalities": {
+            "items": {
+              "additionalProperties": false,
+              "description": "Types related to the annotation schema.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["id", "key", "name"],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["color", "id", "modalities", "name"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "selectedColumn": {
+      "type": "string"
+    }
+  },
+  "required": ["options", "previewType", "schema", "selectedColumn"],
+  "type": "object"
+}

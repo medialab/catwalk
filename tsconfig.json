@@ -3,6 +3,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "allowUmdGlobalAccess": true
+    "allowUmdGlobalAccess": true,
+    "strictNullChecks": true
   }
 }

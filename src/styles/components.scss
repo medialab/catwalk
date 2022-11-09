@@ -25,6 +25,8 @@
     justify-content: stretch;
     box-sizing: border-box;
     .items-container {
+      overflow-y: scroll;
+      height: 100%;
       list-style: none;
       padding: 0;
       margin: 0;
@@ -295,6 +297,15 @@
   }
 }
 
+.ResetConfirmModalContent {
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}
+
 .TagsColumn {
   width: calc(50vw - $layout_annotation_width / 2 - $margin_medium * 2);
   border: 1px solid $color_dark;
@@ -420,7 +431,6 @@
     }
 
     &.is-edited {
-      .add-new-categorization-container,
       .add-new-modality-container {
         max-height: 10rem;
       }
@@ -520,6 +530,9 @@
 
   // tagscolumn is edited
   &.is-edited {
+    .add-new-categorization-container {
+      max-height: 10rem;
+    }
     .model-drop-container {
       max-height: 100vh;
     }
@@ -717,11 +730,12 @@
   .modal-content {
     background: $color_bg;
     padding: $margin_medium;
+    z-index: 2000;
   }
 
   &.is-open {
     z-index: 1000;
-    background: color_translucid_dark;
+    background: $color_translucid_dark;
     pointer-events: all;
     opacity: 1;
   }
