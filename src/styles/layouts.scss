@@ -68,6 +68,15 @@
       height: 100%;
       padding: $margin_medium 0;
       box-sizing: border-box;
+      .MainRow {
+        flex: 1;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: stretch;
+        .MediaAnnotation {
+          flex: 1;
+        }
+      }
       .MediaPreview {
         flex: 1;
       }
