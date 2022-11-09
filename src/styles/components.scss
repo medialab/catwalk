@@ -151,6 +151,10 @@
     display: flex;
     flex-flow: column nowrap;
     justify-content: stretch;
+    pointer-events: none;
+    > * {
+      pointer-events: all;
+    }
   }
 
   .sort-options-container {
