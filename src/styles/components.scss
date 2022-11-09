@@ -449,6 +449,19 @@
 
     .key-btn-container {
       padding-right: $margin_small;
+      display: flex;
+      flex-flow: row nowrap;
+
+      > .Button {
+        min-width: 3rem;
+      }
+
+      .key-edit-btn-container {
+        transition: 0.5s ease all;
+        overflow: hidden;
+        max-width: 0;
+        position: relative;
+      }
     }
 
     .title-container {

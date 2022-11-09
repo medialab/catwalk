@@ -69,12 +69,13 @@ function ModalityGroup({
         'is-edited': isEdited
       })}>
       <div className="key-btn-container">
-        <Button
-          onClick={() =>
-            isEdited ? onKeyBindingEditRequest() : onTagRequest()
-          }>
-          {keyboardKey}
-        </Button>
+        <Button onClick={() => onTagRequest()}>{keyboardKey}</Button>
+
+        <div className="key-edit-btn-container">
+          <Button onClick={() => onKeyBindingEditRequest()}>
+            {'edit key'}
+          </Button>
+        </div>
       </div>
       <div className="title-container">
         <div className="share-bar-background">
