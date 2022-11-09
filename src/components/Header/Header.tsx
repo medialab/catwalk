@@ -13,8 +13,8 @@ function Header({allowBackLink = false, onBackLinkClick}: HeaderProps) {
 
       <h2>{tagline}</h2>
       {allowBackLink ? (
-        <div className="backlink_btn" onClick={onBackLinkClick}>
-          {headerBacklink}
+        <div className="backlink_btn">
+          <span onClick={onBackLinkClick}>{headerBacklink}</span>
         </div>
       ) : null}
     </header>

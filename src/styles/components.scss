@@ -262,10 +262,12 @@
   }
 
   .backlink_btn {
-    text-decoration: underline;
-    cursor: pointer;
-    &:before {
-      content: '←';
+    span {
+      text-decoration: underline;
+      cursor: pointer;
+      &:before {
+        content: '←';
+      }
     }
   }
 }
