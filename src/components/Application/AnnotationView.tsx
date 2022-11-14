@@ -6,7 +6,7 @@ import Railway from '../Railway';
 import TagsColumn from '../TagsColumn';
 import {
   useCSVData,
-  useAnnotationConfig,
+  useAnnotationConfigActions,
   useDisplayModal,
   useCurrentRowIndex,
   useCurrentRowEntry,
@@ -16,7 +16,7 @@ import {
 
 export function RailwayHandler() {
   const csvData = useCSVData();
-  const [annotationConfig, , {setSortOrder}] = useAnnotationConfig();
+  const [annotationConfig, , {setSortOrder}] = useAnnotationConfigActions();
   const [currentRowIndex, setCurrentRowIndex] = useCurrentRowIndex();
   const [isEdited, setIsEdited] = useState(false);
   const argsort = useArgsort();
@@ -58,7 +58,8 @@ export function RailwayHandler() {
 
 export function TagsColumnHandler() {
   const csvData = useCSVData();
-  const [annotationConfig, annotationStats, {setTag}] = useAnnotationConfig();
+  const [annotationConfig, annotationStats, {setTag}] =
+    useAnnotationConfigActions();
   const [isEdited, toggleIsEdited] = useToggleState();
 
   if (!csvData)
@@ -87,7 +88,7 @@ export function TagsColumnHandler() {
 
 export default function AnnotationView() {
   const csvData = useCSVData();
-  const [annotationConfig, , {setPreviewType}] = useAnnotationConfig();
+  const [annotationConfig, , {setPreviewType}] = useAnnotationConfigActions();
   const [[currentRowIndex, currentRow]] = useCurrentRowEntry();
   const displayModal = useDisplayModal();
 

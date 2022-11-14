@@ -31,8 +31,7 @@ import {useSetView} from './ui-state';
 import {useBoxedAtom, useSetBoxedAtom, useBoxedAtomValue} from './utils';
 
 export function useCSVData(): CSVData | null {
-  const [data] = useBoxedAtom(dataAtom);
-  return data;
+  return useBoxedAtomValue(dataAtom);
 }
 
 export function useSetCSVData() {
@@ -77,6 +76,10 @@ export function useCreateAnnotationConfig(): (
   };
 }
 
+export function useAnnotationConfig() {
+  return useBoxedAtomValue(annotationConfigAtom);
+}
+
 interface AnnotationConfigActions {
   selectColumn(column: string): Promise<void>;
   setPreviewType(type: MediaPreviewType): Promise<void>;
@@ -84,7 +87,7 @@ interface AnnotationConfigActions {
   setSortOrder(order: AnnotationSortOrder): Promise<void>;
 }
 
-export function useAnnotationConfig(): [
+export function useAnnotationConfigActions(): [
   AnnotationConfig | null,
   AnnotationStats | null,
   AnnotationConfigActions
@@ -107,7 +110,7 @@ export function useAnnotationConfig(): [
     currentRowIndex === undefined
   )
     throw new Error(
-      'useAnnotationConfig: it should not be possible to use this hook without data being loaded!'
+      'useAnnotationConfigActions: it should not be possible to use this hook without data being loaded!'
     );
 
   const actions: AnnotationConfigActions = {
