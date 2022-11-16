@@ -6,7 +6,7 @@ import {
   useCSVData,
   useAnnotationConfig
 } from '../../hooks';
-import {downloadFile, stringifyData, stringifyModel} from '../../lib/download';
+import {downloadFile} from '../../lib/download';
 
 export default function Modals() {
   const [modal, setModal] = useModals();
@@ -34,16 +34,16 @@ export default function Modals() {
             );
 
           if (downloadType === 'data') {
-            downloadFile(stringifyData(csvData), 'data', 'csv');
+            downloadFile(csvData?.rows, downloadType);
           }
 
           if (downloadType === 'model') {
-            downloadFile(stringifyModel(annotationConfig), 'model', 'yml');
+            downloadFile(annotationConfig, downloadType);
           }
 
           if (downloadType === 'everything') {
-            downloadFile(stringifyData(csvData), 'data', 'csv');
-            downloadFile(stringifyModel(annotationConfig), 'model', 'yml');
+            downloadFile(csvData?.rows, 'data');
+            downloadFile(annotationConfig, 'model');
           }
         }}
       />
