@@ -36,7 +36,7 @@ export default function DownloadModal({
             </Button>
           </li>
           <li>
-            <Button onClick={() => onDownloadChoice?.('model')}>
+            <Button onClick={() => onDownloadChoice?.('config')}>
               <span>{downloadFooterModalDlModel}</span>
               <InfoPin message={downloadFooterModalDlModelHelp} />
             </Button>

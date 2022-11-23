@@ -6,7 +6,7 @@ import {
   useCSVData,
   useAnnotationConfig
 } from '../../hooks';
-import {downloadFile} from '../../lib/download';
+import {downloadConfig, downloadCsvRows} from '../../lib/download';
 
 export default function Modals() {
   const [modal, setModal] = useModals();
@@ -33,18 +33,11 @@ export default function Modals() {
               'It should not be possible to download without config being loaded!'
             );
 
-          if (downloadType === 'data') {
-            downloadFile(csvData?.rows, downloadType);
-          }
+          if (downloadType === 'data' || downloadType === 'everything')
+            downloadCsvRows(annotationConfig, csvData);
 
-          if (downloadType === 'model') {
-            downloadFile(annotationConfig, downloadType);
-          }
-
-          if (downloadType === 'everything') {
-            downloadFile(csvData?.rows, 'data');
-            downloadFile(annotationConfig, 'model');
-          }
+          if (downloadType === 'config' || downloadType === 'everything')
+            downloadConfig(annotationConfig);
         }}
       />
     );

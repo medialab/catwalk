@@ -6,7 +6,7 @@ import type {PointerArray} from 'mnemonist/utils/typed-arrays';
 export type View = 'splash' | 'landing' | 'data-preview' | 'annotation';
 export type LayoutMode = 'landing' | 'annotation';
 export type NotificationType = 'error' | 'info';
-export type DownloadType = 'everything' | 'data' | 'model';
+export type DownloadType = 'everything' | 'data' | 'config';
 export type ModalName = 'download' | 'railway-nav-key-edit' | 'reset-confirm';
 
 /**
