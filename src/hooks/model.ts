@@ -138,25 +138,27 @@ export function useAnnotationConfigActions(): [
       refreshAnnotationStats();
     },
     async setSortOrder(order) {
-      const rowIndexInTableBeforeSort = argsort[currentRowIndex];
+      if (annotationConfig.options.sortOrder !== order) {
+        const rowIndexInTableBeforeSort = argsort[currentRowIndex];
 
-      annotationConfig.options.sortOrder = order;
-      sort(annotationConfig.schema, order, data.rows, argsort);
+        annotationConfig.options.sortOrder = order;
+        sort(annotationConfig.schema, order, data.rows, argsort);
 
-      const rowIndexInNewArgsort = argsort.findIndex(
-        (i: number) => i === rowIndexInTableBeforeSort
-      );
-
-      if (rowIndexInNewArgsort === undefined)
-        throw new Error(
-          'failed to find new index in argsort for current row. This should not happen theoretically!'
+        const rowIndexInNewArgsort = argsort.findIndex(
+          (i: number) => i === rowIndexInTableBeforeSort
         );
 
-      await cache.setConfig(annotationConfig);
+        if (rowIndexInNewArgsort === undefined)
+          throw new Error(
+            'failed to find new index in argsort for current row. This should not happen theoretically!'
+          );
 
-      refreshAnnotationConfig();
-      refreshArgsort();
-      setCurrentRowIndex(rowIndexInNewArgsort);
+        await cache.setConfig(annotationConfig);
+
+        refreshAnnotationConfig();
+        refreshArgsort();
+        setCurrentRowIndex(rowIndexInNewArgsort);
+      }
     }
   };
 

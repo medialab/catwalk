@@ -214,6 +214,9 @@ function Railway({
           <ul>
             {sortOrderOptions.map(({value, label}) => {
               const handleClick = () => {
+                if (value === sortOrder) {
+                  return;
+                }
                 onSortOrderChange?.(value);
               };
               return (
