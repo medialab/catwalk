@@ -85,6 +85,7 @@ interface AnnotationConfigActions {
   setPreviewType(type: MediaPreviewType): Promise<void>;
   setTag(categorization: Categorization, modality: Modality): Promise<void>;
   setSortOrder(order: AnnotationSortOrder): Promise<void>;
+  refreshSortOrder(): Promise<void>;
 }
 
 export function useAnnotationConfigActions(): [
@@ -157,6 +158,9 @@ export function useAnnotationConfigActions(): [
       refreshAnnotationConfig();
       refreshArgsort();
       setCurrentRowIndex(rowIndexInNewArgsort);
+    },
+    async refreshSortOrder() {
+      actions.setSortOrder(annotationConfig.options.sortOrder);
     }
   };
 

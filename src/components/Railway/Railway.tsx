@@ -37,7 +37,6 @@ type RailwayProps = {
   activeRowIndex: number;
 
   isEdited?: boolean;
-  isRefreshable?: boolean;
   keyAssignIsEdited?: boolean;
   editedKeyAssignCommand?: string; // @todo next or prev
 
@@ -62,7 +61,6 @@ function Railway({
   activeRowIndex = 0,
 
   isEdited = false,
-  isRefreshable = false,
 
   onEditOpenPrompt,
   onEditClosePrompt,
@@ -107,7 +105,7 @@ function Railway({
       key="railway"
       className={classNames('Railway', {
         'is-edited': isEdited,
-        'is-refreshable': isRefreshable
+        'is-refreshable': sortOrder === 'incomplete'
       })}>
       <div className="railway-background" onClick={onEditClosePrompt} />
       <div className="main-column">

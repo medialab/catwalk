@@ -16,7 +16,8 @@ import {
 
 export function RailwayHandler() {
   const csvData = useCSVData();
-  const [annotationConfig, , {setSortOrder}] = useAnnotationConfigActions();
+  const [annotationConfig, , {setSortOrder, refreshSortOrder}] =
+    useAnnotationConfigActions();
   const [currentRowIndex, setCurrentRowIndex] = useCurrentRowIndex();
   const [isEdited, setIsEdited] = useState(false);
   const argsort = useArgsort();
@@ -52,6 +53,7 @@ export function RailwayHandler() {
       onSortOrderChange={order => {
         setSortOrder(order);
       }}
+      onRefreshSort={() => refreshSortOrder()}
     />
   );
 }

@@ -7,7 +7,7 @@ import {
   generateMockAnnotatedTweets
 } from './mockData';
 
-import type {CSVRows} from '../../types';
+import type {CSVRows, AnnotationSortOrder} from '../../types';
 import Header from '../../components/Header';
 import Layout from '../../components/Layout/Layout';
 import MainColumn from '../../components/Layout/MainColumn';
@@ -59,7 +59,7 @@ const MockMainRow = () => {
 interface MockRailwayProps {
   rows?: CSVRows;
   isEdited?: boolean;
-  isRefreshable?: boolean;
+  sortOrder?: AnnotationSortOrder;
   editedKeyAssignCommand?: 'next' | 'prev';
 }
 /**
@@ -68,7 +68,7 @@ interface MockRailwayProps {
 const MockRailway = ({
   rows = annotatedTweets100,
   isEdited,
-  isRefreshable,
+  sortOrder,
   editedKeyAssignCommand
 }: MockRailwayProps) => {
   return (
@@ -76,11 +76,10 @@ const MockRailway = ({
       // data & model
       rows={rows}
       navKeyBindings={mockAnnotationConfig.options.navKeyBindings}
-      sortOrder={mockAnnotationConfig.options.sortOrder}
+      sortOrder={sortOrder || mockAnnotationConfig.options.sortOrder}
       schema={mockAnnotationConfig.schema}
       // controlled state
       isEdited={isEdited}
-      isRefreshable={isRefreshable}
       keyAssignIsEdited={editedKeyAssignCommand !== undefined}
       editedKeyAssignCommand={editedKeyAssignCommand}
       activeRowIndex={0}
@@ -196,7 +195,7 @@ export const RailwayIsRefreshable = Template.bind({});
 RailwayIsRefreshable.args = {
   children: (
     <>
-      <MockRailway isRefreshable />
+      <MockRailway sortOrder="incomplete" />
       <MainColumn>
         <MockMainRow />
         <DownloadFooter />
