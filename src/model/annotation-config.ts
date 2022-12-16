@@ -25,11 +25,30 @@ export type CreateDefaultAnnotationConfigParams = {
   previewType: MediaPreviewType;
 };
 
-export function createModality(alreadyUsedKeys: Set<string>): Modality {
+export function createModality(
+  alreadyUsedKeys: Set<string>,
+  name?: string
+): Modality {
   return {
     id: uuid(),
-    name: '',
+    name: name || '',
     key: suggestKey(alreadyUsedKeys)
+  };
+}
+
+export function createCategorizationWithDefaultModalities(
+  alreadyUsedKeys: Set<string>,
+  name: string,
+  color: string
+): Categorization {
+  return {
+    name,
+    id: uuid(),
+    color,
+    modalities: [
+      createModality(alreadyUsedKeys, 'Modality 1'),
+      createModality(alreadyUsedKeys, 'Modality 2')
+    ]
   };
 }
 
