@@ -11,7 +11,7 @@ import type {
   CategorizationStats,
   ModalityStats
 } from '../types';
-import {suggestKey} from '../lib/keys';
+
 import {mapEntries} from '../lib/utils';
 import {
   DEFAULT_CATEGORIZATION_NAME,
@@ -26,28 +26,37 @@ export type CreateDefaultAnnotationConfigParams = {
 };
 
 export function createModality(
-  alreadyUsedKeys: Set<string>,
-  name?: string
+  key: string,
+  name: string,
+  id?: string
 ): Modality {
   return {
-    id: uuid(),
-    name: name || '',
-    key: suggestKey(alreadyUsedKeys)
+    id: id ? id : uuid(),
+    name,
+    key
   };
 }
 
-export function createCategorizationWithDefaultModalities(
-  alreadyUsedKeys: Set<string>,
+export function createCategorization(
   name: string,
-  color: string
+  color: string,
+  id?: string
+): Categorization {
+  return {name, id: id ? id : uuid(), color, modalities: []};
+}
+
+export function createCategorizationWithDefaultModalities(
+  name: string,
+  color: string,
+  keys: [string, string]
 ): Categorization {
   return {
     name,
     id: uuid(),
     color,
     modalities: [
-      createModality(alreadyUsedKeys, 'Modality 1'),
-      createModality(alreadyUsedKeys, 'Modality 2')
+      createModality(keys[0], 'Modality 1'),
+      createModality(keys[1], 'Modality 2')
     ]
   };
 }
