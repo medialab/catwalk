@@ -11,6 +11,7 @@ import type {
   CategorizationStats,
   ModalityStats
 } from '../types';
+import {suggestKey} from '../lib/keys';
 import {mapEntries} from '../lib/utils';
 import {
   DEFAULT_CATEGORIZATION_NAME,
@@ -23,6 +24,14 @@ export type CreateDefaultAnnotationConfigParams = {
   selectedColumn: string;
   previewType: MediaPreviewType;
 };
+
+export function createModality(alreadyUsedKeys: Set<string>): Modality {
+  return {
+    id: uuid(),
+    name: '',
+    key: suggestKey(alreadyUsedKeys)
+  };
+}
 
 function findUnusedDefaultCategorizationName(columns: CSVColumns): string {
   let defaultCategoryName = DEFAULT_CATEGORIZATION_NAME;
