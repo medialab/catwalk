@@ -34,12 +34,20 @@ type AddModalityAction = {
   modality: Modality;
 };
 
+type DropModalityAction = {
+  type: 'drop-modality';
+  categorizationIndex: number;
+  categorization: Categorization;
+  modality: Modality;
+};
+
 type AnnotationSchemaDiffAction =
   | AddCategorizationAction
   | DropCategorizationAction
   | RenameCategorizationAction
   | RecolorCategorizationAction
-  | AddModalityAction;
+  | AddModalityAction
+  | DropModalityAction;
 
 type CategorizatioNameConflictError = {
   type: 'categorization-name-conflict';
@@ -124,7 +132,19 @@ export function diffAnnotationSchemas(
           newColor: c.color
         });
       }
-      // TODO: scout modality changes here
+
+      // Modality changes
+      const afterModalityIds = new Set(c.modalities.map(m => m.id));
+      const beforeModalityIds = new Set(
+        earlierCategorizationState.modalities.map(m => m.id)
+      );
+
+      const addedModalityIds = difference(afterModalityIds, beforeModalityIds);
+
+      const droppedModalityIds = difference(
+        beforeModalityIds,
+        afterModalityIds
+      );
     }
 
     if (c.modalities.length < 2) {
