@@ -1,4 +1,5 @@
 import {difference} from 'mnemonist/set';
+import MultiMap from 'mnemonist/multi-map';
 
 import type {AnnotationSchema, Categorization, Modality} from '../types';
 
@@ -40,14 +41,40 @@ type AnnotationSchemaDiffAction =
   | RecolorCategorizationAction
   | AddModalityAction;
 
+type CategorizatioNameConflictError = {
+  type: 'categorization-name-conflict';
+  name: string;
+  categorizations: Array<[number, Categorization]>;
+};
+
+type AnnotationSchemaDiffError = CategorizatioNameConflictError;
+
+type IrrelevantCategorizationWarning = {
+  type: 'irrelevant-categorization';
+  categorization: Categorization;
+  categorizationIndex: number;
+  cardinality: number;
+};
+
+type AnnotationSchemaDiffWarning = IrrelevantCategorizationWarning;
+
 export function diffAnnotationSchemas(
   before: AnnotationSchema,
   after: AnnotationSchema
-): [Array<AnnotationSchemaDiffAction>] {
+): {
+  actions: Array<AnnotationSchemaDiffAction>;
+  errors: Array<AnnotationSchemaDiffError>;
+  warnings: Array<AnnotationSchemaDiffWarning>;
+} {
   const actions: Array<AnnotationSchemaDiffAction> = [];
+  const errors: Array<AnnotationSchemaDiffError> = [];
+  const warnings: Array<AnnotationSchemaDiffWarning> = [];
 
   const beforeCategorizationIds = new Set(before.map(c => c.id));
   const beforeCategorizationIndex: Map<string, Categorization> = new Map();
+
+  const categorizationByNames: MultiMap<string, [number, Categorization]> =
+    new MultiMap();
 
   before.forEach(c => {
     beforeCategorizationIndex.set(c.id, c);
@@ -71,7 +98,7 @@ export function diffAnnotationSchemas(
     }
   });
 
-  after.forEach(c => {
+  after.forEach((c, i) => {
     if (addedCategorizationIds.has(c.id)) {
       actions.push({type: 'add-categorization', categorization: c});
     } else {
@@ -97,10 +124,26 @@ export function diffAnnotationSchemas(
           newColor: c.color
         });
       }
-
       // TODO: scout modality changes here
     }
+
+    if (c.modalities.length < 2) {
+      warnings.push({
+        type: 'irrelevant-categorization',
+        categorization: c,
+        categorizationIndex: i,
+        cardinality: c.modalities.length
+      });
+    }
+
+    categorizationByNames.set(c.name, [i, c]);
   });
 
-  return [actions];
+  categorizationByNames.forEachAssociation((categorizations, name) => {
+    if (categorizations.length < 2) return;
+
+    errors.push({type: 'categorization-name-conflict', categorizations, name});
+  });
+
+  return {actions, errors, warnings};
 }

@@ -1,6 +1,9 @@
 import assert from 'assert';
 
-import {createCategorization, createModality} from '../src/model';
+// import util from 'util';
+// util.inspect.defaultOptions.depth = null;
+
+import {createCategorization} from '../src/model';
 import {diffAnnotationSchemas} from '../src/model/diff';
 
 describe('Diff', () => {
@@ -8,7 +11,7 @@ describe('Diff', () => {
     const before = [createCategorization('One', 'cyan', 'one')];
     const after = before.concat(createCategorization('Two', 'red', 'two'));
 
-    const [actions] = diffAnnotationSchemas(before, after);
+    const {actions} = diffAnnotationSchemas(before, after);
 
     assert.deepStrictEqual(actions, [
       {
@@ -25,7 +28,7 @@ describe('Diff', () => {
     ];
     const after = before.slice().filter(c => c.name === 'Two');
 
-    const [actions] = diffAnnotationSchemas(before, after);
+    const {actions} = diffAnnotationSchemas(before, after);
 
     assert.deepStrictEqual(actions, [
       {
@@ -39,7 +42,7 @@ describe('Diff', () => {
     const before = [createCategorization('One', 'cyan', 'one')];
     const after = [createCategorization('Renamed One', 'cyan', 'one')];
 
-    const [actions] = diffAnnotationSchemas(before, after);
+    const {actions} = diffAnnotationSchemas(before, after);
 
     assert.deepStrictEqual(actions, [
       {
@@ -60,7 +63,7 @@ describe('Diff', () => {
     const before = [createCategorization('One', 'cyan', 'one')];
     const after = [createCategorization('One', 'blue', 'one')];
 
-    const [actions] = diffAnnotationSchemas(before, after);
+    const {actions} = diffAnnotationSchemas(before, after);
 
     assert.deepStrictEqual(actions, [
       {
@@ -68,6 +71,41 @@ describe('Diff', () => {
         categorization: {name: 'One', id: 'one', color: 'blue', modalities: []},
         oldColor: 'cyan',
         newColor: 'blue'
+      }
+    ]);
+  });
+
+  it('should correctly warn when a categorization seems irrelevant.', () => {
+    const after = [createCategorization('One', 'blue', 'one')];
+
+    const {warnings} = diffAnnotationSchemas([], after);
+
+    assert.deepStrictEqual(warnings, [
+      {
+        type: 'irrelevant-categorization',
+        categorization: {name: 'One', id: 'one', color: 'blue', modalities: []},
+        categorizationIndex: 0,
+        cardinality: 0
+      }
+    ]);
+  });
+
+  it('should detect categorization name conflicts.', () => {
+    const after = [
+      createCategorization('One', 'cyan', 'one'),
+      createCategorization('One', 'cyan', 'two')
+    ];
+
+    const {errors} = diffAnnotationSchemas([], after);
+
+    assert.deepStrictEqual(errors, [
+      {
+        type: 'categorization-name-conflict',
+        categorizations: [
+          [0, {name: 'One', id: 'one', color: 'cyan', modalities: []}],
+          [1, {name: 'One', id: 'two', color: 'cyan', modalities: []}]
+        ],
+        name: 'One'
       }
     ]);
   });
