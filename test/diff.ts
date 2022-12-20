@@ -3,7 +3,7 @@ import assert from 'assert';
 // import util from 'util';
 // util.inspect.defaultOptions.depth = null;
 
-import {createCategorization} from '../src/model';
+import {createCategorization, createModality} from '../src/model';
 import {diffAnnotationSchemas} from '../src/model/diff';
 
 describe('Diff', () => {
@@ -106,6 +106,51 @@ describe('Diff', () => {
           [1, {name: 'One', id: 'two', color: 'cyan', modalities: []}]
         ],
         name: 'One'
+      }
+    ]);
+  });
+
+  it('should correctly detect when modalities are dropped.', () => {
+    const before = [
+      createCategorization('One', 'cyan', 'one', [
+        createModality('A', 'IN', 'one')
+      ])
+    ];
+    const after = [createCategorization('One', 'cyan', 'one')];
+
+    const {actions} = diffAnnotationSchemas(before, after);
+
+    assert.deepStrictEqual(actions, [
+      {
+        type: 'drop-modality',
+        modality: {id: 'one', name: 'IN', key: 'A'},
+        categorization: {name: 'One', id: 'one', color: 'cyan', modalities: []},
+        categorizationIndex: 0
+      }
+    ]);
+  });
+
+  it('should correctly detect when modalities are added.', () => {
+    const before = [createCategorization('One', 'cyan', 'one')];
+    const after = [
+      createCategorization('One', 'cyan', 'one', [
+        createModality('A', 'IN', 'one')
+      ])
+    ];
+
+    const {actions} = diffAnnotationSchemas(before, after);
+
+    assert.deepStrictEqual(actions, [
+      {
+        type: 'add-modality',
+        modality: {id: 'one', name: 'IN', key: 'A'},
+        categorization: {
+          name: 'One',
+          id: 'one',
+          color: 'cyan',
+          modalities: [{name: 'IN', key: 'A', id: 'one'}]
+        },
+        categorizationIndex: 0
       }
     ]);
   });

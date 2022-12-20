@@ -40,9 +40,15 @@ export function createModality(
 export function createCategorization(
   name: string,
   color: string,
-  id?: string
+  id?: string,
+  modalities?: Array<Modality>
 ): Categorization {
-  return {name, id: id ? id : uuid(), color, modalities: []};
+  return {
+    name,
+    id: id ? id : uuid(),
+    color,
+    modalities: modalities ? modalities : []
+  };
 }
 
 export function createCategorizationWithDefaultModalities(

@@ -145,6 +145,28 @@ export function diffAnnotationSchemas(
         beforeModalityIds,
         afterModalityIds
       );
+
+      earlierCategorizationState.modalities.forEach(m => {
+        if (droppedModalityIds.has(m.id)) {
+          actions.push({
+            type: 'drop-modality',
+            modality: m,
+            categorization: c,
+            categorizationIndex: i
+          });
+        }
+      });
+
+      c.modalities.forEach(m => {
+        if (addedModalityIds.has(m.id)) {
+          actions.push({
+            type: 'add-modality',
+            modality: m,
+            categorization: c,
+            categorizationIndex: i
+          });
+        }
+      });
     }
 
     if (c.modalities.length < 2) {
