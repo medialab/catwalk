@@ -27,10 +27,47 @@ describe('Diff', () => {
 
     const [actions] = diffAnnotationSchemas(before, after);
 
-    assert.deepEqual(actions, [
+    assert.deepStrictEqual(actions, [
       {
         type: 'drop-categorization',
         categorization: {name: 'One', id: 'one', color: 'cyan', modalities: []}
+      }
+    ]);
+  });
+
+  it('should correctly detect when a categorization is renamed.', () => {
+    const before = [createCategorization('One', 'cyan', 'one')];
+    const after = [createCategorization('Renamed One', 'cyan', 'one')];
+
+    const [actions] = diffAnnotationSchemas(before, after);
+
+    assert.deepStrictEqual(actions, [
+      {
+        type: 'rename-categorization',
+        oldName: 'One',
+        newName: 'Renamed One',
+        categorization: {
+          name: 'Renamed One',
+          id: 'one',
+          color: 'cyan',
+          modalities: []
+        }
+      }
+    ]);
+  });
+
+  it('should correctly detect when a categorization is recolored.', () => {
+    const before = [createCategorization('One', 'cyan', 'one')];
+    const after = [createCategorization('One', 'blue', 'one')];
+
+    const [actions] = diffAnnotationSchemas(before, after);
+
+    assert.deepStrictEqual(actions, [
+      {
+        type: 'recolor-categorization',
+        categorization: {name: 'One', id: 'one', color: 'blue', modalities: []},
+        oldColor: 'cyan',
+        newColor: 'blue'
       }
     ]);
   });
