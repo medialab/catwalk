@@ -55,7 +55,17 @@ type CategorizatioNameConflictError = {
   categorizations: Array<[number, Categorization]>;
 };
 
-type AnnotationSchemaDiffError = CategorizatioNameConflictError;
+type ModalityNameConflictError = {
+  type: 'modality-name-conflict';
+  name: string;
+  modalities: Array<[number, Modality]>;
+  categorization: Categorization;
+  categorizationIndex: number;
+};
+
+type AnnotationSchemaDiffError =
+  | CategorizatioNameConflictError
+  | ModalityNameConflictError;
 
 type IrrelevantCategorizationWarning = {
   type: 'irrelevant-categorization';
@@ -81,7 +91,7 @@ export function diffAnnotationSchemas(
   const beforeCategorizationIds = new Set(before.map(c => c.id));
   const beforeCategorizationIndex: Map<string, Categorization> = new Map();
 
-  const categorizationByNames: MultiMap<string, [number, Categorization]> =
+  const categorizationsByName: MultiMap<string, [number, Categorization]> =
     new MultiMap();
 
   before.forEach(c => {
@@ -107,6 +117,9 @@ export function diffAnnotationSchemas(
   });
 
   after.forEach((c, i) => {
+    const modalitiesByName: MultiMap<string, [number, Modality]> =
+      new MultiMap();
+
     if (addedCategorizationIds.has(c.id)) {
       actions.push({type: 'add-categorization', categorization: c});
     } else {
@@ -134,6 +147,7 @@ export function diffAnnotationSchemas(
       }
 
       // Modality changes
+      // TODO: we should track "false" modality changes
       const afterModalityIds = new Set(c.modalities.map(m => m.id));
       const beforeModalityIds = new Set(
         earlierCategorizationState.modalities.map(m => m.id)
@@ -157,7 +171,7 @@ export function diffAnnotationSchemas(
         }
       });
 
-      c.modalities.forEach(m => {
+      c.modalities.forEach((m, j) => {
         if (addedModalityIds.has(m.id)) {
           actions.push({
             type: 'add-modality',
@@ -165,9 +179,28 @@ export function diffAnnotationSchemas(
             categorization: c,
             categorizationIndex: i
           });
+        } else {
+          // TODO: track renaming
         }
+        modalitiesByName.set(m.name, [j, m]);
       });
     }
+
+    c.modalities.forEach((m, j) => {
+      modalitiesByName.set(m.name, [j, m]);
+    });
+
+    modalitiesByName.forEachAssociation((modalities, name) => {
+      if (modalities.length < 2) return;
+
+      errors.push({
+        type: 'modality-name-conflict',
+        modalities,
+        name,
+        categorization: c,
+        categorizationIndex: i
+      });
+    });
 
     if (c.modalities.length < 2) {
       warnings.push({
@@ -178,10 +211,10 @@ export function diffAnnotationSchemas(
       });
     }
 
-    categorizationByNames.set(c.name, [i, c]);
+    categorizationsByName.set(c.name, [i, c]);
   });
 
-  categorizationByNames.forEachAssociation((categorizations, name) => {
+  categorizationsByName.forEachAssociation((categorizations, name) => {
     if (categorizations.length < 2) return;
 
     errors.push({type: 'categorization-name-conflict', categorizations, name});

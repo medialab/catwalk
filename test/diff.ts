@@ -154,4 +154,36 @@ describe('Diff', () => {
       }
     ]);
   });
+
+  it('should be able to detect modality name conflicts.', () => {
+    const after = [
+      createCategorization('One', 'cyan', 'one', [
+        createModality('A', 'IN', 'a'),
+        createModality('B', 'IN', 'b')
+      ])
+    ];
+
+    const {errors} = diffAnnotationSchemas([], after);
+
+    assert.deepStrictEqual(errors, [
+      {
+        type: 'modality-name-conflict',
+        modalities: [
+          [0, {id: 'a', name: 'IN', key: 'A'}],
+          [1, {id: 'b', name: 'IN', key: 'B'}]
+        ],
+        name: 'IN',
+        categorization: {
+          name: 'One',
+          id: 'one',
+          color: 'cyan',
+          modalities: [
+            {id: 'a', name: 'IN', key: 'A'},
+            {id: 'b', name: 'IN', key: 'B'}
+          ]
+        },
+        categorizationIndex: 0
+      }
+    ]);
+  });
 });
