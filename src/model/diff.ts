@@ -41,13 +41,23 @@ type DropModalityAction = {
   modality: Modality;
 };
 
+type RenameModalityAction = {
+  type: 'rename-modality';
+  categorizationIndex: number;
+  categorization: Categorization;
+  modality: Modality;
+  oldName: string;
+  newName: string;
+};
+
 type AnnotationSchemaDiffAction =
   | AddCategorizationAction
   | DropCategorizationAction
   | RenameCategorizationAction
   | RecolorCategorizationAction
   | AddModalityAction
-  | DropModalityAction;
+  | DropModalityAction
+  | RenameModalityAction;
 
 type CategorizatioNameConflictError = {
   type: 'categorization-name-conflict';
@@ -94,10 +104,6 @@ export function diffAnnotationSchemas(
   const categorizationsByName: MultiMap<string, [number, Categorization]> =
     new MultiMap();
 
-  before.forEach(c => {
-    beforeCategorizationIndex.set(c.id, c);
-  });
-
   const afterCategorizationIds = new Set(after.map(c => c.id));
 
   const addedCategorizationIds = difference(
@@ -111,6 +117,8 @@ export function diffAnnotationSchemas(
   );
 
   before.forEach(c => {
+    beforeCategorizationIndex.set(c.id, c);
+
     if (droppedCategorizationIds.has(c.id)) {
       actions.push({type: 'drop-categorization', categorization: c});
     }
@@ -153,6 +161,8 @@ export function diffAnnotationSchemas(
         earlierCategorizationState.modalities.map(m => m.id)
       );
 
+      const beforeModalityIndex: Map<string, Modality> = new Map();
+
       const addedModalityIds = difference(afterModalityIds, beforeModalityIds);
 
       const droppedModalityIds = difference(
@@ -161,6 +171,8 @@ export function diffAnnotationSchemas(
       );
 
       earlierCategorizationState.modalities.forEach(m => {
+        beforeModalityIndex.set(m.id, m);
+
         if (droppedModalityIds.has(m.id)) {
           actions.push({
             type: 'drop-modality',
@@ -180,7 +192,21 @@ export function diffAnnotationSchemas(
             categorizationIndex: i
           });
         } else {
-          // TODO: track renaming
+          const earlierModalityState = beforeModalityIndex.get(m.id);
+
+          if (!earlierModalityState)
+            throw new Error('this should not be possible');
+
+          if (earlierModalityState.name !== m.name) {
+            actions.push({
+              type: 'rename-modality',
+              categorization: c,
+              categorizationIndex: i,
+              modality: m,
+              oldName: earlierModalityState.name,
+              newName: m.name
+            });
+          }
         }
         modalitiesByName.set(m.name, [j, m]);
       });

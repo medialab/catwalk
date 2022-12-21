@@ -186,4 +186,36 @@ describe('Diff', () => {
       }
     ]);
   });
+
+  it('should correctly detect when modalities are renamed.', () => {
+    const before = [
+      createCategorization('One', 'cyan', 'one', [
+        createModality('A', 'IN', 'a')
+      ])
+    ];
+
+    const after = [
+      createCategorization('One', 'cyan', 'one', [
+        createModality('A', 'OUT', 'a')
+      ])
+    ];
+
+    const {actions} = diffAnnotationSchemas(before, after);
+
+    assert.deepStrictEqual(actions, [
+      {
+        type: 'rename-modality',
+        categorization: {
+          name: 'One',
+          id: 'one',
+          color: 'cyan',
+          modalities: [{id: 'a', name: 'OUT', key: 'A'}]
+        },
+        categorizationIndex: 0,
+        modality: {id: 'a', name: 'OUT', key: 'A'},
+        oldName: 'IN',
+        newName: 'OUT'
+      }
+    ]);
+  });
 });
