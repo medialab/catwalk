@@ -187,3 +187,18 @@ export function renameModality(
     } else return c;
   });
 }
+
+export function renameCategorization(
+  schema: AnnotationSchema,
+  categorization: Categorization,
+  name: string
+): AnnotationSchema {
+  return schema.map(c => {
+    if (c.id === categorization.id) {
+      return {
+        ...c,
+        name
+      };
+    } else return c;
+  });
+}

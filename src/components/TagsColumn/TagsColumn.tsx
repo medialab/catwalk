@@ -34,6 +34,10 @@ type TagsColumnProps = {
     modality: Modality,
     name: string
   ) => void;
+  onChangeCategorizationName?: (
+    categorization: Categorization,
+    name: string
+  ) => void;
 };
 
 function TagsColumn({
@@ -49,7 +53,8 @@ function TagsColumn({
   onEditTogglePrompt,
   onNewCategorizationPrompt,
   onDeleteCategorization,
-  onChangeModalityName
+  onChangeModalityName,
+  onChangeCategorizationName
 }: TagsColumnProps) {
   const {
     tagsEditionEdit,
@@ -91,9 +96,8 @@ function TagsColumn({
                 stats={categorizationStats.modalities}
                 isEdited={isEdited}
                 onTag={onTag}
-                onChangeModalityName={(modality, name) => {
-                  onChangeModalityName?.(categorization, modality, name);
-                }}
+                onChangeModalityName={onChangeModalityName}
+                onChangeCategorizationName={onChangeCategorizationName}
                 onDeleteCategorization={() =>
                   onDeleteCategorization?.(categorization)
                 }

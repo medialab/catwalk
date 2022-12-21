@@ -13,6 +13,7 @@ interface CategorizationHeaderProps {
   color: string;
   completedPercentage: number;
   onDelete?: () => void;
+  onChange?: (name: string) => void;
 }
 
 function CategorizationHeader({
@@ -20,7 +21,8 @@ function CategorizationHeader({
   name,
   color,
   completedPercentage,
-  onDelete
+  onDelete,
+  onChange
 }: CategorizationHeaderProps) {
   const safePercentage = Math.round(completedPercentage * 100);
 
@@ -51,7 +53,7 @@ function CategorizationHeader({
               className="title-writemode"
               value={name}
               placeholder="Type name"
-              onChange={console.log}
+              onChange={e => onChange?.(e.target.value)}
             />
           ) : (
             <span className="title-readmode">
@@ -77,7 +79,7 @@ interface ModalityGroupProps {
 
   onDelete?: () => void;
   onKeyBindingEdit?: () => void;
-  onNameChange?: (newName: string) => void;
+  onNameChange?: (modality: Modality, newName: string) => void;
   onTag?: (event: AnnotationConfigKeypressEvent) => void;
 }
 
@@ -124,7 +126,7 @@ function ModalityGroup({
             value={modalityState ? modalityState.name : modality.name}
             placeholder="Type modality name"
             onChange={e => {
-              onNameChange?.(e.target.value);
+              onNameChange?.(modality, e.target.value);
             }}
           />
         ) : (
@@ -150,7 +152,15 @@ type CategorizationGroupProps = {
   completedPercentage: number;
   total: number;
   onTag?: (event: AnnotationConfigKeypressEvent) => void;
-  onChangeModalityName?: (modality: Modality, newName: string) => void;
+  onChangeModalityName?: (
+    categorization: Categorization,
+    modality: Modality,
+    newName: string
+  ) => void;
+  onChangeCategorizationName?: (
+    categorization: Categorization,
+    newName: string
+  ) => void;
   onDeleteCategorization?: () => void;
 };
 
@@ -163,6 +173,7 @@ export default function CategorizationGroup({
   total,
   onTag,
   onChangeModalityName,
+  onChangeCategorizationName,
   onDeleteCategorization
 }: CategorizationGroupProps) {
   const {tagsEditionNewModality} = useI18nMessages();
@@ -174,10 +185,15 @@ export default function CategorizationGroup({
       })}>
       <CategorizationHeader
         isEdited={isEdited}
-        name={categorization.name}
+        name={
+          categorizationState ? categorizationState.name : categorization.name
+        }
         completedPercentage={completedPercentage}
         color={categorization.color}
         onDelete={onDeleteCategorization}
+        onChange={newName =>
+          onChangeCategorizationName?.(categorization, newName)
+        }
       />
       <ul className="modalities-list">
         {zip(categorization.modalities, categorizationState?.modalities).map(
@@ -195,9 +211,7 @@ export default function CategorizationGroup({
                 isEdited={isEdited}
                 onDelete={console.log}
                 onKeyBindingEdit={console.log}
-                onNameChange={newName => {
-                  onChangeModalityName?.(modality, newName);
-                }}
+                onNameChange={onChangeModalityName?.bind(null, categorization)}
                 onTag={onTag}
               />
             );

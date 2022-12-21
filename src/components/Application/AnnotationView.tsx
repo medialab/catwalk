@@ -100,9 +100,8 @@ export function TagsColumnHandler() {
       onTag={async event => {
         await setTag(event.categorization, event.modality);
       }}
-      onChangeModalityName={(categorization, modality, name) => {
-        schemaStateActions.renameModality(categorization, modality, name);
-      }}
+      onChangeCategorizationName={schemaStateActions.renameCategorization}
+      onChangeModalityName={schemaStateActions.renameModality}
     />
   );
 }
