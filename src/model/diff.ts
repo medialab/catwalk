@@ -73,7 +73,7 @@ type ModalityNameConflictError = {
   categorizationIndex: number;
 };
 
-type AnnotationSchemaDiffError =
+type AnnotationSchemaError =
   | CategorizatioNameConflictError
   | ModalityNameConflictError;
 
@@ -84,27 +84,22 @@ type IrrelevantCategorizationWarning = {
   cardinality: number;
 };
 
-type AnnotationSchemaDiffWarning = IrrelevantCategorizationWarning;
+type AnnotationSchemaWarning = IrrelevantCategorizationWarning;
 
 export type AnnotationSchemaDiffResult = {
   actions: Array<AnnotationSchemaDiffAction>;
-  errors: Array<AnnotationSchemaDiffError>;
-  warnings: Array<AnnotationSchemaDiffWarning>;
+  errors: Array<AnnotationSchemaError>;
+  warnings: Array<AnnotationSchemaWarning>;
 };
 
-export function diffAnnotationSchemas(
+export function inferActionsFromSchemaDiff(
   before: AnnotationSchema,
   after: AnnotationSchema
-): AnnotationSchemaDiffResult {
+): Array<AnnotationSchemaDiffAction> {
   const actions: Array<AnnotationSchemaDiffAction> = [];
-  const errors: Array<AnnotationSchemaDiffError> = [];
-  const warnings: Array<AnnotationSchemaDiffWarning> = [];
 
   const beforeCategorizationIds = new Set(before.map(c => c.id));
   const beforeCategorizationIndex: Map<string, Categorization> = new Map();
-
-  const categorizationsByName: MultiMap<string, [number, Categorization]> =
-    new MultiMap();
 
   const afterCategorizationIds = new Set(after.map(c => c.id));
 
@@ -127,9 +122,6 @@ export function diffAnnotationSchemas(
   });
 
   after.forEach((c, i) => {
-    const modalitiesByName: MultiMap<string, [number, Modality]> =
-      new MultiMap();
-
     if (addedCategorizationIds.has(c.id)) {
       actions.push({type: 'add-categorization', categorization: c});
     } else {
@@ -212,10 +204,39 @@ export function diffAnnotationSchemas(
         }
       });
     }
+  });
+
+  return actions;
+}
+
+export function reportErrorsAndWarningsFromSchema(schema: AnnotationSchema): {
+  errors: Array<AnnotationSchemaError>;
+  warnings: Array<AnnotationSchemaWarning>;
+} {
+  const errors: Array<AnnotationSchemaError> = [];
+  const warnings: Array<AnnotationSchemaWarning> = [];
+
+  const categorizationsByName: MultiMap<string, [number, Categorization]> =
+    new MultiMap();
+
+  schema.forEach((c, i) => {
+    categorizationsByName.set(c.name, [i, c]);
+
+    const modalitiesByName: MultiMap<string, [number, Modality]> =
+      new MultiMap();
 
     c.modalities.forEach((m, j) => {
       modalitiesByName.set(m.name, [j, m]);
     });
+
+    if (c.modalities.length < 2) {
+      warnings.push({
+        type: 'irrelevant-categorization',
+        categorization: c,
+        categorizationIndex: i,
+        cardinality: c.modalities.length
+      });
+    }
 
     modalitiesByName.forEachAssociation((modalities, name) => {
       if (modalities.length < 2) return;
@@ -228,17 +249,6 @@ export function diffAnnotationSchemas(
         categorizationIndex: i
       });
     });
-
-    if (c.modalities.length < 2) {
-      warnings.push({
-        type: 'irrelevant-categorization',
-        categorization: c,
-        categorizationIndex: i,
-        cardinality: c.modalities.length
-      });
-    }
-
-    categorizationsByName.set(c.name, [i, c]);
   });
 
   categorizationsByName.forEachAssociation((categorizations, name) => {
@@ -247,5 +257,5 @@ export function diffAnnotationSchemas(
     errors.push({type: 'categorization-name-conflict', categorizations, name});
   });
 
-  return {actions, errors, warnings};
+  return {errors, warnings};
 }

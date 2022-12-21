@@ -4,14 +4,17 @@ import assert from 'assert';
 // util.inspect.defaultOptions.depth = null;
 
 import {createCategorization, createModality} from '../src/model';
-import {diffAnnotationSchemas} from '../src/model/diff';
+import {
+  inferActionsFromSchemaDiff,
+  reportErrorsAndWarningsFromSchema
+} from '../src/model/diff';
 
 describe('Diff', () => {
   it('should correctly detect when a categorization is added.', () => {
     const before = [createCategorization('One', 'cyan', 'one')];
     const after = before.concat(createCategorization('Two', 'red', 'two'));
 
-    const {actions} = diffAnnotationSchemas(before, after);
+    const actions = inferActionsFromSchemaDiff(before, after);
 
     assert.deepStrictEqual(actions, [
       {
@@ -28,7 +31,7 @@ describe('Diff', () => {
     ];
     const after = before.slice().filter(c => c.name === 'Two');
 
-    const {actions} = diffAnnotationSchemas(before, after);
+    const actions = inferActionsFromSchemaDiff(before, after);
 
     assert.deepStrictEqual(actions, [
       {
@@ -42,7 +45,7 @@ describe('Diff', () => {
     const before = [createCategorization('One', 'cyan', 'one')];
     const after = [createCategorization('Renamed One', 'cyan', 'one')];
 
-    const {actions} = diffAnnotationSchemas(before, after);
+    const actions = inferActionsFromSchemaDiff(before, after);
 
     assert.deepStrictEqual(actions, [
       {
@@ -63,7 +66,7 @@ describe('Diff', () => {
     const before = [createCategorization('One', 'cyan', 'one')];
     const after = [createCategorization('One', 'blue', 'one')];
 
-    const {actions} = diffAnnotationSchemas(before, after);
+    const actions = inferActionsFromSchemaDiff(before, after);
 
     assert.deepStrictEqual(actions, [
       {
@@ -76,9 +79,9 @@ describe('Diff', () => {
   });
 
   it('should correctly warn when a categorization seems irrelevant.', () => {
-    const after = [createCategorization('One', 'blue', 'one')];
+    const schema = [createCategorization('One', 'blue', 'one')];
 
-    const {warnings} = diffAnnotationSchemas([], after);
+    const {warnings} = reportErrorsAndWarningsFromSchema(schema);
 
     assert.deepStrictEqual(warnings, [
       {
@@ -91,12 +94,12 @@ describe('Diff', () => {
   });
 
   it('should detect categorization name conflicts.', () => {
-    const after = [
+    const schema = [
       createCategorization('One', 'cyan', 'one'),
       createCategorization('One', 'cyan', 'two')
     ];
 
-    const {errors} = diffAnnotationSchemas([], after);
+    const {errors} = reportErrorsAndWarningsFromSchema(schema);
 
     assert.deepStrictEqual(errors, [
       {
@@ -118,7 +121,7 @@ describe('Diff', () => {
     ];
     const after = [createCategorization('One', 'cyan', 'one')];
 
-    const {actions} = diffAnnotationSchemas(before, after);
+    const actions = inferActionsFromSchemaDiff(before, after);
 
     assert.deepStrictEqual(actions, [
       {
@@ -138,7 +141,7 @@ describe('Diff', () => {
       ])
     ];
 
-    const {actions} = diffAnnotationSchemas(before, after);
+    const actions = inferActionsFromSchemaDiff(before, after);
 
     assert.deepStrictEqual(actions, [
       {
@@ -156,14 +159,14 @@ describe('Diff', () => {
   });
 
   it('should be able to detect modality name conflicts.', () => {
-    const after = [
+    const schema = [
       createCategorization('One', 'cyan', 'one', [
         createModality('A', 'IN', 'a'),
         createModality('B', 'IN', 'b')
       ])
     ];
 
-    const {errors} = diffAnnotationSchemas([], after);
+    const {errors} = reportErrorsAndWarningsFromSchema(schema);
 
     assert.deepStrictEqual(errors, [
       {
@@ -200,7 +203,7 @@ describe('Diff', () => {
       ])
     ];
 
-    const {actions} = diffAnnotationSchemas(before, after);
+    const actions = inferActionsFromSchemaDiff(before, after);
 
     assert.deepStrictEqual(actions, [
       {

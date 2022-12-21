@@ -14,7 +14,7 @@ import {
   useSchemaState,
   useArgsort
 } from '../../hooks';
-import {diffAnnotationSchemas} from '../../model/diff';
+import {inferActionsFromSchemaDiff} from '../../model/diff';
 
 export function RailwayHandler() {
   const csvData = useCSVData();
@@ -90,7 +90,7 @@ export function TagsColumnHandler() {
         if (isEdited) {
           console.log(
             schemaState,
-            diffAnnotationSchemas(annotationConfig.schema, schemaState)
+            inferActionsFromSchemaDiff(annotationConfig.schema, schemaState)
           );
           schemaStateActions.resetWith(annotationConfig.schema);
         }
