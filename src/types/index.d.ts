@@ -32,8 +32,10 @@ export type Modality = {
   name: string;
   key: string;
 };
+export type ModalityWithoutId = Omit<Modality, 'id'>;
 
 export type Modalities = Array<Modality>;
+export type ModalitiesWithoutIds = Array<ModalityWithoutId>;
 
 export type Categorization = {
   id: string;
@@ -41,8 +43,14 @@ export type Categorization = {
   color: string;
   modalities: Modalities;
 };
+export type CategorizationWithoutId = {
+  name: string;
+  color: string;
+  modalities: ModalitiesWithoutIds;
+};
 
 export type AnnotationSchema = Array<Categorization>;
+export type AnnotationSchemaWithoutIds = Array<CategorizationWithoutId>;
 
 export type AnnotationSortOrder = 'table' | 'incomplete';
 
