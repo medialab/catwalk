@@ -11,6 +11,7 @@ import {
   useCurrentRowIndex,
   useCurrentRowEntry,
   useToggleState,
+  useSchemaState,
   useArgsort
 } from '../../hooks';
 
@@ -63,6 +64,9 @@ export function TagsColumnHandler() {
   const [annotationConfig, annotationStats, {setTag}] =
     useAnnotationConfigActions();
   const [isEdited, toggleIsEdited] = useToggleState();
+  const [schemaState, schemaStateActions] = useSchemaState(
+    annotationConfig?.schema
+  );
 
   if (!csvData)
     throw new Error(
@@ -78,10 +82,18 @@ export function TagsColumnHandler() {
     <TagsColumn
       isEdited={isEdited}
       schema={annotationConfig.schema}
+      schemaState={schemaState}
       stats={annotationStats}
       total={csvData.rows.length}
-      onEditTogglePrompt={toggleIsEdited}
-      onTagRequest={async event => {
+      onEditTogglePrompt={() => {
+        if (isEdited) {
+          console.log(schemaState);
+          schemaStateActions.resetWith(annotationConfig.schema);
+        }
+
+        toggleIsEdited();
+      }}
+      onTag={async event => {
         await setTag(event.categorization, event.modality);
       }}
     />

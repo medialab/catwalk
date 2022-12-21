@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import zip from 'lodash/zip';
 
 import type {
   AnnotationSchema,
@@ -18,29 +19,30 @@ import CategorizationGroup from './CategorizationGroup';
 type TagsColumnProps = {
   isEdited?: boolean;
   schema: AnnotationSchema;
+  schemaState?: AnnotationSchema;
   stats: AnnotationStats;
   total: number;
   uploadedModelStatus?: 'error' | 'pending' | 'processing';
-  onTagRequest?: (event: AnnotationConfigKeypressEvent) => void;
+  onTag?: (event: AnnotationConfigKeypressEvent) => void;
   onNewCategorizationPrompt?: () => void;
   onModelFilesDrop?: (file: File) => void;
   onEditTogglePrompt?: () => void;
-
-  onDeleteCategoryRequest?: (category: Categorization) => void;
+  onDeleteCategorization?: (category: Categorization) => void;
 };
 
 function TagsColumn({
   isEdited = false,
   schema,
+  schemaState,
   stats,
   total,
   uploadedModelStatus,
 
-  onTagRequest,
+  onTag,
   onModelFilesDrop,
   onEditTogglePrompt,
   onNewCategorizationPrompt,
-  onDeleteCategoryRequest
+  onDeleteCategorization
 }: TagsColumnProps) {
   const {
     tagsEditionEdit,
@@ -53,7 +55,7 @@ function TagsColumn({
 
   useAnnotationSchemaKeypress(schema, event => {
     if (isEdited) return;
-    onTagRequest?.(event);
+    onTag?.(event);
   });
 
   const counter = stats.counter;
@@ -65,25 +67,30 @@ function TagsColumn({
         'is-edited': isEdited
       })}>
       <ul className="main-row">
-        {schema.map(categorization => {
-          const categorizationStats = counter[categorization.name];
+        {zip(schema, schemaState).map(
+          ([categorization, categorizationState]: [
+            Categorization,
+            Categorization | undefined
+          ]) => {
+            const categorizationStats = counter[categorization.name];
 
-          return (
-            <CategorizationGroup
-              key={categorization.id}
-              categorization={categorization}
-              completedPercentage={categorizationStats.count / total}
-              total={categorizationStats.count}
-              stats={categorizationStats.modalities}
-              modalities={categorization.modalities}
-              isEdited={isEdited}
-              onTagRequest={onTagRequest}
-              onDeleteCategoryRequest={() =>
-                onDeleteCategoryRequest?.(categorization)
-              }
-            />
-          );
-        })}
+            return (
+              <CategorizationGroup
+                key={categorization.id}
+                categorization={categorization}
+                categorizationState={categorizationState}
+                completedPercentage={categorizationStats.count / total}
+                total={categorizationStats.count}
+                stats={categorizationStats.modalities}
+                isEdited={isEdited}
+                onTag={onTag}
+                onDeleteCategorization={() =>
+                  onDeleteCategorization?.(categorization)
+                }
+              />
+            );
+          }
+        )}
         <li className="add-new-categorization-container">
           <Button onClick={onNewCategorizationPrompt} isFullWidth>
             {tagsEditionNewCategorization}

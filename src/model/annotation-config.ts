@@ -9,7 +9,8 @@ import type {
   Categorization,
   Modality,
   CategorizationStats,
-  ModalityStats
+  ModalityStats,
+  AnnotationSchema
 } from '../types';
 
 import {mapEntries} from '../lib/utils';
@@ -162,4 +163,27 @@ export function inferAnnotationStatsFromConfigAndRows(
   });
 
   return stats;
+}
+
+export function renameModality(
+  schema: AnnotationSchema,
+  categorization: Categorization,
+  modality: Modality,
+  name: string
+): AnnotationSchema {
+  return schema.map(c => {
+    if (c.id === categorization.id) {
+      return {
+        ...c,
+        modalities: c.modalities.map(m => {
+          if (m.id === modality.id) {
+            return {
+              ...m,
+              name
+            };
+          } else return m;
+        })
+      };
+    } else return c;
+  });
 }

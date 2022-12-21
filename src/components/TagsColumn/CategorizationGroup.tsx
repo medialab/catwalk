@@ -1,13 +1,9 @@
 import classNames from 'classnames';
+import zip from 'lodash/zip';
 
 import {useI18nMessages} from '../../hooks';
 
-import type {
-  Categorization,
-  Modality,
-  Modalities,
-  ModalitiesStats
-} from '../../types';
+import type {Categorization, Modality, ModalitiesStats} from '../../types';
 import type {AnnotationConfigKeypressEvent} from '../../hooks';
 import Button from '../Button';
 
@@ -16,7 +12,7 @@ interface CategorizationHeaderProps {
   name: string;
   color: string;
   completedPercentage: number;
-  onDeleteRequest?: () => void;
+  onDelete?: () => void;
 }
 
 function CategorizationHeader({
@@ -24,7 +20,7 @@ function CategorizationHeader({
   name,
   color,
   completedPercentage,
-  onDeleteRequest
+  onDelete
 }: CategorizationHeaderProps) {
   const safePercentage = Math.round(completedPercentage * 100);
 
@@ -65,7 +61,7 @@ function CategorizationHeader({
         </span>
       </h4>
       <div className="delete-btn-container">
-        <Button onClick={onDeleteRequest}>🗑</Button>
+        <Button onClick={onDelete}>🗑</Button>
       </div>
     </div>
   );
@@ -74,25 +70,29 @@ function CategorizationHeader({
 interface ModalityGroupProps {
   categorization: Categorization;
   modality: Modality;
+  modalityState?: Modality;
   count: number;
   share: number;
   isEdited: boolean;
 
-  onDeleteRequest?: () => void;
-  onKeyBindingEditRequest?: () => void;
-  onTagRequest?: (event: AnnotationConfigKeypressEvent) => void;
+  onDelete?: () => void;
+  onKeyBindingEdit?: () => void;
+  onNameChange?: (newName: string) => void;
+  onTag?: (event: AnnotationConfigKeypressEvent) => void;
 }
 
 function ModalityGroup({
   categorization,
   modality,
+  modalityState,
   count,
   share,
   isEdited,
 
-  onDeleteRequest,
-  onKeyBindingEditRequest,
-  onTagRequest
+  onDelete,
+  onNameChange,
+  onKeyBindingEdit,
+  onTag
 }: ModalityGroupProps) {
   return (
     <li
@@ -103,8 +103,8 @@ function ModalityGroup({
         <Button
           onClick={() =>
             isEdited
-              ? onKeyBindingEditRequest?.()
-              : onTagRequest?.({categorization, modality})
+              ? onKeyBindingEdit?.()
+              : onTag?.({categorization, modality})
           }>
           {modality.key}
         </Button>
@@ -121,9 +121,11 @@ function ModalityGroup({
         {isEdited ? (
           <input
             className="title-writemode"
-            value={modality.name}
+            value={modalityState ? modalityState.name : modality.name}
             placeholder="Type modality name"
-            onChange={console.log}
+            onChange={e => {
+              onNameChange?.(e.target.value);
+            }}
           />
         ) : (
           // <span className="title-readmode">{name} ({count})</span>
@@ -134,7 +136,7 @@ function ModalityGroup({
       </div>
 
       <div className="delete-btn-container">
-        <Button onClick={onDeleteRequest}>🗑</Button>
+        <Button onClick={onDelete}>🗑</Button>
       </div>
     </li>
   );
@@ -143,23 +145,25 @@ function ModalityGroup({
 type CategorizationGroupProps = {
   isEdited: boolean;
   categorization: Categorization;
-  modalities: Modalities;
+  categorizationState?: Categorization;
   stats: ModalitiesStats;
   completedPercentage: number;
   total: number;
-  onTagRequest?: (event: AnnotationConfigKeypressEvent) => void;
-  onDeleteCategoryRequest?: () => void;
+  onTag?: (event: AnnotationConfigKeypressEvent) => void;
+  onModalityNameChange?: (modality: Modality, newName: string) => void;
+  onDeleteCategorization?: () => void;
 };
 
 export default function CategorizationGroup({
   isEdited,
   categorization,
-  modalities,
+  categorizationState,
   stats,
   completedPercentage,
   total,
-  onTagRequest,
-  onDeleteCategoryRequest
+  onTag,
+  onModalityNameChange,
+  onDeleteCategorization
 }: CategorizationGroupProps) {
   const {tagsEditionNewModality} = useI18nMessages();
 
@@ -173,26 +177,32 @@ export default function CategorizationGroup({
         name={categorization.name}
         completedPercentage={completedPercentage}
         color={categorization.color}
-        onDeleteRequest={onDeleteCategoryRequest}
+        onDelete={onDeleteCategorization}
       />
       <ul className="modalities-list">
-        {modalities.map(modality => {
-          const modalityStats = stats[modality.name];
+        {zip(categorization.modalities, categorizationState?.modalities).map(
+          ([modality, modalityState]: [Modality, Modality | undefined]) => {
+            const modalityStats = stats[modality.name];
 
-          return (
-            <ModalityGroup
-              key={modality.id}
-              categorization={categorization}
-              modality={modality}
-              count={modalityStats.count}
-              share={total === 0 ? 0 : modalityStats.count / total}
-              isEdited={isEdited}
-              onDeleteRequest={console.log}
-              onKeyBindingEditRequest={console.log}
-              onTagRequest={onTagRequest}
-            />
-          );
-        })}
+            return (
+              <ModalityGroup
+                key={modality.id}
+                categorization={categorization}
+                modality={modality}
+                modalityState={modalityState}
+                count={modalityStats.count}
+                share={total === 0 ? 0 : modalityStats.count / total}
+                isEdited={isEdited}
+                onDelete={console.log}
+                onKeyBindingEdit={console.log}
+                onNameChange={newName => {
+                  onModalityNameChange?.(modality, newName);
+                }}
+                onTag={onTag}
+              />
+            );
+          }
+        )}
         <li className="add-new-modality-container">
           <Button isFullWidth onClick={console.log}>
             {tagsEditionNewModality}
