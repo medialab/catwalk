@@ -7,7 +7,7 @@ import {createCategorization, createModality} from '../src/model';
 import {
   inferActionsFromSchemaDiff,
   reportErrorsAndWarningsFromSchema
-} from '../src/model/diff';
+} from '../src/model';
 
 describe('Diff', () => {
   it('should correctly detect when a categorization is added.', () => {

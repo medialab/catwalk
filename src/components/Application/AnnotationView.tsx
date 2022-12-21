@@ -14,7 +14,7 @@ import {
   useSchemaState,
   useArgsort
 } from '../../hooks';
-import {inferActionsFromSchemaDiff} from '../../model/diff';
+import {inferActionsFromSchemaDiff} from '../../model';
 
 export function RailwayHandler() {
   const csvData = useCSVData();
