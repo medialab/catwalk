@@ -150,6 +150,7 @@ export function inferActionsFromSchemaDiff(
 
       // Modality changes
       // TODO: we should track "false" modality changes
+      // TODO: track modality key changes
       const afterModalityIds = new Set(c.modalities.map(m => m.id));
       const beforeModalityIds = new Set(
         earlierCategorizationState.modalities.map(m => m.id)
@@ -209,6 +210,8 @@ export function inferActionsFromSchemaDiff(
   return actions;
 }
 
+// TODO: create a variant for a single categorization
+// TODO: add support for already allocated names
 export function reportErrorsAndWarningsFromSchema(schema: AnnotationSchema): {
   errors: Array<AnnotationSchemaError>;
   warnings: Array<AnnotationSchemaWarning>;
