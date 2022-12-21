@@ -86,14 +86,16 @@ type IrrelevantCategorizationWarning = {
 
 type AnnotationSchemaDiffWarning = IrrelevantCategorizationWarning;
 
-export function diffAnnotationSchemas(
-  before: AnnotationSchema,
-  after: AnnotationSchema
-): {
+export type AnnotationSchemaDiffResult = {
   actions: Array<AnnotationSchemaDiffAction>;
   errors: Array<AnnotationSchemaDiffError>;
   warnings: Array<AnnotationSchemaDiffWarning>;
-} {
+};
+
+export function diffAnnotationSchemas(
+  before: AnnotationSchema,
+  after: AnnotationSchema
+): AnnotationSchemaDiffResult {
   const actions: Array<AnnotationSchemaDiffAction> = [];
   const errors: Array<AnnotationSchemaDiffError> = [];
   const warnings: Array<AnnotationSchemaDiffWarning> = [];
@@ -183,7 +185,7 @@ export function diffAnnotationSchemas(
         }
       });
 
-      c.modalities.forEach((m, j) => {
+      c.modalities.forEach(m => {
         if (addedModalityIds.has(m.id)) {
           actions.push({
             type: 'add-modality',
@@ -208,7 +210,6 @@ export function diffAnnotationSchemas(
             });
           }
         }
-        modalitiesByName.set(m.name, [j, m]);
       });
     }
 

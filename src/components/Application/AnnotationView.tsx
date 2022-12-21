@@ -14,6 +14,7 @@ import {
   useSchemaState,
   useArgsort
 } from '../../hooks';
+import {diffAnnotationSchemas} from '../../model/diff';
 
 export function RailwayHandler() {
   const csvData = useCSVData();
@@ -87,7 +88,10 @@ export function TagsColumnHandler() {
       total={csvData.rows.length}
       onEditTogglePrompt={() => {
         if (isEdited) {
-          console.log(schemaState);
+          console.log(
+            schemaState,
+            diffAnnotationSchemas(annotationConfig.schema, schemaState)
+          );
           schemaStateActions.resetWith(annotationConfig.schema);
         }
 
@@ -95,6 +99,9 @@ export function TagsColumnHandler() {
       }}
       onTag={async event => {
         await setTag(event.categorization, event.modality);
+      }}
+      onChangeModalityName={(categorization, modality, name) => {
+        schemaStateActions.renameModality(categorization, modality, name);
       }}
     />
   );

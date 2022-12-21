@@ -4,7 +4,8 @@ import zip from 'lodash/zip';
 import type {
   AnnotationSchema,
   Categorization,
-  AnnotationStats
+  AnnotationStats,
+  Modality
 } from '../../types';
 import {
   useI18nMessages,
@@ -28,6 +29,11 @@ type TagsColumnProps = {
   onModelFilesDrop?: (file: File) => void;
   onEditTogglePrompt?: () => void;
   onDeleteCategorization?: (category: Categorization) => void;
+  onChangeModalityName?: (
+    categorization: Categorization,
+    modality: Modality,
+    name: string
+  ) => void;
 };
 
 function TagsColumn({
@@ -42,7 +48,8 @@ function TagsColumn({
   onModelFilesDrop,
   onEditTogglePrompt,
   onNewCategorizationPrompt,
-  onDeleteCategorization
+  onDeleteCategorization,
+  onChangeModalityName
 }: TagsColumnProps) {
   const {
     tagsEditionEdit,
@@ -84,6 +91,9 @@ function TagsColumn({
                 stats={categorizationStats.modalities}
                 isEdited={isEdited}
                 onTag={onTag}
+                onChangeModalityName={(modality, name) => {
+                  onChangeModalityName?.(categorization, modality, name);
+                }}
                 onDeleteCategorization={() =>
                   onDeleteCategorization?.(categorization)
                 }

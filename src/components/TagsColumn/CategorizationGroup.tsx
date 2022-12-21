@@ -150,7 +150,7 @@ type CategorizationGroupProps = {
   completedPercentage: number;
   total: number;
   onTag?: (event: AnnotationConfigKeypressEvent) => void;
-  onModalityNameChange?: (modality: Modality, newName: string) => void;
+  onChangeModalityName?: (modality: Modality, newName: string) => void;
   onDeleteCategorization?: () => void;
 };
 
@@ -162,7 +162,7 @@ export default function CategorizationGroup({
   completedPercentage,
   total,
   onTag,
-  onModalityNameChange,
+  onChangeModalityName,
   onDeleteCategorization
 }: CategorizationGroupProps) {
   const {tagsEditionNewModality} = useI18nMessages();
@@ -196,7 +196,7 @@ export default function CategorizationGroup({
                 onDelete={console.log}
                 onKeyBindingEdit={console.log}
                 onNameChange={newName => {
-                  onModalityNameChange?.(modality, newName);
+                  onChangeModalityName?.(modality, newName);
                 }}
                 onTag={onTag}
               />
