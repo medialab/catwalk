@@ -99,7 +99,8 @@ function ModalityGroup({
   return (
     <li
       className={classNames('ModalityGroup', {
-        'is-edited': isEdited
+        'is-edited': isEdited,
+        'is-dropped': isEdited && !modalityState
       })}>
       <div className="key-btn-container">
         <Button
@@ -181,7 +182,8 @@ export default function CategorizationGroup({
   return (
     <li
       className={classNames('CategorizationGroup', {
-        'is-edited': isEdited
+        'is-edited': isEdited,
+        'is-dropped': isEdited && !categorizationState
       })}>
       <CategorizationHeader
         isEdited={isEdited}

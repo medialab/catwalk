@@ -451,6 +451,9 @@
         }
       }
     }
+    &.is-dropped {
+      opacity: 0.5;
+    }
   }
 
   .ModalityGroup {
@@ -527,6 +530,9 @@
         max-width: 100vw;
         padding-left: $margin_small;
       }
+    }
+    &.is-dropped {
+      opacity: 0.5;
     }
   }
 

@@ -19,6 +19,8 @@ import Railway from '../../components/Railway';
 import DownloadModal from '../../components/Modals/DownloadModal';
 import {RailwayNavKeyEditModal} from '../../components/Modals/KeyEditModal';
 
+import {dropModality, dropCategorization} from '../../model';
+
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Mockups/3 - Annotation',
@@ -100,15 +102,34 @@ const MockRailway = ({
 interface MockTagsColumnProps {
   isEdited?: boolean;
   uploadedModelStatus?: 'error' | 'pending' | 'processing';
+  hasDroppedModality?: boolean;
+  hasDroppedCategorization?: boolean;
 }
 
 const MockTagsColumn = ({
   isEdited,
-  uploadedModelStatus
+  uploadedModelStatus,
+  hasDroppedModality = false,
+  hasDroppedCategorization = false
 }: MockTagsColumnProps) => {
+  let schemaState = mockAnnotationConfig.schema;
+
+  if (hasDroppedModality) {
+    schemaState = dropModality(
+      schemaState,
+      schemaState[0],
+      schemaState[0].modalities[1]
+    );
+  }
+
+  if (hasDroppedCategorization) {
+    schemaState = dropCategorization(schemaState, schemaState[0]);
+  }
+
   return (
     <TagsColumn
       schema={mockAnnotationConfig.schema}
+      schemaState={schemaState}
       isEdited={!!isEdited}
       uploadedModelStatus={uploadedModelStatus}
       stats={mockAnnotationStats}
@@ -173,6 +194,34 @@ ModelIsEdited.args = {
         <DownloadFooter />
       </MainColumn>
       <MockTagsColumn isEdited />
+    </>
+  )
+};
+
+export const ModalityIsDropped = Template.bind({});
+ModalityIsDropped.args = {
+  children: (
+    <>
+      <MockRailway />
+      <MainColumn>
+        <MockMainRow />
+        <DownloadFooter />
+      </MainColumn>
+      <MockTagsColumn isEdited hasDroppedModality />
+    </>
+  )
+};
+
+export const CategorizationIsDropped = Template.bind({});
+CategorizationIsDropped.args = {
+  children: (
+    <>
+      <MockRailway />
+      <MainColumn>
+        <MockMainRow />
+        <DownloadFooter />
+      </MainColumn>
+      <MockTagsColumn isEdited hasDroppedCategorization />
     </>
   )
 };
