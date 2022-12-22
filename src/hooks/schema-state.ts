@@ -1,7 +1,11 @@
 import {useState} from 'react';
 
 import type {AnnotationSchema, Categorization, Modality} from '../types';
-import {renameModality, renameCategorization} from '../model';
+import {
+  renameModality,
+  renameCategorization,
+  dropCategorization
+} from '../model';
 
 export type SchemaStateActions = {
   resetWith: (schema: AnnotationSchema) => void;
@@ -11,6 +15,7 @@ export type SchemaStateActions = {
     modality: Modality,
     name: string
   ) => void;
+  dropCategorization: (categorization: Categorization) => void;
 };
 
 export function useSchemaState(
@@ -35,6 +40,11 @@ export function useSchemaState(
     renameModality(categorization, modality, name) {
       setCurrentSchemaState(
         renameModality(currentSchemaState, categorization, modality, name)
+      );
+    },
+    dropCategorization(categorization) {
+      setCurrentSchemaState(
+        dropCategorization(currentSchemaState, categorization)
       );
     }
   };

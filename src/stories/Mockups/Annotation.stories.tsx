@@ -116,7 +116,7 @@ const MockTagsColumn = ({
       onModelFilesDrop={console.log}
       onEditTogglePrompt={console.log}
       onNewCategorizationPrompt={console.log}
-      onDeleteCategorization={console.log}
+      onDropCategorization={console.log}
     />
   );
 };

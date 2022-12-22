@@ -28,7 +28,7 @@ type TagsColumnProps = {
   onNewCategorizationPrompt?: () => void;
   onModelFilesDrop?: (file: File) => void;
   onEditTogglePrompt?: () => void;
-  onDeleteCategorization?: (category: Categorization) => void;
+  onDropCategorization?: (category: Categorization) => void;
   onChangeModalityName?: (
     categorization: Categorization,
     modality: Modality,
@@ -52,7 +52,7 @@ function TagsColumn({
   onModelFilesDrop,
   onEditTogglePrompt,
   onNewCategorizationPrompt,
-  onDeleteCategorization,
+  onDropCategorization,
   onChangeModalityName,
   onChangeCategorizationName
 }: TagsColumnProps) {
@@ -98,9 +98,7 @@ function TagsColumn({
                 onTag={onTag}
                 onChangeModalityName={onChangeModalityName}
                 onChangeCategorizationName={onChangeCategorizationName}
-                onDeleteCategorization={() =>
-                  onDeleteCategorization?.(categorization)
-                }
+                onDropCategorization={onDropCategorization}
               />
             );
           }

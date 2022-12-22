@@ -102,6 +102,7 @@ export function TagsColumnHandler() {
       }}
       onChangeCategorizationName={schemaStateActions.renameCategorization}
       onChangeModalityName={schemaStateActions.renameModality}
+      onDropCategorization={schemaStateActions.dropCategorization}
     />
   );
 }

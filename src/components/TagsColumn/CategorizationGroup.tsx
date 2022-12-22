@@ -12,7 +12,7 @@ interface CategorizationHeaderProps {
   name: string;
   color: string;
   completedPercentage: number;
-  onDelete?: () => void;
+  onDrop?: () => void;
   onChange?: (name: string) => void;
 }
 
@@ -21,7 +21,7 @@ function CategorizationHeader({
   name,
   color,
   completedPercentage,
-  onDelete,
+  onDrop,
   onChange
 }: CategorizationHeaderProps) {
   const safePercentage = Math.round(completedPercentage * 100);
@@ -63,7 +63,7 @@ function CategorizationHeader({
         </span>
       </h4>
       <div className="delete-btn-container">
-        <Button onClick={onDelete}>🗑</Button>
+        <Button onClick={onDrop}>🗑</Button>
       </div>
     </div>
   );
@@ -77,7 +77,7 @@ interface ModalityGroupProps {
   share: number;
   isEdited: boolean;
 
-  onDelete?: () => void;
+  onDrop?: () => void;
   onKeyBindingEdit?: () => void;
   onNameChange?: (modality: Modality, newName: string) => void;
   onTag?: (event: AnnotationConfigKeypressEvent) => void;
@@ -91,7 +91,7 @@ function ModalityGroup({
   share,
   isEdited,
 
-  onDelete,
+  onDrop,
   onNameChange,
   onKeyBindingEdit,
   onTag
@@ -138,7 +138,7 @@ function ModalityGroup({
       </div>
 
       <div className="delete-btn-container">
-        <Button onClick={onDelete}>🗑</Button>
+        <Button onClick={onDrop}>🗑</Button>
       </div>
     </li>
   );
@@ -161,7 +161,7 @@ type CategorizationGroupProps = {
     categorization: Categorization,
     newName: string
   ) => void;
-  onDeleteCategorization?: () => void;
+  onDropCategorization?: (categorization: Categorization) => void;
 };
 
 export default function CategorizationGroup({
@@ -174,7 +174,7 @@ export default function CategorizationGroup({
   onTag,
   onChangeModalityName,
   onChangeCategorizationName,
-  onDeleteCategorization
+  onDropCategorization
 }: CategorizationGroupProps) {
   const {tagsEditionNewModality} = useI18nMessages();
 
@@ -190,7 +190,7 @@ export default function CategorizationGroup({
         }
         completedPercentage={completedPercentage}
         color={categorization.color}
-        onDelete={onDeleteCategorization}
+        onDrop={onDropCategorization?.bind(null, categorization)}
         onChange={newName =>
           onChangeCategorizationName?.(categorization, newName)
         }
@@ -209,7 +209,7 @@ export default function CategorizationGroup({
                 count={modalityStats.count}
                 share={total === 0 ? 0 : modalityStats.count / total}
                 isEdited={isEdited}
-                onDelete={console.log}
+                onDrop={console.log}
                 onKeyBindingEdit={console.log}
                 onNameChange={onChangeModalityName?.bind(null, categorization)}
                 onTag={onTag}
