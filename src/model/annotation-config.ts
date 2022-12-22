@@ -15,6 +15,7 @@ import type {
 
 import {mapEntries} from '../lib/utils';
 import {suggestKey} from '../lib/keys';
+import {randomColor} from '../lib/colors';
 import {
   DEFAULT_CATEGORIZATION_NAME,
   DEFAULT_ANNOTATION_SORT_ORDER,
@@ -188,10 +189,17 @@ export function renameCategorization(
   });
 }
 
-// export function addDefaultCategorization(
-//   schema: AnnotationSchema,
-//   alreadyUsedKeys?: Set<string>
-// ): AnnotationSchema {}
+export function addDefaultCategorization(
+  schema: AnnotationSchema,
+  alreadyUsedKeys?: Set<string>
+): AnnotationSchema {
+  return schema.concat(
+    createCategorization('', randomColor(), undefined, [
+      createModality(suggestKey(alreadyUsedKeys), 'Modality 1'),
+      createModality(suggestKey(alreadyUsedKeys), 'Modality 2')
+    ])
+  );
+}
 
 export function addDefaultModality(
   schema: AnnotationSchema,
