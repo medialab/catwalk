@@ -73,24 +73,43 @@ type ModalityNameConflictError = {
   categorizationIndex: number;
 };
 
+type InvalidCategorizationNameError = {
+  type: 'invalid-categorization-name';
+  name: string;
+  categorization: Categorization;
+  categorizationIndex: number;
+};
+
+type InvalidModalityNameError = {
+  type: 'invalid-modality-name';
+  name: string;
+  categorization: Categorization;
+  categorizationIndex: number;
+  modality: Modality;
+};
+
 type AnnotationSchemaError =
   | CategorizatioNameConflictError
-  | ModalityNameConflictError;
+  | ModalityNameConflictError
+  | InvalidCategorizationNameError
+  | InvalidModalityNameError;
 
-type IrrelevantCategorizationWarning = {
-  type: 'irrelevant-categorization';
+type IrrelevantCategorizationCardinalityWarning = {
+  type: 'irrelevant-categorization-cardinality';
   categorization: Categorization;
   categorizationIndex: number;
   cardinality: number;
 };
 
-type AnnotationSchemaWarning = IrrelevantCategorizationWarning;
+type AnnotationSchemaWarning = IrrelevantCategorizationCardinalityWarning;
 
 export type AnnotationSchemaDiffResult = {
   actions: Array<AnnotationSchemaDiffAction>;
   errors: Array<AnnotationSchemaError>;
   warnings: Array<AnnotationSchemaWarning>;
 };
+
+// TODO: add function to cleanup schema to avoid invisible whitespace issues
 
 export function inferActionsFromSchemaDiff(
   before: AnnotationSchema,
@@ -211,7 +230,7 @@ export function inferActionsFromSchemaDiff(
 }
 
 // TODO: create a variant for a single categorization
-// TODO: add support for already allocated names
+// TODO: check extraneous column names
 export function reportErrorsAndWarningsFromSchema(schema: AnnotationSchema): {
   errors: Array<AnnotationSchemaError>;
   warnings: Array<AnnotationSchemaWarning>;
@@ -225,16 +244,35 @@ export function reportErrorsAndWarningsFromSchema(schema: AnnotationSchema): {
   schema.forEach((c, i) => {
     categorizationsByName.set(c.name, [i, c]);
 
+    if (c.name.trim() === '') {
+      errors.push({
+        type: 'invalid-categorization-name',
+        name: c.name,
+        categorization: c,
+        categorizationIndex: i
+      });
+    }
+
     const modalitiesByName: MultiMap<string, [number, Modality]> =
       new MultiMap();
 
     c.modalities.forEach((m, j) => {
+      if (m.name.trim() === '') {
+        errors.push({
+          type: 'invalid-modality-name',
+          name: m.name,
+          categorization: c,
+          categorizationIndex: i,
+          modality: m
+        });
+      }
+
       modalitiesByName.set(m.name, [j, m]);
     });
 
     if (c.modalities.length < 2) {
       warnings.push({
-        type: 'irrelevant-categorization',
+        type: 'irrelevant-categorization-cardinality',
         categorization: c,
         categorizationIndex: i,
         cardinality: c.modalities.length
@@ -257,7 +295,11 @@ export function reportErrorsAndWarningsFromSchema(schema: AnnotationSchema): {
   categorizationsByName.forEachAssociation((categorizations, name) => {
     if (categorizations.length < 2) return;
 
-    errors.push({type: 'categorization-name-conflict', categorizations, name});
+    errors.push({
+      type: 'categorization-name-conflict',
+      categorizations,
+      name
+    });
   });
 
   return {errors, warnings};

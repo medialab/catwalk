@@ -85,7 +85,7 @@ describe('Diff', () => {
 
     assert.deepStrictEqual(warnings, [
       {
-        type: 'irrelevant-categorization',
+        type: 'irrelevant-categorization-cardinality',
         categorization: {name: 'One', id: 'one', color: 'blue', modalities: []},
         categorizationIndex: 0,
         cardinality: 0

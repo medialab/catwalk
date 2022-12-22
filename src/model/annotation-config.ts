@@ -202,3 +202,7 @@ export function renameCategorization(
     } else return c;
   });
 }
+
+// export function addDefaultCategorization(
+//   schema: AnnotationSchema
+// ): AnnotationSchema {}
