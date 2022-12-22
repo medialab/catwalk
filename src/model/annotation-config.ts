@@ -53,22 +53,6 @@ export function createCategorization(
   };
 }
 
-export function createCategorizationWithDefaultModalities(
-  name: string,
-  color: string,
-  keys: [string, string]
-): Categorization {
-  return {
-    name,
-    id: uuid(),
-    color,
-    modalities: [
-      createModality(keys[0], 'Modality 1'),
-      createModality(keys[1], 'Modality 2')
-    ]
-  };
-}
-
 function findUnusedDefaultCategorizationName(columns: CSVColumns): string {
   let defaultCategoryName = DEFAULT_CATEGORIZATION_NAME;
 
@@ -203,6 +187,11 @@ export function renameCategorization(
     } else return c;
   });
 }
+
+// export function addDefaultCategorization(
+//   schema: AnnotationSchema,
+//   alreadyUsedKeys?: Set<string>
+// ): AnnotationSchema {}
 
 export function addDefaultModality(
   schema: AnnotationSchema,
