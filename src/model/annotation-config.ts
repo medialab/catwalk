@@ -217,3 +217,22 @@ export function addDefaultModality(
     } else return c;
   });
 }
+
+export function dropCategorization(
+  schema: AnnotationSchema,
+  categorization: Categorization
+): AnnotationSchema {
+  return schema.filter(c => c.id !== categorization.id);
+}
+
+export function dropModality(
+  schema: AnnotationSchema,
+  categorization: Categorization,
+  modality: Modality
+): AnnotationSchema {
+  return schema.map(c => {
+    if (c.id === categorization.id) {
+      return {...c, modalities: c.modalities.filter(m => m.id !== modality.id)};
+    } else return c;
+  });
+}
