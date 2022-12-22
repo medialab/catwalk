@@ -10,8 +10,12 @@ const KEY_SUGGESTIONS = 'qwertyuiop asdfghjkl zxcvbnm'
 export function createRandomKeySuggestion(rng: RNGFunction) {
   const choice = createChoice<string>(rng);
 
-  return function (alreadyUsed: Set<string>): string {
-    const possibleKeys = KEY_SUGGESTIONS.filter(key => !alreadyUsed.has(key));
+  return function (alreadyUsed?: Set<string>): string {
+    let possibleKeys = KEY_SUGGESTIONS;
+
+    if (alreadyUsed) {
+      possibleKeys = possibleKeys.filter(key => !alreadyUsed.has(key));
+    }
 
     if (possibleKeys.length === 0)
       throw new Error('cannot suggest key. this is a loophole!');

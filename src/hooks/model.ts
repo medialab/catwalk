@@ -17,8 +17,8 @@ import {
   annotationStatsAtom,
   currentRowAtom,
   currentRowIndexAtom,
-  columnNamesInUseAtom,
-  keysInUseAtom
+  alreadyUsedColumnNamesAtom,
+  alreadyUsedKeysAtom
 } from '../atoms';
 import {
   CreateDefaultAnnotationConfigParams,
@@ -49,12 +49,12 @@ export function useArgsort() {
   return useBoxedAtomValue(argsortAtom);
 }
 
-export function useColumnNamesInUse() {
-  return useAtomValue(columnNamesInUseAtom);
+export function useAlreadyUsedColumnNames() {
+  return useAtomValue(alreadyUsedColumnNamesAtom);
 }
 
-export function useKeysInUse() {
-  return useAtomValue(keysInUseAtom);
+export function useAlreadyUsedKeys() {
+  return useAtomValue(alreadyUsedKeysAtom);
 }
 
 export function useCreateAnnotationConfig(): (

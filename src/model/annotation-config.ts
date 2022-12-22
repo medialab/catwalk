@@ -14,6 +14,7 @@ import type {
 } from '../types';
 
 import {mapEntries} from '../lib/utils';
+import {suggestKey} from '../lib/keys';
 import {
   DEFAULT_CATEGORIZATION_NAME,
   DEFAULT_ANNOTATION_SORT_ORDER,
@@ -203,6 +204,19 @@ export function renameCategorization(
   });
 }
 
-// export function addDefaultCategorization(
-//   schema: AnnotationSchema
-// ): AnnotationSchema {}
+export function addDefaultModality(
+  schema: AnnotationSchema,
+  categorization: Categorization,
+  alreadyUsedKeys?: Set<string>
+): AnnotationSchema {
+  return schema.map(c => {
+    if (c.id === categorization.id) {
+      return {
+        ...c,
+        modalities: c.modalities.concat(
+          createModality(suggestKey(alreadyUsedKeys), '')
+        )
+      };
+    } else return c;
+  });
+}

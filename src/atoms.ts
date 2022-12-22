@@ -51,7 +51,7 @@ export const currentRowAtom = atom<
     set(currentRowIndexAtom, index);
   }
 );
-export const columnNamesInUseAtom = atom<Set<string>>(get => {
+export const alreadyUsedColumnNamesAtom = atom<Set<string>>(get => {
   const configBox = get(annotationConfigAtom);
 
   const names: Set<string> = new Set();
@@ -63,7 +63,7 @@ export const columnNamesInUseAtom = atom<Set<string>>(get => {
 
   return names;
 });
-export const keysInUseAtom = atom<Set<string>>(get => {
+export const alreadyUsedKeysAtom = atom<Set<string>>(get => {
   const configBox = get(annotationConfigAtom);
 
   const keys: Set<string> = new Set();
