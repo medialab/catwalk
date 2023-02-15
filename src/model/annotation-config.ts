@@ -89,9 +89,9 @@ export function createDefaultAnnotationConfig({
         id: uuid(),
         color: DEFAULT_CATEGORIZATION_COLOR,
         modalities: [
-          {id: uuid(), name: 'IN', key: 'A'},
-          {id: uuid(), name: 'OUT', key: 'Z'},
-          {id: uuid(), name: 'UNDECIDED', key: 'E'}
+          {id: uuid(), name: 'IN', key: 'ArrowLeft'},
+          {id: uuid(), name: 'UNDECIDED', key: 'Shift'},
+          {id: uuid(), name: 'OUT', key: 'ArrowRight'}
         ]
       }
     ]
