@@ -14,7 +14,7 @@ const websiteIframePreviewSpecs: PreviewSpecification<string> = {
         <iframe
           src={value}
           width="100%"
-          height="300"
+          height="800"
           sandbox="allow-same-origin"></iframe>
       </div>
     );
